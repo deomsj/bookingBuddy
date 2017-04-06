@@ -3,9 +3,9 @@ Project Name
 Pithy project description
 Team
 
-Product Owner: teamMember
-Scrum Master: teamMember
-Development Team Members: teamMember, teamMember
+Product Owner: Lou Kaileh
+Scrum Master: Jesse DeOms
+Development Team Members: Nate Nault, Preston Moore, Max Berger
 Table of Contents
 
 Usage
@@ -18,22 +18,26 @@ Contributing
 Usage
 
 Some usage instructions
+If you choose to install yarn, follow these steps from your terminal:
+`brew update`
+`brew install yarn`
+Locate and open your profile. This will either be `.profle`, `.bashrc`, or `.zshrc`. (For me it was the bashrc. It can be located in your root directory by using `ls -a`)
+Add the following line to your profile.
+export PATH="$PATH:`yarn global bin`"
+Test that Yarn is running with `yarn --version`
+
 Requirements
 
 Node 0.10.x
-Redis 2.6.x
-Postgresql 9.1.x
-etc
-etc
+
 Development
 
 Installing Dependencies
 
 From within the root directory:
 
-sudo npm install -g bower
-npm install
-bower install
+yarn
+
 Roadmap
 
 View the project roadmap here
