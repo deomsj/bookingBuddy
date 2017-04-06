@@ -1,0 +1,19 @@
+{
+  "name": "bookingBuddy",
+  "version": "1.0.0",
+  "main": "server/server.js",
+    "scripts": {
+    "start": "node server/server.js",
+    "start:dev": "nodemon server/server.js"
+  },
+  "repository": "https://github.com/Aquilans/bookingBuddy.git",
+  "author": "MLPJN",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "pg": "^6.1.5",
+    "sequelize": "^3.30.4",
+    "sequelize-cli": "^2.7.0"
+  }
+}
