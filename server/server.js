@@ -9,11 +9,11 @@ var port = process.env.PORT || 3000;
 
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
-// var client = new pg.Client(connectionString);
+var client = new pg.Client(connectionString);
 
-// client.connect(function (err) {
-//   if (err) throw err;
-// });
+client.connect(function (err) {
+  if (err) throw err;
+});
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client')));
@@ -55,7 +55,9 @@ var tripUser1 = {
   endDate : '03/26/2018',
   duration : '7',
   budget : 300,
-  tripId : 11
+  tripId : 1
+  //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
+    //SELECT * FROM trips; <--- in postgres this will show your trip id
 };
 
 var tripUser2 = {
@@ -68,7 +70,9 @@ var tripUser2 = {
   endDate : '03/22/2018',
   duration : '7',
   budget : 1300,
-  tripId : 11
+  tripId : 1
+  //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
+    //SELECT * FROM trips; <--- in postgres this will show your trip id
 };
 
 var tripMaster = function(obj) {
@@ -147,8 +151,11 @@ var tripUser = function(obj) {
                   VALUES($1, $2) RETURNING id",
                   [u_results.rows[0].id, obj.tripId], function(err, ut_results) {
                     if(err){
+// IF YOU EXPERIENCE ERROR HERE CHANGE "tripId" in tripUser object TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
+  //SELECT * FROM trips; <--- in postgres, this will show your trip id
                       // res.send(err)
                     }
+                 
 
   client.query("INSERT INTO \
                   dates(beging, ending, duration, trip_id) \
@@ -168,7 +175,7 @@ var tripUser = function(obj) {
 
   obj.locations.forEach(function(location, ind, coll) {
   client.query("INSERT INTO \
-                  locations(name, trip_id) \
+                  locations(name, user_trip_id) \
                   VALUES($1, $2) RETURNING id",
                   [location, ut_results.rows[0].id], function(err, u_results) {
                     if(err){
