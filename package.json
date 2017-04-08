@@ -4,7 +4,8 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "start:dev": "nodemon server/server.js"
+    "start:dev": "nodemon server/server.js",
+    "lint": "eslint ./"
   },
   "repository": "https://github.com/Aquilans/bookingBuddy.git",
   "author": "MLPJN",
@@ -15,6 +16,7 @@
     "node": "0.0.0",
     "nodemailer": "^4.0.0",
     "pg": "^6.1.5",
+    "request": "^2.81.0",
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
     "validator": "^7.0.0"
