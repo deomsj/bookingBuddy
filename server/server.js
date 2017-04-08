@@ -8,11 +8,11 @@ var port = process.env.PORT || 3000;
 
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
-var client = new pg.Client(connectionString);
+// var client = new pg.Client(connectionString);
 
-client.connect(function (err) {
-  if (err) throw err;
-});
+// client.connect(function (err) {
+//   if (err) throw err;
+// });
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client')));
@@ -55,7 +55,7 @@ var tripUser1 = {
   endDate : '03/26/2018',
   duration : '7',
   budget : 300,
-  tripId : 11 
+  tripId : 11
 };
 
 var tripUser2 = {
@@ -113,7 +113,7 @@ var tripMaster = function(obj) {
                       // res.send(err)
                     }
 
-  obj.locations.forEach(function(location, ind, coll) {                    
+  obj.locations.forEach(function(location, ind, coll) {
   client.query("INSERT INTO \
                   locations(name, trip_id) \
                   VALUES($1, $2) RETURNING id",
@@ -165,7 +165,7 @@ var tripUser = function(obj) {
                       // res.send(err)
                     }
 
-  obj.locations.forEach(function(location, ind, coll) {                    
+  obj.locations.forEach(function(location, ind, coll) {
   client.query("INSERT INTO \
                   locations(name, trip_id) \
                   VALUES($1, $2) RETURNING id",
@@ -193,14 +193,14 @@ var getTotal = function(key) {
         if(err) {
           console.log(err, "err");
         }
-        sum+=parseInt(data.rows[0].total);   
+        sum+=parseInt(data.rows[0].total);
         if(ind === coll.length-1) {
           console.log(sum, "sum")
           return sum;
         }
       });
     });
-  });        
+  });
 }
 
 // getTotal(11)
