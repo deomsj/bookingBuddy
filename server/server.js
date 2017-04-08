@@ -3,7 +3,8 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var pg = require('pg');
-
+var nodemailer = require('nodemailer');
+var validator = require('validator');
 var port = process.env.PORT || 3000;
 
 
@@ -16,7 +17,7 @@ var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/te
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client')));
-
+  
 app.listen(port, function() {
   console.log('listening on', port);
 });
@@ -25,13 +26,12 @@ var tripCreatorTest = {
   //Once "create trip" button is hit, api call should be made...
   email : "johndoe@gmail.com",
   //backend will create random and unique trip id ex "abc123"
-  //Send that trip id back to client side as reference to that specific trip for all users
+    //Send that trip id back to client side as reference to that specific trip for all users
 };
 
 //3 IDEAL FRONTEND SUMBISSION FORMS BELOW!!!
 var tripMaster1 = {
   //tripMaster === Originator of trip
-  //signup example data
     //John Doe creates trip
   email : 'johndoe@gmail.com',
   nameF : 'John',
@@ -59,6 +59,7 @@ var tripUser1 = {
 };
 
 var tripUser2 = {
+  //tripUser === invitee
   email : 'lifeisgood@gmail.com',
   nameF : 'Lyfe',
   nameL : 'Jennings',
@@ -185,7 +186,7 @@ var tripUser = function(obj) {
 
 var getTotal = function(key) {
   //key represents the trip id
-  //gets total contribution (sum) associated with a single trip
+    //gets total contribution (sum) associated with a single trip
   var sum = 0;
   client.query("SELECT * FROM userTrips WHERE trip_id = ($1)", [key], function(err, data) {
     data.rows.forEach(function(item, ind, coll) {
@@ -202,7 +203,6 @@ var getTotal = function(key) {
     });
   });
 }
-
 // getTotal(11)
 
 var commonTrip = function(key) {
@@ -243,5 +243,69 @@ var commonTrip = function(key) {
       });
     });
   }
-
 // commonTrip(11);
+
+var getUserLocations = function(key) {
+  //gets a single users location preferences based on trip id
+    //key references some data specific to user, can be an object
+  client.query("SELECT * FROM locations WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($1))", [key], function(err, data) {
+    if(err) {
+      res.send(404);
+      console.log(err, "ERR");
+    }
+    console.log(data.rows);
+  });
+};
+// getUserLocations(14);
+
+var getUserDates = function(key) {
+    //gets a single users date preferences based on trip id
+      //key references some data specific to user, can be an object
+  client.query("SELECT * FROM dates WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($1))", [key], function(err, data) {
+    if(err) {
+      res.send(404);
+      console.log(err, "ERR");
+    }
+    console.log(data.rows);
+  });
+};
+// getUserDates(14);
+
+var getUserBudget = function(key) {
+  //gets a single users budget based on trip id
+    //key references some data specific to user, can be an object
+  client.query("SELECT * FROM budget WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($1))", [key], function(err, data) {
+    if(err) {
+      res.send(404);
+      console.log(err, "ERR");
+    }
+    console.log(data.rows);
+  });
+};
+// getUserBudget(14);
+
+var sendEmail = function(obj) {
+  //obj will contain email recipients name and email
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'bookingbuddy17@gmail.com',
+      pass: 'Verizon7'
+    }
+  });
+
+  let mailOptions = {
+    from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
+    to: obj.email, // list of receivers
+    subject: "Hey " + obj.name + "! You've been invited to go on vation!", // Subject line
+    text: 'Whatever we want to tell the client', // plain text body
+    html: '<b>Enjoy your savings!</b>' // html body
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+  });
+};
