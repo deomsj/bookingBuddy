@@ -248,17 +248,3 @@ var commonTrip = function(key) {
 // commonTrip(11);
 module.exports = app;
 
-
-// test
-var request = require('request');
-
-
-var API_KEY = '97jp5twzjc9xbvzgkp7y3c59';
-
-var url = `http://api.hotwire.com/v1/deal/hotel?apikey=${API_KEY}&limit=5&diversity=city`;
-
-var query = request(url, function(error, response, body) {
-  if (error) { console.error(error); }
-  console.log('statusCode:', response && response.statusCode);
-  console.log('body:', body);
-});
