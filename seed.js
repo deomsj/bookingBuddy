@@ -1,14 +1,14 @@
 var express = require('express');
 var pg = require('pg');
 
-var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
-var client = new pg.Client(connectionString);
+// var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
+// var client = new pg.Client(connectionString);
 
-client.connect(function (err) {
-  //uncomment and run node seed.js to create db.  
+// client.connect(function (err) {
+  //uncomment and run node seed.js to create db.
   //Nothing changes except instead of "test1" above you must insert your own db name on your local computer.
-  
-  if (err) throw err;
+
+  // if (err) throw err;
 
 //   client.query("CREATE TABLE \
 //                   users( \
@@ -49,4 +49,4 @@ client.connect(function (err) {
 //                   user_trip_id INTEGER REFERENCES userTrips(id))");
 
 
-});
+// });
