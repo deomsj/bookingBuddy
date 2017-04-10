@@ -193,6 +193,7 @@ var tripUser = function(obj) {
 
 var getTotal = function(key) {
   //key represents the trip id
+    //SELECT * FROM trips <------ to see your current trip id(s)!
     //gets total contribution (sum) associated with a single trip
   var sum = 0;
   client.query("SELECT * FROM userTrips WHERE trip_id = ($1)", [key], function(err, data) {
@@ -210,7 +211,7 @@ var getTotal = function(key) {
     });
   });
 }
-// getTotal(11)
+// getTotal(11);
 
 var commonTrip = function(key) {
 //key represents the trip id
@@ -253,4 +254,163 @@ var commonTrip = function(key) {
 
 // commonTrip(11);
 module.exports = app;
+var getUserLocations = function(key) {
+  //gets a single users location preferences based on trip id
+    //key references some data specific to user, can be an object
+  client.query("SELECT * FROM locations WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($1))", [key], function(err, data) {
+    if(err) {
+      res.send(404);
+      console.log(err, "ERR");
+    }
+    console.log(data.rows);
+  });
+};
+// getUserLocations(14);
+ 
+var getUserDates = function(key) {
+    //gets a single users date preferences based on trip id
+      //key references some data specific to user, can be an object
+  client.query("SELECT * FROM dates WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($1))", [key], function(err, data) {
+    if(err) {
+      res.send(404);
+      console.log(err, "ERR");
+    }
+    console.log(data.rows);
+   });
+ };
+// getUserDates(14);
+ 
+var getUserBudget = function(key) {
+   //gets a single users budget based on trip id
+     //key references some data specific to user, can be an object
+   client.query("SELECT * FROM budget WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($1))", [key], function(err, data) {
+     if(err) {
+       res.send(404);
+       console.log(err, "ERR");
+     }
+    console.log(data.rows);
+   });
+ };
+ // getUserBudget(14);
+
+var updateUserBudget = function(key) {
+//updates a single users budget based on a passed in amount, user_id, and trip_id
+  //key should be an object
+  client.query("UPDATE budget SET total = ($1) WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($2) AND trip_id = ($3))", [key.total, key.id, key.trip_id],
+    function(err, data) {
+      if(err) {
+        // res.send(404);
+        console.log(err, "ERR");
+      }
+      // console.log(data);
+  });
+};
+// updateUserBudget({total:9900, id:14, trip_id:11});
+
+var updateUserDates = function(key) {
+//updates a single users begin and end dates based on a passed in user_id, trip_id, new begin and/or end dates
+  //key should be an object
+  client.query("UPDATE dates SET beging = ($1) WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($2) AND trip_id = ($3))", [key.beginning, key.id, key.trip_id],
+    function(err, data) {
+      if(err) {
+        // res.send(404);
+        console.log(err, "ERR");
+      }
+      // console.log(data);
+  });
+  client.query("UPDATE dates SET ending = ($1) WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($2) AND trip_id = ($3))", [key.ending, key.id, key.trip_id],
+    function(err, data) {
+      if(err) {
+        // res.send(404);
+        console.log(err, "ERR");
+      }
+      // console.log(data);
+  });
+};
+//updateUserDates({beginning:'01/12/17', ending:'12/12/17', id:14, trip_id:11});
+
+var updateDuration = function(key) {
+//updates a single users begin and end dates based on a passed in user_id, trip_id, new begin and/or end dates
+  //key should be an object
+  client.query("UPDATE dates SET duration = ($1) WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($2) AND trip_id = ($3))", [key.duration, key.user_id, key.trip_id],
+    function(err, data) {
+      if(err) {
+        // res.send(404);
+        console.log(err, "ERR");
+      }
+      // console.log(data);
+  });
+}
+// updateDuration({user_id:14, trip_id:11, duration:'12'});
+
+var addUserLocation = function(key) {
+//updates a single users location based on a passed in location, user_id, and trip_id
+  //key should be an object
+  client.query("SELECT id FROM userTrips WHERE user_id = ($1) AND trip_id = ($2)", [key.user_id, key.trip_id],
+    function(err, data) {
+      if(err) {
+        // res.send(404);
+        console.log(err, "ERR");
+      }
+    console.log(data.rows[0].id);
+    var id = data.rows[0].id
+    client.query("INSERT INTO \
+                    locations(name, trip_id) \
+                    VALUES($1, $2) RETURNING id",
+                    [key.name, id], function(err, u_results) {
+                      if(err){
+                        // res.send(err)
+                      }
+                    });
+                  });
+};
+// addUserLocation({user_id:14, trip_id:11, name:'Oakland'});
+
+var deleteUserLocation = function(key) {
+//delete a single users location based on a passed in locaiton name, user_id, and trip_id
+  //key should be an object
+  client.query("SELECT id FROM userTrips WHERE user_id = ($1) AND trip_id = ($2)", [key.user_id, key.trip_id],
+    function(err, data) {
+      if(err) {
+        // res.send(404);
+        console.log(err, "ERR");
+      }
+    console.log(data.rows[0].id);
+    var id = data.rows[0].id
+    client.query("DELETE FROM locations WHERE name = ($1) AND trip_id = ($2)", [key.name, id], 
+      function(err, u_results) {
+        if(err){
+        // res.send(err)
+        }
+        //comment
+    });
+  });
+}
+// deleteUserLocation({user_id:14, trip_id:11, name:'Oakland'});
+ 
+ var sendEmail = function(obj) {
+   //obj will contain email recipients name and email
+   let transporter = nodemailer.createTransport({
+     service: 'gmail',
+     auth: {
+       user: 'bookingbuddy17@gmail.com',
+       pass: 'Verizon7'
+     }
+   });
+ 
+   let mailOptions = {
+     from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
+     to: obj.email, // list of receivers
+     subject: "Hey " + obj.name + "! You've been invited to go on vation!", // Subject line
+     text: 'Whatever we want to tell the client', // plain text body
+     html: '<b>Enjoy your savings!</b>' // html body
+   };
+ 
+   transporter.sendMail(mailOptions, (error, info) => {
+     if (error) {
+       return console.log(error);
+     }
+     console.log('Message %s sent: %s', info.messageId, info.response);
+   });
+ }; 
 
