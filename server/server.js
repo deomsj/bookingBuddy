@@ -75,6 +75,10 @@ var tripUser2 = {
     //SELECT * FROM trips; <--- in postgres this will show your trip id
 };
 
+// var apiCall = function() {
+
+// }
+
 var tripMaster = function(obj) {
   console.log("Creating Trip Master!");
   client.query("INSERT INTO \
