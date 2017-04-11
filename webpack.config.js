@@ -2,21 +2,26 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './client/src/index.js',
+  entry: [
+    // 'webpack-dev-server/client?http://localhost:3000',
+    './client/src/index.js'
+  ],
+
   output: {
-    path: path.resolve(__dirname, 'client/dist'),
-    publicPath: '/client/dist',
+    path: path.resolve(__dirname, 'client/compiled'),
     filename: 'bundle.js'
   },
   module: {
     loaders: [
       {
-        test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/,
-        query: { presets: ['es2015', 'react'] }
+        test: /\.js$/,
+        loaders: ['babel-loader'],
+        exclude: /node_modules/
       },
       {
-        test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/,
-        query: { presets: ['es2015', 'react'] }
+        test: /\.jsx$/,
+        loaders: ['babel-loader'],
+        exclude: /node_modules/
       }
     ]
   }
