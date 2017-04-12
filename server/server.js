@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var pg = require('pg');
 var nodemailer = require('nodemailer');
 var validator = require('validator');
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3002;
 
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
