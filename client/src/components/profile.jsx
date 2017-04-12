@@ -5,26 +5,77 @@ import {
   Link
 } from 'react-router-dom';
 
-class Profile extends Component {
 
-  handleClick(event) {
-    event.preventDefault();
-    let tripId = event.target.elements[0].value;
-    let path = `trip-room/${tripId}`;
-    browserHistory.push(path);
+
+var ProfileUser = ({userInfo}) => (
+  <div>
+    <h1>{userInfo.userName}</h1>
+    <img width="500px" src={userInfo.imageUrl} alt="profile picture"/>
+    <p>{userInfo.userEmail}</p>
+  </div>
+);
+
+
+class ProfileTrip extends Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      tripBody: ''
+    };
+  }
+
+  showTripDescription() {
+    if (this.state.tripBody) {
+      this.setState({
+        tripBody: ''
+      });
+    } else {
+      this.setState({
+        tripBody: (
+          <div>
+            <p>{this.props.trip.tripDescription}</p>
+            <button>View Trip Room</button>
+            <button>My Trip Preferences</button>
+          </div>
+          )
+      });
+    }
   }
 
   render() {
     return (
-      <div>
-        <h2>Profile Page</h2>
-        <button>
-          {/* /23/ needs to be replaced with the actual TripRoom ID */}
-          <Link to="/trip-room/23">Enter Trip Room</Link>
-        </button>
-      </div>
+      <li>
+        <h2 onClick={this.showTripDescription.bind(this)} >
+          {this.props.trip.tripName}
+        </h2>
+        {this.state.tripBody}
+      </li>
+
     );
   }
 }
+
+
+
+// Functional, stateless component
+// destructure props object
+var Profile = function ({userInfo}) {
+  var tripList = userInfo.trips.map((trip, index) => (
+      <ProfileTrip trip={trip} key={index} />
+    ));
+
+  return (
+    <div className="Profile">
+      <ProfileUser userInfo={userInfo} />
+      <div className="ProfileTrips">
+        <h1>Current Trips</h1>
+        <ul>
+          {tripList}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 export default Profile;
