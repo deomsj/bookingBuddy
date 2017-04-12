@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var pg = require('pg');
 var nodemailer = require('nodemailer');
 var validator = require('validator');
-var port = process.env.PORT || 3002;
+var port = process.env.PORT || 3001;
 
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
@@ -16,6 +16,7 @@ client.connect(function (err) {
 });
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, '../client')));
 
 app.listen(port, function() {
@@ -194,13 +195,14 @@ var tripUser = function(obj) {
 };
 // tripMaster(tripMaster1);
 // tripUser(tripUser2);
-
-var getTotal = function(key) {
+app.post('/getTotal', function(req, res, next) {
+  console.log("getTotal")
+  console.log(req.body);
   //key represents the trip id
     //SELECT * FROM trips <------ to see your current trip id(s)!
     //gets total contribution (sum) associated with a single trip
   var sum = 0;
-  client.query("SELECT * FROM userTrips WHERE trip_id = ($1)", [key], function(err, data) {
+  client.query("SELECT * FROM userTrips WHERE trip_id = ($1)", [req.body.id], function(err, data) {
     data.rows.forEach(function(item, ind, coll) {
       client.query("SELECT total FROM budget WHERE trip_id = ($1)", [item.id] , function(err, data) {
         if(err) {
@@ -208,16 +210,16 @@ var getTotal = function(key) {
         }
         sum+=parseInt(data.rows[0].total);
         if(ind === coll.length-1) {
-          console.log(sum, "sum")
-          return sum;
+          //console.log(sum, "sum")
+          res.send({sum:sum});
         }
       });
     });
   });
-}
-// getTotal(11);
+});
 
-var commonTrip = function(key) {
+app.post('/commonTrip', function(req, res, next) {
+  console.log("COMMON TRIP", req.body);
 //key represents the trip id
 //gets common trip location(s) out of all user locations associated with a certain trip
   var commonTrips = [];
@@ -227,7 +229,7 @@ var commonTrip = function(key) {
     max = data.rows.length-1;
   });
 
-  client.query("SELECT * FROM userTrips WHERE trip_id = ($1)", [key], function(err, data) {
+  client.query("SELECT * FROM userTrips WHERE trip_id = ($1)", [req.body.id], function(err, data) {
     var len = data.rows.length;
     data.rows.forEach(function(item, ind, coll) {
       client.query("SELECT * FROM locations WHERE trip_id = ($1)", [item.id] , function(err, data) {
@@ -247,16 +249,15 @@ var commonTrip = function(key) {
                   commonTrips.push(key);
                 }
               }
-              console.log(commonTrips)
-              //return commonTrips;
+              console.log("CT", commonTrips)
+              res.send({commonTrips:commonTrips});
             }
           });
         });
       });
     });
-  }
+});
 
-// commonTrip(11);
 module.exports = app;
 var getUserLocations = function(key) {
   //gets a single users location preferences based on trip id
