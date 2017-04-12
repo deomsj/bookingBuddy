@@ -30,7 +30,7 @@ const Links = () => (
 );
 
 // Routes
-const App = () => (
+const App = ({userInfo}) => (
   <Router>
     <div>
       <Links />
@@ -38,7 +38,7 @@ const App = () => (
       <Route path="/signin" component={Signin} />
       <Route path="/signup" component={Signup} />
       <Route path="/start-planning" component={StartPlanning} />
-      <Route path="/profile" component={Profile} />
+      <Route path="/profile" component={() => <Profile userInfo={userInfo}/> }/>
       <Route path="/trip-room/:tripId" component={TripRoom} />
     </div>
   </Router>
