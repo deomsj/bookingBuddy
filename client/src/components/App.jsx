@@ -26,6 +26,7 @@ const Links = () => (
     <NavLink to="/signup">Register</NavLink>
     <NavLink to="/start-planning">Start Planning</NavLink>
     <NavLink to="/signout">Sign Out</NavLink>
+    <NavLink to="/trip-room/:tripId">TripRoom(Testing)</NavLink>
   </nav>
 );
 

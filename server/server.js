@@ -8,7 +8,7 @@ var validator = require('validator');
 var port = process.env.PORT || 3000;
 
 
-var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test6';
 var client = new pg.Client(connectionString);
 
 client.connect(function (err) {
@@ -52,8 +52,8 @@ var tripUser1 = {
   nameF : 'Johnny',
   nameL : 'Joe',
   locations : ['Reeding', 'Atlanta', 'Fresno'],
-  startDate : '01/06/18',
-  endDate : '03/26/2018',
+  startDate : '01/06/17',
+  endDate : '10/26/2017',
   duration : '7',
   budget : 300,
   tripId : 1
@@ -61,16 +61,16 @@ var tripUser1 = {
     //SELECT * FROM trips; <--- in postgres this will show your trip id
 };
 
-var tripUser2 = {
+var tripUser3 = {
   //tripUser === invitee
   email : 'lifeisgood@gmail.com',
-  nameF : 'Lyfe',
-  nameL : 'Jennings',
-  locations : ['Merced', 'Atlanta', 'Queens'],
-  startDate : '02/26/18',
-  endDate : '03/22/2018',
+  nameF : 'Lyle',
+  nameL : 'Jones',
+  locations : ['Oakland', 'Atlanta', 'New York'],
+  startDate : '01/02/17',
+  endDate : '12/22/2017',
   duration : '7',
-  budget : 1300,
+  budget : 1200,
   tripId : 1
   //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
     //SELECT * FROM trips; <--- in postgres this will show your trip id
@@ -106,11 +106,11 @@ var tripMaster = function(obj) {
                     if(err){
                       // res.send(err)
                     }
-
+                    console.log(ut_results.rows[0])
   client.query("INSERT INTO \
-                  dates(beging, ending, duration, trip_id) \
-                  VALUES($1, $2, $3, $4) RETURNING id",
-                  [obj.startDate, obj.endDate, obj.duration, ut_results.rows[0].id], function(err, d_results) {
+                  dates(beging, ending, duration, trip_id, trip_number) \
+                  VALUES($1, $2, $3, $4, $5) RETURNING id",
+                  [obj.startDate, obj.endDate, obj.duration, ut_results.rows[0].id, t_results.rows[0].id], function(err, d_results) {
                     if(err){
                       // res.send(err)
                     }
@@ -125,7 +125,7 @@ var tripMaster = function(obj) {
 
   obj.locations.forEach(function(location, ind, coll) {
   client.query("INSERT INTO \
-                  locations(name, trip_id) \
+                  locations(name, user_trip_id) \
                   VALUES($1, $2) RETURNING id",
                   [location, ut_results.rows[0].id], function(err, u_results) {
                     if(err){
@@ -163,9 +163,9 @@ var tripUser = function(obj) {
 
 
   client.query("INSERT INTO \
-                  dates(beging, ending, duration, trip_id) \
-                  VALUES($1, $2, $3, $4) RETURNING id",
-                  [obj.startDate, obj.endDate, obj.duration, ut_results.rows[0].id], function(err, d_results) {
+                  dates(beging, ending, duration, trip_id, trip_number) \
+                  VALUES($1, $2, $3, $4, $5) RETURNING id",
+                  [obj.startDate, obj.endDate, obj.duration, ut_results.rows[0].id, obj.tripId ], function(err, d_results) {
                     if(err){
                       // res.send(err)
                     }
@@ -194,7 +194,7 @@ var tripUser = function(obj) {
         });
 };
 // tripMaster(tripMaster1);
-// tripUser(tripUser2);
+// tripUser(tripUser3);
 app.post('/getTotal', function(req, res, next) {
   console.log("getTotal")
   console.log(req.body);
@@ -232,7 +232,7 @@ app.post('/commonTrip', function(req, res, next) {
   client.query("SELECT * FROM userTrips WHERE trip_id = ($1)", [req.body.id], function(err, data) {
     var len = data.rows.length;
     data.rows.forEach(function(item, ind, coll) {
-      client.query("SELECT * FROM locations WHERE trip_id = ($1)", [item.id] , function(err, data) {
+      client.query("SELECT * FROM locations WHERE user_trip_id = ($1)", [item.id] , function(err, data) {
         if(err) {
             console.log(err, "err");
           }
@@ -257,6 +257,45 @@ app.post('/commonTrip', function(req, res, next) {
       });
     });
 });
+
+app.post('/commonDate', function(req, res, next) {
+  console.log("COMMON DATE");
+//key represents the trip id
+//gets common trip location(s) out of all user locations associated with a certain trip
+  var commonDateObj = {beginning:"", ending:""};
+
+  client.query("SELECT beging FROM dates WHERE trip_number = ($1)", [req.body.id], function(err, data) {
+    var begHighMon = [];
+    var begHighDay = [];
+    var begHighYear = [];
+    for(var i = 0; i < data.rows.length;i++) {
+      begHighMon.push(parseInt(data.rows[i].beging.slice(0,2)));
+      begHighDay.push(parseInt(data.rows[i].beging.slice(3,5)));
+      begHighYear.push(parseInt(data.rows[i].beging.slice(6,10)));
+    }
+    commonDateObj.beginning += Math.max(...begHighMon)+'/';
+    commonDateObj.beginning += Math.max(...begHighDay)+'/';
+    commonDateObj.beginning += Math.max(...begHighYear);
+
+    client.query("SELECT ending FROM dates WHERE trip_number = ($1)", [req.body.id], function(err, data) {
+      var endHighMon = [];
+      var endHighDay = [];
+      var endHighYear = [];
+      for(var i = 0; i < data.rows.length;i++) {
+        endHighMon.push(parseInt(data.rows[i].ending.slice(0,2)));
+        endHighDay.push(parseInt(data.rows[i].ending.slice(3,5)));
+        endHighYear.push(parseInt(data.rows[i].ending.slice(6,10)));
+      }
+      commonDateObj.ending += Math.min(...endHighMon)+'/';
+      commonDateObj.ending += Math.min(...endHighDay)+'/';
+      commonDateObj.ending += Math.min(...endHighYear);
+      console.log(777, commonDateObj);
+      res.send(commonDateObj)
+    });
+  });
+});
+
+// commonDate(1);
 
 module.exports = app;
 var getUserLocations = function(key) {
@@ -332,7 +371,7 @@ var updateUserDates = function(key) {
       // console.log(data);
   });
 };
-//updateUserDates({beginning:'01/12/17', ending:'12/12/17', id:14, trip_id:11});
+// updateUserDates({beginning:'02/20/2017', ending:'12/12/2017', id:3, trip_id:1});
 
 var updateDuration = function(key) {
 //updates a single users begin and end dates based on a passed in user_id, trip_id, new begin and/or end dates
