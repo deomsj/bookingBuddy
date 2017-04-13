@@ -1,7 +1,7 @@
 var express = require('express');
 var pg = require('pg');
 
-var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test6';
 var client = new pg.Client(connectionString);
 
 client.connect(function (err) {
@@ -40,7 +40,8 @@ client.query("CREATE TABLE \
                   beging VARCHAR(15) not null, \
                   ending VARCHAR(15) not null, \
                   duration VARCHAR(10) not null, \
-                  trip_id INTEGER REFERENCES userTrips(id))");
+                  trip_id INTEGER REFERENCES userTrips(id), \
+                  trip_number INTEGER REFERENCES trips(id))");
 
 client.query("CREATE TABLE \
                   locations( \
