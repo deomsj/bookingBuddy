@@ -39,8 +39,8 @@ class ProfileTrip extends Component {
         </div>
         <div className="collapsible-body">
           <p>{this.props.trip.tripDescription}</p>
-          <button className="btn orange">View Trip Room</button>
-          <button className="btn orange">My Trip Preferences</button>
+          <button className="btn">View Trip Room</button>
+          <button className="btn">My Trip Preferences</button>
         </div>
       </li>
 
