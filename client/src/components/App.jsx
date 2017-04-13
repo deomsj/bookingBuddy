@@ -19,14 +19,29 @@ import Signup from './authentication/Signup.jsx';
 
 // Navigation Menu
 const Links = () => (
-  <nav>
-    <NavLink exact to="/">Home</NavLink>
-    <NavLink to="/profile">My Profile</NavLink>
-    <NavLink to="/signin">Sign In</NavLink>
-    <NavLink to="/signup">Register</NavLink>
-    <NavLink to="/start-planning">Start Planning</NavLink>
-    <NavLink to="/signout">Sign Out</NavLink>
-    <NavLink to="/trip-room/:tripId">TripRoom(Testing)</NavLink>
+  <nav className="green lighten-1" role="navigation">
+    <div className="nav-wrapper container"><a id="logo-container" href="#" className="brand-logo">Booking Buddy</a>
+      <ul className="right hide-on-med-and-down">
+        <li><NavLink exact to="/">Home</NavLink></li>
+        <li><NavLink to="/profile">My Profile</NavLink></li>
+        <li><NavLink to="/signin">Sign In</NavLink></li>
+        <li><NavLink to="/signup">Register</NavLink></li>
+        <li><NavLink to="/start-planning">Start Planning</NavLink></li>
+        <li><NavLink to="/signout">Sign Out</NavLink></li>
+        <li><NavLink to="/trip-room/:tripId">TripRoom</NavLink></li>
+      </ul>
+
+      <ul id="nav-mobile" className="side-nav">
+        <li><NavLink exact to="/">Home</NavLink></li>
+        <li><NavLink to="/profile">My Profile</NavLink></li>
+        <li><NavLink to="/signin">Sign In</NavLink></li>
+        <li><NavLink to="/signup">Register</NavLink></li>
+        <li><NavLink to="/start-planning">Start Planning</NavLink></li>
+        <li><NavLink to="/signout">Sign Out</NavLink></li>
+        <li><NavLink to="/trip-room/:tripId">TripRoom(Testing)</NavLink></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" className="button-collapse"><i className="material-icons">menu</i></a>
+    </div>
   </nav>
 );
 
