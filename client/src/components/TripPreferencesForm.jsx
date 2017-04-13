@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-//import $ from 'jQuery';
-//import 'materialize-css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+
 class TripPreferencesForm extends Component {
   constructor(props) {
     super(props);
@@ -66,22 +70,30 @@ class TripPreferencesForm extends Component {
   // }
   // showWhen() {
   // }
+
   render() {
     return (
-      <div>
-        <li>
+      <div className="row">
+        <form className="col s12">
           <h3>Trip Preferences Form</h3>
-          <h4 onClick={this.showLocation.bind(this)} > Location </h4>
-          <h4>Enter a destination you are interested in:</h4>
-            <input onChange={this.changeLocation} value={this.state.location} /> <br/>
-          <h4>Enter your maximum budget for this trip:</h4>
-            <input onChange={this.changeBudget} value={this.state.budget} /> <br/>
-          <h4>Enter beginning date for this trip:</h4>
-            <input onChange={this.changeBeginDate} value={this.state.beginDate} /> <br/>
-          <h4>Enter ending date for this trip:</h4>
-            <input onChange={this.changeEndDate} value={this.state.endDate} /> <br/>
-          <button><h5>Submit</h5></button>
-        </li>
+          <div className="row">
+            <div className="input-field col s6">
+              <input placeholder="Enter a destination you are interested in" onChange={this.changeLocation} value={this.state.location} />
+            </div>
+            <div className="input-field col s6">
+              <input placeholder="Enter your maximum budget for this trip" onChange={this.changeBudget} value={this.state.budget} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s6">
+              <input type="date" className="datepicker" placeholder="Enter beginning date for this trip" onChange={this.changeBeginDate} value={this.state.beginDate} /> <br/>
+            </div>
+            <div className="input-field col s6">
+              <input type="date" className="datepicker" placeholder="Enter ending date for this trip" onChange={this.changeEndDate} value={this.state.endDate} /> <br/>
+            </div>
+          </div>
+            <Link className="waves-effect waves-light orange btn" to="">Submit</Link>
+        </form>
       </div>
     );
   }
