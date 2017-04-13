@@ -9,13 +9,21 @@ import {
 
 var ProfileUser = ({userInfo}) => (
   <div>
-    <h1>{userInfo.userName}</h1>
-    <img width="500px" src={userInfo.imageUrl} alt="profile picture"/>
-    <p>{userInfo.userEmail}</p>
+    <div className="card">
+      <div classNme="card-image">
+        <img className="responsive-img" src={userInfo.imageUrl} alt="profile picture"/>
+      </div>
+      <div className="card-content">
+        <h1 className="card-title">{userInfo.userName}</h1>
+      </div>
+      <div className="card-content">
+        <p>{userInfo.userEmail}</p>
+      </div>
+    </div>
   </div>
 );
 
-
+{/*
 class ProfileTrip extends Component {
 
   constructor (props) {
@@ -35,8 +43,8 @@ class ProfileTrip extends Component {
         tripBody: (
           <div>
             <p>{this.props.trip.tripDescription}</p>
-            <button>View Trip Room</button>
-            <button>My Trip Preferences</button>
+            <button className="btn">View Trip Room</button>
+            <button className="btn">My Trip Preferences</button>
           </div>
           )
       });
@@ -46,17 +54,35 @@ class ProfileTrip extends Component {
   render() {
     return (
       <li>
-        <h2 onClick={this.showTripDescription.bind(this)} >
+        <h4 onClick={this.showTripDescription.bind(this)} >
           {this.props.trip.tripName}
-        </h2>
+        </h4>
         {this.state.tripBody}
       </li>
 
     );
   }
 }
+*/}
 
+class ProfileTrip extends Component {
 
+  render() {
+    return (
+      <li>
+        <div className="collapsible-header">
+          <strong>{this.props.trip.tripName}</strong>
+        </div>
+        <div className="collapsible-body">
+          <p>{this.props.trip.tripDescription}</p>
+          <button className="btn">View Trip Room</button>
+          <button className="btn">My Trip Preferences</button>
+        </div>
+      </li>
+
+    );
+  }
+}
 
 // Functional, stateless component
 // destructure props object
@@ -66,13 +92,23 @@ var Profile = function ({userInfo}) {
     ));
 
   return (
-    <div className="Profile">
-      <ProfileUser userInfo={userInfo} />
-      <div className="ProfileTrips">
-        <h1>Current Trips</h1>
-        <ul>
-          {tripList}
-        </ul>
+    <div className="Profile section">
+      <div className="container">
+        <div className="row">
+          <div className="col m4">
+            <ProfileUser userInfo={userInfo} />
+          </div>
+          <div className="col m8">
+            <div className="ProfileTrips">
+              <h2 className="header">Current Trips</h2>
+              <div className="section">
+                <ul className="collapsible popout" data-collapsible="accordion">
+                  {tripList}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
