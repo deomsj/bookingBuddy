@@ -199,7 +199,6 @@ var tripUser = function(obj) {
 // tripUser(tripUser3);
 
 app.post('/hotwire', function(req, res, next) {
-  console.log(req.body);
   hotwire.hotelDeals({format: 'json',
     price:'*~'+req.body.sum,
     limit:10,
