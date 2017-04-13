@@ -299,7 +299,6 @@ class DropDownFilter extends React.Component {
 
 class TripRoom extends React.Component {
   constructor(props) {
-    console.log(789)
     super(props);
     this.state = {};
   }
@@ -312,7 +311,7 @@ class TripRoom extends React.Component {
       data : {'id':1},
       success: function(comments) {
         obj['sum'] = comments.sum;
-        console.log(comments, "RESPONSE!");
+        console.log(comments);
         this.setState({budgetSum: comments.sum});
       }.bind(this)
     });
@@ -323,7 +322,7 @@ class TripRoom extends React.Component {
         data : {'id':1},
         success: function(comments) {
           obj.location=comments.commonTrips;
-          console.log(comments, "COMMON");
+          console.log(comments);
           this.setState({commonLocation: comments.commonTrips});
         }.bind(this)
       });
@@ -333,8 +332,8 @@ class TripRoom extends React.Component {
         dataType: 'json',
         data : {'id':1},
         success: function(comments) {
+          console.log(comments);
           obj.dates=[comments.beginning,comments.ending, comments.duration];
-          console.log(comments, "COMMON DATES");
           this.setState({commonDateB: comments.beginning, commonDateE:comments.ending});
         }.bind(this)
       });
@@ -351,7 +350,11 @@ class TripRoom extends React.Component {
     });
    },1000);
 }
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> Code Cleanup
   render() {
     return (
       <div>
