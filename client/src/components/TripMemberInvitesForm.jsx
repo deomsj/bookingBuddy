@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 const InvitedMember = ({name, email}) => (
-  <div>
+  <tr>
     <td>{name}</td>
     <td>{email}</td>
-  </div>
+  </tr>
 );
 
 const InvitedMemberList = ({invitedMembers}) => {
@@ -16,15 +16,15 @@ const InvitedMemberList = ({invitedMembers}) => {
   });
 
   return (
-    <table>
-      <tbody>
+    <table className="highlight responsive-table">
+      <thead>
         <tr>
           <th>Name</th>
           <th>Email</th>
         </tr>
-        <tr>
-          {invitedMembers}
-        </tr>
+      </thead>
+      <tbody>
+        {invitedMembers}
       </tbody>
     </table>
   );
@@ -47,15 +47,19 @@ class TripMemberInvitesForm extends Component {
   render() {
 
     return (
-      <div>
-        <h3>Invite Your Buddies: </h3>
-        <InvitedMemberList invitedMembers={this.state.invitedMembers}/>
-        <form onSubmit={this.addBuddy}>
-          <p>Name: </p>
-          <input onChange={this.changeBuddyName} value={this.state.buddyName} /> <br />
-          <p>Email: </p>
-          <input onChange={this.changeBuddyEmail} value={this.state.buddyEmail} /> <br />
-          <button />
+      <div className="row">
+        <form className="col s12" onSubmit={this.addBuddy}>
+          <div className="row">
+            <h3>Invite Your Buddies:</h3>
+            <InvitedMemberList invitedMembers={this.state.invitedMembers}/>
+            <div className="col s6">
+              <input placeholder="name" onChange={this.changeBuddyName} value={this.state.buddyName} /> <br />
+            </div>
+            <div className="col s6">
+              <input type="email" placeholder="email" onChange={this.changeBuddyEmail} value={this.state.buddyEmail} /> <br />
+            </div>
+          </div>
+          <button className="waves-effect waves-light orange btn" >Invite Friends</button>
         </form>
       </div>
     );

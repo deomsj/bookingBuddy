@@ -11,8 +11,8 @@ import TripPreferencesForm from './TripPreferencesForm.jsx';
 
 const PlanningLinks = () => (
   <div>
-    <Link to="/start-planning/trip-create">Create Trip</Link>
-    <Link to="/start-planning/trip-preferences">Trip Preferences</Link>
+    <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-create">Create Trip</Link>
+    <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-preferences">Trip Preferences</Link>
   </div>
 );
 
@@ -34,7 +34,7 @@ class StartPlanning extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2>Start Planning</h2>
         <PlanningRoutes />
       </div>

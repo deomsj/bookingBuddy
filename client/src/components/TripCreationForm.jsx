@@ -28,12 +28,20 @@ class TripCreationForm extends Component {
 
   render() {
     return (
-      <div>
-        <p>Trip Name:</p>
-        <input onChange={this.changeTripName} value={this.state.tripName} /> <br />
-        <p>Trip Description:</p>
-        <textarea onChange={this.changeTripSummary} defaultValue={this.state.tripSummary}/>
-        <TripMemberInvitesForm />
+      <div className="row">
+        <form className="col s12">
+          <div className="row">
+            <div className="input-field col s12">
+              <input placeholder="Trip Name" className="validate" onChange={this.changeTripName} value={this.state.tripName} /> <br />
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s12">
+              <textarea className="materialize-textarea" placeholder="Trip Description" onChange={this.changeTripSummary} defaultValue={this.state.tripSummary}/>
+            </div>
+          </div>
+          <TripMemberInvitesForm />
+        </form>
       </div>
     );
   }

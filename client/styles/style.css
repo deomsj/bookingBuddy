@@ -11,3 +11,11 @@ h5, h4 {
   margin: 2px;
   width: 200px;
 }
+.profilePic {
+  width: 100%;
+  border: 2px solid grey;
+  border-radius: 5px;
+}
+.btn {
+  margin: 2px;
+}
