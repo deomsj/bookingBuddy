@@ -68,7 +68,7 @@ class TripRoomComponents extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="container">
         <h1>{this.props.tripData.tripName}</h1>
         <GroupPreferencesBar
           priceRange={this.state.priceRange}
@@ -200,7 +200,7 @@ class Bookmarker extends React.Component {
       <div>
         <form onSubmit={this.bookmarkThisOne} >
           <textarea rows="5" cols="40" onChange={this.changeBookmarkComment} placeholder="Want to stay here? Write a quick note to your buddies about why you like this one, then bookmark it to highlight this option for your friends to see!" defaultValue={this.state.bookmarkComment} /> <br/>
-          <button type="submit">Add Bookmark!</button>
+          <button className="btn-large waves-effect waves-light orange" type="submit">Add Bookmark!</button>
         </form>
       </div>
     );
@@ -220,8 +220,8 @@ class Bookmarker extends React.Component {
 var GroupPreferencesBar = ({priceRange, dateRange, locations, setLocation}) => (
   <div>
     <p>
-      <span><strong>Prices:</strong>  {priceRange} </span>
-      <span><strong>Dates:</strong> {dateRange} </span>
+      <span><strong>Prices:</strong> {priceRange} </span><br />
+      <span><strong>Dates:</strong> {dateRange} </span><br /><br />
       <span><strong>Locations:</strong>
         <DropDownFilter options={locations} setter={setLocation} />
       </span>

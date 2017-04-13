@@ -9,12 +9,12 @@ var userInfo = {
   userEmail: 'jesse.deoms@gmail.com',
   trips: [{
     tripName: 'Hiking Trip with the Guys',
-    tripDescription: 'fun in the mountains',
+    tripDescription: 'Fun in the mountains',
     tripId: 12312312
   },
   {
     tripName: 'Surfin in Hawaii',
-    tripDescription: 'fun in ocean',
+    tripDescription: 'Fun in ocean',
     tripId: 684332972
   }]
 };

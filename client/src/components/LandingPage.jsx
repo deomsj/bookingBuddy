@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 import 'materialize-css';
 import $ from 'jquery';
 
@@ -35,9 +40,9 @@ class LandingPage extends Component {
             <table className="highlight responsive-table">
               <thead>
                 <tr>
-                    <th>Group</th>
-                    <th>Available Dates</th>
-                    <th>Budget</th>
+                  <th>Group</th>
+                  <th>Available Dates</th>
+                  <th>Budget</th>
                 </tr>
               </thead>
 
@@ -111,7 +116,7 @@ class LandingPage extends Component {
             <h4 className="header col s12 light">What are you waiting for?</h4>
             <br />
             <div className="row center">
-              <a href="http://materializecss.com/getting-started.html" id="download-button" className="btn-large waves-effect waves-light orange">Start Planning!</a>
+              <Link id="download-button" className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
             </div>
             <br /><br />
           </div>
