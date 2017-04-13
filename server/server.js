@@ -7,15 +7,15 @@ var nodemailer = require('nodemailer');
 var validator = require('validator');
 var port = process.env.PORT || 3000;
 var Hotwire = require('hotwire');
- 
+
 var hotwire = new Hotwire('93w4ahrxdpy96pj6mxnaxn2t');
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test6';
 var client = new pg.Client(connectionString);
 
-// client.connect(function (err) {
-//   if (err) throw err;
-// });
+client.connect(function (err) {
+  if (err) throw err;
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -41,8 +41,8 @@ var tripMaster1 = {
   nameL : 'Doe',
   locations : ['New York', 'Atlanta', 'Pheonix'],
   invites : ['f1','f2','f2'],
-  startDate : '01/26/18',
-  endDate : '03/16/2016',
+  startDate : '01/26/17',
+  endDate : '03/16/2017',
   duration : '7',
   budget : 1100,
   tripname : "abc123"
@@ -199,15 +199,16 @@ var tripUser = function(obj) {
 // tripUser(tripUser3);
 
 app.post('/hotwire', function(req, res, next) {
-  hotwire.hotelDeals({format: 'json', 
+  console.log(req.body);
+  hotwire.hotelDeals({format: 'json',
     price:'*~'+req.body.sum,
     limit:10,
     dest: req.body.location,
     startdate:req.body.dates[0]+'~'+req.body.dates[1],
     duration:parseInt(req.body.dates[2])
   }, function (err, response, body) {
-    if (err) { 
-      console.log(err,"ERR"); 
+    if (err) {
+      console.log(err,"ERR");
     }
      res.send(JSON.parse(body));
   });
@@ -391,7 +392,7 @@ var updateUserDates = function(key) {
       // console.log(data);
   });
 };
-// updateUserDates({beginning:'02/20/2017', ending:'12/12/2017', id:3, trip_id:1});
+// updateUserDates({beginning:'02/20/2017', ending:'12/12/2017', id:1, trip_id:1});
 
 var updateDuration = function(key) {
 //updates a single users begin and end dates based on a passed in user_id, trip_id, new begin and/or end dates
