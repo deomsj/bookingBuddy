@@ -4,13 +4,14 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-
+import 'materialize-css';
+import $ from 'jquery';
 
 
 var ProfileUser = ({userInfo}) => (
   <div>
     <div className="card">
-      <div classNme="card-image">
+      <div className="card-image">
         <img className="responsive-img" src={userInfo.imageUrl} alt="profile picture"/>
       </div>
       <div className="card-content">
@@ -23,49 +24,12 @@ var ProfileUser = ({userInfo}) => (
   </div>
 );
 
-{/*
 class ProfileTrip extends Component {
-
-  constructor (props) {
-    super(props);
-    this.state = {
-      tripBody: ''
-    };
+  componentDidMount() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
   }
-
-  showTripDescription() {
-    if (this.state.tripBody) {
-      this.setState({
-        tripBody: ''
-      });
-    } else {
-      this.setState({
-        tripBody: (
-          <div>
-            <p>{this.props.trip.tripDescription}</p>
-            <button className="btn">View Trip Room</button>
-            <button className="btn">My Trip Preferences</button>
-          </div>
-          )
-      });
-    }
-  }
-
-  render() {
-    return (
-      <li>
-        <h4 onClick={this.showTripDescription.bind(this)} >
-          {this.props.trip.tripName}
-        </h4>
-        {this.state.tripBody}
-      </li>
-
-    );
-  }
-}
-*/}
-
-class ProfileTrip extends Component {
 
   render() {
     return (
@@ -100,11 +64,15 @@ var Profile = function ({userInfo}) {
           </div>
           <div className="col m8">
             <div className="ProfileTrips">
-              <h2 className="header">Current Trips</h2>
+              <h2 className="header orange-text">Current Trips</h2>
               <div className="section">
                 <ul className="collapsible popout" data-collapsible="accordion">
                   {tripList}
                 </ul>
+              </div>
+              <div className="divider"></div>
+              <div className="section">
+                <button className="btn btn-large waves-effect waves-light orange">Create New Trip</button>
               </div>
             </div>
           </div>
