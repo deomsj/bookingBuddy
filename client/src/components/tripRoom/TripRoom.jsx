@@ -350,11 +350,7 @@ class TripRoom extends React.Component {
     });
    },1000);
 }
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> Code Cleanup
   render() {
     return (
       <div>
