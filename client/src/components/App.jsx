@@ -20,9 +20,8 @@ import Signup from './authentication/Signup.jsx';
 // Navigation Menu
 const Links = () => (
   <nav className="green lighten-1" role="navigation">
-    <div className="nav-wrapper container"><a id="logo-container" href="#" className="brand-logo">Booking Buddy</a>
+    <div className="nav-wrapper container"><NavLink id="logo-container" exact to="/" className="brand-logo">Booking Buddy</NavLink>
       <ul className="right hide-on-med-and-down">
-        <li><NavLink exact to="/">Home</NavLink></li>
         <li><NavLink to="/profile">My Profile</NavLink></li>
         <li><NavLink to="/signin">Sign In</NavLink></li>
         <li><NavLink to="/signup">Register</NavLink></li>
