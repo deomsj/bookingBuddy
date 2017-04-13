@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var pg = require('pg');
 var nodemailer = require('nodemailer');
 var validator = require('validator');
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 3000;
 
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test1';
@@ -160,7 +160,7 @@ var tripUser = function(obj) {
   //SELECT * FROM trips; <--- in postgres, this will show your trip id
                       // res.send(err)
                     }
-                 
+
 
   client.query("INSERT INTO \
                   dates(beging, ending, duration, trip_id) \
@@ -271,7 +271,7 @@ var getUserLocations = function(key) {
   });
 };
 // getUserLocations(14);
- 
+
 var getUserDates = function(key) {
     //gets a single users date preferences based on trip id
       //key references some data specific to user, can be an object
@@ -284,7 +284,7 @@ var getUserDates = function(key) {
    });
  };
 // getUserDates(14);
- 
+
 var getUserBudget = function(key) {
    //gets a single users budget based on trip id
      //key references some data specific to user, can be an object
@@ -382,7 +382,7 @@ var deleteUserLocation = function(key) {
       }
     console.log(data.rows[0].id);
     var id = data.rows[0].id
-    client.query("DELETE FROM locations WHERE name = ($1) AND trip_id = ($2)", [key.name, id], 
+    client.query("DELETE FROM locations WHERE name = ($1) AND trip_id = ($2)", [key.name, id],
       function(err, u_results) {
         if(err){
         // res.send(err)
@@ -392,7 +392,7 @@ var deleteUserLocation = function(key) {
   });
 }
 // deleteUserLocation({user_id:14, trip_id:11, name:'Oakland'});
- 
+
  var sendEmail = function(obj) {
    //obj will contain email recipients name and email
    let transporter = nodemailer.createTransport({
@@ -402,7 +402,7 @@ var deleteUserLocation = function(key) {
        pass: 'Verizon7'
      }
    });
- 
+
    let mailOptions = {
      from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
      to: obj.email, // list of receivers
@@ -410,12 +410,12 @@ var deleteUserLocation = function(key) {
      text: 'Whatever we want to tell the client', // plain text body
      html: '<b>Enjoy your savings!</b>' // html body
    };
- 
+
    transporter.sendMail(mailOptions, (error, info) => {
      if (error) {
        return console.log(error);
      }
      console.log('Message %s sent: %s', info.messageId, info.response);
    });
- }; 
+ };
 
