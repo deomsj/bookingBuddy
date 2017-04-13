@@ -7,37 +7,53 @@ class TripRoom extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+    var obj = {};
     $.ajax({
       type : 'POST',
       url: "/getTotal",
       dataType: 'json',
       data : {'id':1},
       success: function(comments) {
+        obj['sum'] = comments.sum;
         console.log(comments, "RESPONSE!");
         this.setState({budgetSum: comments.sum});
       }.bind(this)
     });
-$.ajax({
+  $.ajax({
+        type : 'POST',
+        url: "/commonTrip",
+        dataType: 'json',
+        data : {'id':1},
+        success: function(comments) {
+          obj.location=comments.commonTrips;
+          console.log(comments, "COMMON");
+          this.setState({commonLocation: comments.commonTrips});
+        }.bind(this)
+      });
+  $.ajax({
+        type : 'POST',
+        url: "/commonDate",
+        dataType: 'json',
+        data : {'id':1},
+        success: function(comments) {
+          obj.dates=[comments.beginning,comments.ending, comments.duration];
+          console.log(comments, "COMMON DATES");
+          this.setState({commonDateB: comments.beginning, commonDateE:comments.ending});
+        }.bind(this)
+      });
+
+  setTimeout(function(){
+   $.ajax({ 
       type : 'POST',
-      url: "/commonTrip",
-      dataType: 'json',
-      data : {'id':1},
-      success: function(comments) {
-        console.log(comments, "COMMON");
-        this.setState({commonLocation: comments.commonTrips});
+      url : '/hotwire',
+      dataType : "json",
+      data : obj,
+      success : function(data) {
+        console.log(data);
       }.bind(this)
     });
-$.ajax({
-      type : 'POST',
-      url: "/commonDate",
-      dataType: 'json',
-      data : {'id':1},
-      success: function(comments) {
-        console.log(comments, "COMMON DATES");
-        this.setState({commonDateB: comments.beginning, commonDateE:comments.ending});
-      }.bind(this)
-    });
-  }
+   },1000);
+}
 
   
   render() {

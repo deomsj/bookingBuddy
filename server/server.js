@@ -6,7 +6,9 @@ var pg = require('pg');
 var nodemailer = require('nodemailer');
 var validator = require('validator');
 var port = process.env.PORT || 3000;
-
+var Hotwire = require('hotwire');
+ 
+var hotwire = new Hotwire('93w4ahrxdpy96pj6mxnaxn2t');
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test6';
 var client = new pg.Client(connectionString);
@@ -195,6 +197,22 @@ var tripUser = function(obj) {
 };
 // tripMaster(tripMaster1);
 // tripUser(tripUser3);
+
+app.post('/hotwire', function(req, res, next) {
+  hotwire.hotelDeals({format: 'json', 
+    price:'*~'+req.body.sum,
+    limit:10,
+    dest: req.body.location,
+    startdate:req.body.dates[0]+'~'+req.body.dates[1],
+    duration:parseInt(req.body.dates[2])
+  }, function (err, response, body) {
+    if (err) { 
+      console.log(err,"ERR"); 
+    }
+     res.send(JSON.parse(body));
+  });
+});
+
 app.post('/getTotal', function(req, res, next) {
   console.log("getTotal")
   console.log(req.body);
@@ -220,8 +238,8 @@ app.post('/getTotal', function(req, res, next) {
 
 app.post('/commonTrip', function(req, res, next) {
   console.log("COMMON TRIP", req.body);
-//key represents the trip id
-//gets common trip location(s) out of all user locations associated with a certain trip
+  //key represents the trip id
+  //gets common trip location(s) out of all user locations associated with a certain trip
   var commonTrips = [];
   var common = {};
   var max;
@@ -260,10 +278,9 @@ app.post('/commonTrip', function(req, res, next) {
 
 app.post('/commonDate', function(req, res, next) {
   console.log("COMMON DATE");
-//key represents the trip id
-//gets common trip location(s) out of all user locations associated with a certain trip
-  var commonDateObj = {beginning:"", ending:""};
-
+  //key represents the trip id
+  //gets common trip location(s) out of all user locations associated with a certain trip
+  var commonDateObj = {beginning:"", ending:"", duration:""};
   client.query("SELECT beging FROM dates WHERE trip_number = ($1)", [req.body.id], function(err, data) {
     var begHighMon = [];
     var begHighDay = [];
@@ -290,7 +307,10 @@ app.post('/commonDate', function(req, res, next) {
       commonDateObj.ending += Math.min(...endHighDay)+'/';
       commonDateObj.ending += Math.min(...endHighYear);
       console.log(777, commonDateObj);
-      res.send(commonDateObj)
+      client.query("SELECT duration FROM dates WHERE trip_number = ($1)", [req.body.id], function(err, data) {
+        commonDateObj.duration=data.rows[0].duration;
+        res.send(commonDateObj)
+      });
     });
   });
 });
