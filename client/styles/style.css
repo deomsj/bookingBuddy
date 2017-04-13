@@ -1,0 +1,13 @@
+h5, h4 {
+  text-align: center;
+}
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+.row.center a {
+  margin: 2px;
+  width: 200px;
+}
