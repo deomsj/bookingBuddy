@@ -2,6 +2,7 @@ import React from 'react';
 import {tripData, hotelRecomendations} from './tripRoomDummyData';
 import TripRecomendationsCards from './tripRecomendationsCards.jsx';
 import GroupPreferencesBar from './groupPreferencesBar';
+
 /////////////////////////
 // Trip Room Components
 /////////////////////////
@@ -60,8 +61,6 @@ class TripRoomComponents extends React.Component {
       // />
     );
   }
-
-}
 
 
 class TripRoom extends React.Component {
