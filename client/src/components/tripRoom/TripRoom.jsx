@@ -22,7 +22,7 @@ var hotelRecomendations = [{
   StarRating: 5,
   Description: 'where all the ballers and shot callers come to relax and recharge',
   Image: 'https://s3-media3.fl.yelpcdn.com/bphoto/8qcpzDf8VSeYxPtHG4Lu5g/o.jpg'
-},{
+}, {
   hotelRecomendationId: 21218,
   HotelName: 'Photos for Hotel Indigo Baltimore Downtown',
   Price: 180.27,
@@ -69,7 +69,7 @@ class TripRoomComponents extends React.Component {
 
     return (
       <div className="container">
-        <h1>{this.props.tripData.tripName}</h1>
+        <h1 className="orange-text darken-2">{this.props.tripData.tripName}</h1>
         <GroupPreferencesBar
           priceRange={this.state.priceRange}
           dateRange={this.state.dateRange}
@@ -89,7 +89,7 @@ class TripRoomComponents extends React.Component {
     );
   }
 
-};
+}
 
 /////////////////////////
 // Trip Recomendations Carousel
@@ -109,37 +109,41 @@ class TripRecomendationsCarousel extends React.Component {
     this.state = {
       currentRecIndex: 0,
       bookmarkComment: ''
-    }
+    };
   }
 
   advanceToNextRec() {
     var numberOfRecs = this.props.hotelRecomendations.length;
     var nextIndex;
-    if(this.state.currentRecIndex < numberOfRecs - 1) {
+    if (this.state.currentRecIndex < numberOfRecs - 1) {
       nextIndex = this.state.currentRecIndex + 1;
     } else {
       nextIndex = 0;
     }
     this.setState({
       currentRecIndex: nextIndex
-    })
+    });
   }
 
-  bookmarkThisRec(comment){
+  bookmarkThisRec(comment) {
     var newBookmark = {
       hotelRecomendationObj: this.props.hotelRecomendations[this.state.currentRecIndex],
       bookmarkComment: comment
-    }
+    };
     this.setState({bookmarkComment: comment});
     this.props.addBookmark(newBookmark);
   }
 
   render() {
     return (
-      <div>
-        <div>
-          <DisplayCurrentRec currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]} />
-          <h1 onClick={this.advanceToNextRec}> >> </h1>
+      <div className="row">
+        <div className="col s12 m7">
+          <div className="card">
+            <DisplayCurrentRec currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]} />
+            <div className="card-action">
+              <a onClick={this.advanceToNextRec}>Next</a>
+            </div>
+          </div>
         </div>
         <Bookmarker bookmarkThisRec={this.bookmarkThisRec}/>
       </div>
@@ -155,11 +159,15 @@ class TripRecomendationsCarousel extends React.Component {
 
 var DisplayCurrentRec = ({currentRec}) => (
   <div>
-    <h3>{currentRec.HotelName}</h3>
-    <img src={currentRec.Image} alt="picture" width="250px"/>
-    <p>{currentRec.StarRating} Stars</p>
-    <p>{currentRec.Description}</p>
-    <p>${currentRec.Price} total per person</p>
+    <div className="card-image">
+      <img src={currentRec.Image} alt="picture" />
+      <span className="card-title">{currentRec.HotelName}</span>
+    </div>
+    <div className="card-content">
+      <p><i className="material-icons orange-text">star</i>{currentRec.StarRating}</p>
+      <p>{currentRec.Description}</p>
+      <p>${currentRec.Price} total per person</p>
+    </div>
   </div>
 );
 
@@ -177,7 +185,7 @@ class Bookmarker extends React.Component {
     this.changeBookmarkComment = this.changeBookmarkComment.bind(this);
     this.state = {
       bookmarkComment: ''
-    }
+    };
   }
 
   changeBookmarkComment(e) {
@@ -199,7 +207,7 @@ class Bookmarker extends React.Component {
     return (
       <div>
         <form onSubmit={this.bookmarkThisOne} >
-          <textarea rows="5" cols="40" onChange={this.changeBookmarkComment} placeholder="Want to stay here? Write a quick note to your buddies about why you like this one, then bookmark it to highlight this option for your friends to see!" defaultValue={this.state.bookmarkComment} /> <br/>
+          <textarea className="materialize-textarea" onChange={this.changeBookmarkComment} placeholder="Want to stay here? Write a quick note to your buddies about why you like this one, then bookmark it to highlight this option for your friends to see!" defaultValue={this.state.bookmarkComment} /> <br/>
           <button className="btn-large waves-effect waves-light orange" type="submit">Add Bookmark!</button>
         </form>
       </div>
@@ -219,13 +227,17 @@ class Bookmarker extends React.Component {
 
 var GroupPreferencesBar = ({priceRange, dateRange, locations, setLocation}) => (
   <div>
-    <p>
-      <span><strong>Prices:</strong> {priceRange} </span><br />
-      <span><strong>Dates:</strong> {dateRange} </span><br /><br />
-      <span><strong>Locations:</strong>
-        <DropDownFilter options={locations} setter={setLocation} />
-      </span>
-    </p>
+    <div className="row">
+      <div className="col s3">
+        <span><i className="material-icons green-text">credit_card</i>{ priceRange }</span><br />
+      </div>
+      <div className="col s3">
+        <span><i className="material-icons green-text">today</i>{dateRange}</span><br /><br />
+      </div>
+    </div>
+    <span><strong>Locations</strong>
+      <DropDownFilter options={locations} setter={setLocation} />
+    </span>
   </div>
 );
 
@@ -261,7 +273,7 @@ class DropDownFilter extends React.Component {
       </select>
     );
   }
-};
+}
 
 
 
@@ -305,10 +317,10 @@ class TripRoom extends React.Component {
   componentDidMount() {
     var obj = {};
     $.ajax({
-      type : 'POST',
-      url: "/getTotal",
+      type: 'POST',
+      url: '/getTotal',
       dataType: 'json',
-      data : {'id':1},
+      data: {'id': 1},
       success: function(comments) {
         obj['sum'] = comments.sum;
         console.log(comments);
@@ -337,19 +349,8 @@ class TripRoom extends React.Component {
           this.setState({commonDateB: comments.beginning, commonDateE:comments.ending});
         }.bind(this)
       });
-
-  setTimeout(function(){
-   $.ajax({
-      type : 'POST',
-      url : '/hotwire',
-      dataType : "json",
-      data : obj,
-      success : function(data) {
-        console.log(data);
-      }.bind(this)
-    });
-   },1000);
-}
+    }, 1000);
+  }
 
   render() {
     return (
