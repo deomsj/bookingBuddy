@@ -318,7 +318,7 @@ class TripRoom extends React.Component {
     });
   $.ajax({
         type : 'POST',
-        url: "/commonTrip",
+        url: "/commonTripLocations",
         dataType: 'json',
         data : {'id':1},
         success: function(comments) {
@@ -329,7 +329,7 @@ class TripRoom extends React.Component {
       });
   $.ajax({
         type : 'POST',
-        url: "/commonDate",
+        url: "/commonTripDates",
         dataType: 'json',
         data : {'id':1},
         success: function(comments) {
