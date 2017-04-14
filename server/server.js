@@ -251,7 +251,7 @@ app.post('/commonTrip', function(req, res, next) {
         });
       });
     });
-});
+  });
 
 app.post('/commonDate', function(req, res, next) {
   //key represents the trip id
@@ -355,9 +355,10 @@ var updateUserDates = function(key) {
       if(err) {
         // res.send(404);
         console.log(err, "ERR");
-      }
+      };
       // console.log(data);
-  });
+    }
+  );
 
   client.query("UPDATE dates SET ending = ($1) WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($2) AND trip_id = ($3))", [key.ending, key.id, key.trip_id],
     function(err, data) {
@@ -366,7 +367,8 @@ var updateUserDates = function(key) {
         console.log(err, "ERR");
       }
       // console.log(data);
-  });
+    }
+  );
 };
 // updateUserDates({beginning:'02/20/2017', ending:'12/12/2017', id:1, trip_id:1});
 
@@ -380,8 +382,9 @@ var updateDuration = function(key) {
         console.log(err, "ERR");
       }
       // console.log(data);
-  });
-}
+    } 
+  );
+};
 // updateDuration({user_id:14, trip_id:11, duration:'12'});
 
 var addUserLocation = function(key) {
@@ -426,7 +429,7 @@ var deleteUserLocation = function(key) {
         //comment
     });
   });
-}
+};
 // deleteUserLocation({user_id:14, trip_id:11, name:'Oakland'});
 
  var sendEmail = function(obj) {
