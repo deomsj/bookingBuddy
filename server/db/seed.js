@@ -20,7 +20,7 @@ db.connect(function (err) {
   db.query('CREATE TABLE \
                   trips( \
                   id SERIAL PRIMARY KEY, \
-                     name VARCHAR(15) not null)');
+                  name VARCHAR(15) not null)');
 
   db.query('CREATE TABLE \
                   userTrips( \

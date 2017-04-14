@@ -1,7 +1,7 @@
-var hotWireApiKey = require('../config').hotWireApiKey;
+//var hotWireApiKey = require('../config').hotWireApiKey;
 
 var Hotwire = require('hotwire');
-var hotwire = new Hotwire(process.env.HOTWIRE_API_KEY || hotWireApiKey);
+var hotwire = new Hotwire(process.env.HOTWIRE_API_KEY || '93w4ahrxdpy96pj6mxnaxn2t');
 
 module.exports.hotwirePostRequest = function(req, res, next) {
   hotwire.hotelDeals({format: 'json',
