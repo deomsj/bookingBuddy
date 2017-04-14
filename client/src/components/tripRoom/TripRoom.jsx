@@ -62,6 +62,8 @@ class TripRoomComponents extends React.Component {
     );
   }
 
+};
+
 
 class TripRoom extends React.Component {
   constructor(props) {
