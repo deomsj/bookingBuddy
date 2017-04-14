@@ -1,7 +1,7 @@
 var express = require('express');
 var pg = require('pg');
 
-var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test6';
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test7';
 var db = new pg.Client(connectionString);
 
 db.connect(function (err) {
@@ -47,6 +47,14 @@ db.query('CREATE TABLE \
                   locations( \
                   id SERIAL PRIMARY KEY, \
                   name VARCHAR(25) not null, \
+                  user_trip_id INTEGER REFERENCES userTrips(id))');
+
+  db.query('CREATE TABLE \
+                  bookmarks( \
+                  id SERIAL PRIMARY KEY, \
+                  email VARCHAR(30), \
+                  bookmark VARCHAR(300), \
+                  trip_id INTEGER, \
                   user_trip_id INTEGER REFERENCES userTrips(id))');
 
 });

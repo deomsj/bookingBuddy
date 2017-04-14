@@ -1,8 +1,6 @@
 var pg = require('pg');
-var nodemailer = require('nodemailer');
-var validator = require('validator');
 
-var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test6';
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test7';
 var db = new pg.Client(connectionString);
 
 db.connect(function (err) {
@@ -25,7 +23,7 @@ var tripMaster1 = {
   nameL: 'Doe',
   locations: ['New York', 'Atlanta', 'Pheonix'],
   invites: ['f1', 'f2', 'f2'],
-  startDate: '01/26/17',
+  startDate: '01/26/2017',
   endDate: '03/16/2017',
   duration: '7',
   budget: 1100,
@@ -38,7 +36,7 @@ var tripUser1 = {
   nameF: 'Johnny',
   nameL: 'Joe',
   locations: ['Reeding', 'Atlanta', 'Fresno'],
-  startDate: '01/06/17',
+  startDate: '01/06/2017',
   endDate: '10/26/2017',
   duration: '7',
   budget: 300,
@@ -53,7 +51,7 @@ var tripUser3 = {
   nameF: 'Lyle',
   nameL: 'Jones',
   locations: ['Oakland', 'Atlanta', 'New York'],
-  startDate: '01/02/17',
+  startDate: '01/02/2017',
   endDate: '12/22/2017',
   duration: '7',
   budget: 1200,
@@ -181,6 +179,7 @@ var tripUser = function(obj) {
 };
 // tripMaster(tripMaster1);
 // tripUser(tripUser3);
+
 
 
 

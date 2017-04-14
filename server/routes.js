@@ -4,6 +4,8 @@ var APIsController = require('./controllers/APIsController');
 var tripsController = require('./controllers/tripsController');
 var usersController = require('./controllers/usersController');
 var emailController = require('./controllers/usersController');
+var bookmarkController = require('./controllers/tripsController');
+var viewBookmarkController = require('./controllers/tripsController');
 
 router.post('/hotwire', APIsController.hotwirePostRequest);
 router.post('/getTotal', tripsController.getTotalBudgetForTrip);
@@ -11,14 +13,9 @@ router.post('/commonTripLocations', tripsController.commonTripLocations);
 router.post('/commonTripDates', tripsController.commonTripDates);
 router.post('/registerUser', usersController.registerUser);
 router.post('/email', emailController.email);
+router.post('/addTripBookmark', bookmarkController.addTripBookmark);
+router.post('/viewTripBookmark', viewBookmarkController.viewTripBookmark);
 
-
-
-
-
-
-
-// commonDate(1);
 
 var getUserLocations = function(key) {
   //gets a single users location preferences based on trip id

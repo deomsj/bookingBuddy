@@ -31,9 +31,9 @@ module.exports.email = function(obj) {
   let mailOptions = {
     from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
     to: obj.body.email, // list of receivers
-    subject: 'Hey ' + obj.body.id + ! 'You\'ve been invited to go on vacation!', // Subject line
+    subject: 'Hey! You\'ve been invited to go on vacation!', // Subject line
     text: 'Whatever we want to tell the db ' + obj.body.id, // plain text body
-    html: '<b>Enjoy your savings!</b>' // html body
+    html: '<b>Its vacation time! Go to the following link to plan your group vacation.</b>' + ' http://localhost:3000/profile/'+ obj.body.id + '<br><b> Enjoy enjoy!</b>' // html body
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
