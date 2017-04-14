@@ -4,21 +4,20 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import 'materialize-css';
-import $ from 'jquery';
 
 class LandingPage extends Component {
 
   componentDidMount() {
     $(document).ready(function() {
       $('.carousel').carousel();
+      $('.parallax').parallax();
     });
   }
 
   render() {
     return (
       <div>
-        <div className="section no-pad-bot" id="index-banner">
+        <div className="section" id="index-banner">
           <div className="container">
             <br /><br />
             <h1 className="header center orange-text">Planning a trip with friends? Let us Help!</h1>
@@ -35,47 +34,59 @@ class LandingPage extends Component {
               <a href="http://materializecss.com/getting-started.html" id="download-button" className="btn-large waves-effect waves-light orange">Travel budgets</a>
             </div>
             <br /><br />
-            <h5 className="header col s12 light">We'll organize all this information and share it with you and your buddies.</h5>
-            <br /><br />
-            <table className="highlight responsive-table">
-              <thead>
-                <tr>
-                  <th>Group</th>
-                  <th>Available Dates</th>
-                  <th>Budget</th>
-                </tr>
-              </thead>
+          </div>
+          <div className="parallax-container">
+            <div className="parallax"><img src="https://images.trvl-media.com/media/content/expus/graphics/launch/activity1320x742.jpg" alt="photo" /></div>
+          </div>
+          <div className="section white">
+            <div className="row container">
+              <h5 className="header col s12 light">We'll organize all this information and share it with you and your buddies.</h5>
+              <br /><br />
+              <table className="highlight responsive-table">
+                <thead>
+                  <tr>
+                    <th>Group</th>
+                    <th>Available Dates</th>
+                    <th>Budget</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                <tr>
-                  <td>Max</td>
-                  <td>May 3rd - May 28th</td>
-                  <td>$1,000</td>
-                </tr>
-                <tr>
-                  <td>Lou</td>
-                  <td>May 1st - May 12th</td>
-                  <td>$2,000</td>
-                </tr>
-                <tr>
-                  <td>Preston</td>
-                  <td>May 5th - May 11th</td>
-                  <td>$1,200</td>
-                </tr>
-                <tr>
-                  <td>Nate</td>
-                  <td>May 1st - May 20th</td>
-                  <td>$1,700</td>
-                </tr>
-                <tr>
-                  <td>Jesse</td>
-                  <td>May 4th - May 17th</td>
-                  <td>$1,300</td>
-                </tr>
-              </tbody>
-            </table>
+                <tbody>
+                  <tr>
+                    <td>Max</td>
+                    <td>May 3rd - May 28th</td>
+                    <td>$1,000</td>
+                  </tr>
+                  <tr>
+                    <td>Lou</td>
+                    <td>May 1st - May 12th</td>
+                    <td>$2,000</td>
+                  </tr>
+                  <tr>
+                    <td>Preston</td>
+                    <td>May 5th - May 11th</td>
+                    <td>$1,200</td>
+                  </tr>
+                  <tr>
+                    <td>Nate</td>
+                    <td>May 1st - May 20th</td>
+                    <td>$1,700</td>
+                  </tr>
+                  <tr>
+                    <td>Jesse</td>
+                    <td>May 4th - May 17th</td>
+                    <td>$1,300</td>
+                  </tr>
+                </tbody>
+              </table>
 
-            <br /><br />
+              <br /><br />
+            </div>
+          </div>
+          <div className="parallax-container">
+            <div className="parallax"><img src="images/parallax2.jpg" /></div>
+          </div>
+          <div className="container">
             <h5 className="header col s12 light">Chat with your buddies about the results and brainstorm ideas.</h5>
             <br />
 
