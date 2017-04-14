@@ -31,6 +31,10 @@ module.exports.commonTripLocations = function(req, res, next) {
   var commonTrips = [];
   var common = {};
   var max;
+  var tripName;
+  db.query('SELECT name FROM trips WHERE id = ($1)', [req.body.id], function(err, data) {
+    tripName = data.rows[0].name;
+  });
   db.query('SELECT name FROM locations', function(err, data) {
     max = data.rows.length - 1;
   });
@@ -56,7 +60,7 @@ module.exports.commonTripLocations = function(req, res, next) {
               }
             }
             console.log('CT', commonTrips);
-            res.send({commonTrips: commonTrips});
+            res.send({commonTrips: commonTrips, tripName:tripName});
           }
         });
       });
