@@ -311,7 +311,6 @@ class DropDownFilter extends React.Component {
 
 class TripRoom extends React.Component {
   constructor(props) {
-    console.log(789);
     super(props);
     this.state = {};
   }
@@ -324,41 +323,30 @@ class TripRoom extends React.Component {
       data: {'id': 1},
       success: function(comments) {
         obj['sum'] = comments.sum;
-        console.log(comments, 'RESPONSE!');
+        console.log(comments);
         this.setState({budgetSum: comments.sum});
       }.bind(this)
     });
-    $.ajax({
-      type: 'POST',
-      url: '/commonTrip',
-      dataType: 'json',
-      data: {'id': 1},
-      success: function(comments) {
-        obj.location = comments.commonTrips;
-        console.log(comments, 'COMMON');
-        this.setState({commonLocation: comments.commonTrips});
-      }.bind(this)
-    });
-    $.ajax({
-      type: 'POST',
-      url: '/commonDate',
-      dataType: 'json',
-      data: {'id': 1},
-      success: function(comments) {
-        obj.dates = [comments.beginning, comments.ending, comments.duration];
-        console.log(comments, 'COMMON DATES');
-        this.setState({commonDateB: comments.beginning, commonDateE: comments.ending});
-      }.bind(this)
-    });
-
-    setTimeout(function() {
-      $.ajax({
-        type: 'POST',
-        url: '/hotwire',
+  $.ajax({
+        type : 'POST',
+        url: "/commonTripLocations",
         dataType: 'json',
-        data: obj,
-        success: function(data) {
-          console.log(data);
+        data : {'id':1},
+        success: function(comments) {
+          obj.location=comments.commonTrips;
+          console.log(comments);
+          this.setState({commonLocation: comments.commonTrips});
+        }.bind(this)
+      });
+  $.ajax({
+        type : 'POST',
+        url: "/commonTripDates",
+        dataType: 'json',
+        data : {'id':1},
+        success: function(comments) {
+          console.log(comments);
+          obj.dates=[comments.beginning,comments.ending, comments.duration];
+          this.setState({commonDateB: comments.beginning, commonDateE:comments.ending});
         }.bind(this)
       });
     }, 1000);

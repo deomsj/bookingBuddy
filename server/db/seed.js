@@ -6,7 +6,7 @@ var db = new pg.Client(connectionString);
 
 db.connect(function (err) {
   // uncomment and run node seed.js to create db.
-    // Nothing changes except instead of "test1" above you must insert your own db name on your local computer or create database named, 'test1' by running, CREATE DB test1; in postgres terminal
+    // Nothing changes except instead of "test1" above you must insert your own db name on your local computer or create database
 
   if (err) { throw err; }
 
@@ -20,7 +20,7 @@ db.connect(function (err) {
   db.query('CREATE TABLE \
                   trips( \
                   id SERIAL PRIMARY KEY, \
-                     name VARCHAR(15) not null)');
+                  name VARCHAR(15) not null)');
 
   db.query('CREATE TABLE \
                   userTrips( \

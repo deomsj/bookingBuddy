@@ -2,12 +2,15 @@ var router = require('express').Router();
 var db = require('./db/db');
 var APIsController = require('./controllers/APIsController');
 var tripsController = require('./controllers/tripsController');
+var usersController = require('./controllers/usersController');
+var emailController = require('./controllers/usersController');
 
 router.post('/hotwire', APIsController.hotwirePostRequest);
 router.post('/getTotal', tripsController.getTotalBudgetForTrip);
 router.post('/commonTripLocations', tripsController.commonTripLocations);
 router.post('/commonTripDates', tripsController.commonTripDates);
-
+router.post('/registerUser', usersController.registerUser);
+router.post('/email', emailController.email);
 
 
 
@@ -150,32 +153,6 @@ var deleteUserLocation = function(key) {
     });
 };
 // deleteUserLocation({user_id:14, trip_id:11, name:'Oakland'});
-
-var sendEmail = function(obj) {
-  //obj will contain email recipients name and email
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'bookingbuddy17@gmail.com',
-      pass: 'Verizon7'
-    }
-  });
-
-  let mailOptions = {
-    from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
-    to: obj.email, // list of receivers
-    subject: 'Hey ' + obj.name + ! 'You\'ve been invited to go on vacation!', // Subject line
-    text: 'Whatever we want to tell the db', // plain text body
-    html: '<b>Enjoy your savings!</b>' // html body
-  };
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-  });
-};
 
 
 module.exports = router;
