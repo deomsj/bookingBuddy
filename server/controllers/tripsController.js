@@ -68,6 +68,36 @@ module.exports.commonTripLocations = function(req, res, next) {
   });
 };
 
+module.exports.addTripBookmark = function(req, res, next) {
+  //must be sent with tripname, email addres of user making bookmark, and the actual bookmark message 
+  //ex. addTripBookmark({email:'lifeisgood@gmail.com', bookmark:'The best trip is now here!', tripname:'abc123'});
+  console.log(req.body);
+  db.query('SELECT id FROM trips WHERE name = ($1)', [req.body.tripname], function(err, trip) {
+    db.query('SELECT id FROM userTrips WHERE user_id = (SELECT id FROM users WHERE email = ($1)) AND trip_id  = (SELECT id FROM trips WHERE name = ($2))', [req.body.email, req.body.tripname],
+      function(err, data) { 
+        console.log(data.rows)
+        db.query('INSERT INTO \
+                      bookmarks(bookmark, user_trip_id, email, trip_id) \
+                      VALUES($1, $2, $3, $4) RETURNING id',
+                      [req.body.bookmark, data.rows[0].id, key.email, trip.rows[0].id], function(err, userResults) {
+                        if (err) {
+                          res.send(err)
+                        }
+                        res.sendStatus(200);
+                      });
+      });
+  })
+}
+
+module.exports.viewTripBookmark = function(req, res, next) {
+  //example // viewTripBookmark({tripname : 'abc123'})
+  console.log(req.body);
+  db.query('SELECT * FROM bookmarks WHERE trip_id = (SELECT id FROM trips WHERE name = ($1))', [req.body.tripname],
+    function(err, data) {
+      res.send({data:data.rows});
+    });
+}
+
 
 module.exports.commonTripDates = function(req, res, next) {
   console.log('COMMON DATE');

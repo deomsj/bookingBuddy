@@ -29,7 +29,19 @@ class Signup extends React.Component {
         this.email(this.state.email, this.state.id);
       }.bind(this)
     });
+/*
+    $.ajax({
+      type : 'POST',
+      url : '/hotwire',
+      dataType : "json",
+      data : {sum: 1000, location:'Atlanta, GA', dates:['04/20/2017', '04/23/2017', '3']},
+      success : function(data) {
+        console.log(data, "DATA");
+      }.bind(this)
+    });
+*/
   };
+
 
   changeNameF(e) {
     this.setState({
