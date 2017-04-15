@@ -19,3 +19,9 @@ h5, h4 {
 .btn {
   margin: 2px;
 }
+.bling {
+  display: inline;
+  text-decoration: bold;
+  font-size: 22px;
+  padding: 0 23px 0 8px;
+}
