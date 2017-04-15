@@ -22,10 +22,20 @@ var hasRemainder = function(stars) {
 }
 
 var DisplayCurrentRec = function({currentRec}) {
+
+  var imageContainerStyle = {
+    width: '450px',
+    'max-width': '100%',
+    height: '400px',
+    overflow: 'hidden',
+    'background-size': 'cover',
+    'background-position': 'center',
+    backgroundImage: 'url(' + currentRec.Image + ')'
+  };
+
   return (
     <div>
-      <div className="card-image">
-        <img src={currentRec.Image} alt="picture" />
+      <div className="card-image" style={imageContainerStyle}>
         <span className="card-title">{currentRec.HotelName}</span>
       </div>
       <div className="card-content">
