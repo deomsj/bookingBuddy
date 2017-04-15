@@ -1,11 +1,14 @@
 var router = require('express').Router();
 var db = require('./db/db');
+
 var APIsController = require('./controllers/APIsController');
 var tripsController = require('./controllers/tripsController');
 var usersController = require('./controllers/usersController');
 var emailController = require('./controllers/usersController');
 var bookmarkController = require('./controllers/tripsController');
 var viewBookmarkController = require('./controllers/tripsController');
+var getUserTripNames = require('./controllers/usersController');
+var userLocations = require('./controllers/usersController');
 
 router.post('/hotwire', APIsController.hotwirePostRequest);
 router.post('/getTotal', tripsController.getTotalBudgetForTrip);
@@ -15,24 +18,13 @@ router.post('/registerUser', usersController.registerUser);
 router.post('/email', emailController.email);
 router.post('/addTripBookmark', bookmarkController.addTripBookmark);
 router.post('/viewTripBookmark', viewBookmarkController.viewTripBookmark);
+router.post('/userTripNames', getUserTripNames.userTripNames);
+router.post('/userLocations', userLocations.getUserLocations)
 
-
-var getUserLocations = function(key) {
-  //gets a single users location preferences based on trip id
-    //key references some data specific to user, can be an object
-  db.query('SELECT * FROM locations WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($1))', [key], function(err, data) {
-    if (err) {
-      res.send(404);
-      console.log(err, 'ERR');
-    }
-    console.log(data.rows);
-  });
-};
-// getUserLocations(14);
 
 var getUserDates = function(key) {
-    //gets a single users date preferences based on trip id
-      //key references some data specific to user, can be an object
+  //gets a single users date preferences based on trip id
+    //key references some data specific to user, can be an object
   db.query('SELECT * FROM dates WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = ($1))', [key], function(err, data) {
     if (err) {
       res.send(404);

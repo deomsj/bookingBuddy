@@ -5,7 +5,7 @@
 
 var tripData = {
   tripId: 12345,
-  tripName: 'Hiking Trip with the Guys',
+  tripName: 'Hiking Trip',
   locations: ['Hawaii', 'Florida', 'Bahamas'],
   priceRange: '$1,500-$2,500',
   dateRange: '12/10 - 12/21',

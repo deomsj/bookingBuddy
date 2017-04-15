@@ -55,6 +55,7 @@ var Profile = function ({userInfo}) {
       <ProfileTrip trip={trip} key={index} />
     ));
 
+
   return (
     <div className="Profile section">
       <div className="container">

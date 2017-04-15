@@ -12,7 +12,7 @@ import StartPlanning from './StartPlanning.jsx';
 import TripRoom from './tripRoom/TripRoom.jsx';
 import TripCreationForm from './TripCreationForm.jsx';
 import TripPreferencesForm from './TripPreferencesForm.jsx';
-
+import PostRegistration from './authentication/PostRegistration.jsx';
 // Auth
 import Signin from './authentication/Signin.jsx';
 import Signup from './authentication/Signup.jsx';
@@ -28,6 +28,7 @@ const Links = () => (
         <li><NavLink to="/start-planning">Start Planning</NavLink></li>
         <li><NavLink to="/signout">Sign Out</NavLink></li>
         <li><NavLink to="/trip-room/:tripId">TripRoom</NavLink></li>
+        <li><NavLink to="/postRegistration"> PostRegistration</NavLink></li>
       </ul>
 
       <ul id="nav-mobile" className="side-nav">
@@ -35,6 +36,7 @@ const Links = () => (
         <li><NavLink to="/profile">My Profile</NavLink></li>
         <li><NavLink to="/signin">Sign In</NavLink></li>
         <li><NavLink to="/signup">Register</NavLink></li>
+        <li><NavLink to="/postRegistration"> PostRegistration</NavLink></li>
         <li><NavLink to="/start-planning">Start Planning</NavLink></li>
         <li><NavLink to="/signout">Sign Out</NavLink></li>
         <li><NavLink to="/trip-room/:tripId">TripRoom(Testing)</NavLink></li>
@@ -54,6 +56,7 @@ const App = ({userInfo}) => (
       <Route path="/signup" component={Signup} />
       <Route path="/start-planning" component={StartPlanning} />
       <Route path="/profile" component={() => <Profile userInfo={userInfo}/> }/>
+      <Route path="/postRegistration" component={PostRegistration}/>
       <Route path="/trip-room/:tripId" component={TripRoom} />
     </div>
   </Router>

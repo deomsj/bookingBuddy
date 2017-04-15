@@ -1,6 +1,5 @@
 import React from 'react';
-
-
+import {userData} from './userData';
 
 class Signup extends React.Component {
 
@@ -25,21 +24,12 @@ class Signup extends React.Component {
       dataType: 'json',
       data : {'id':1, 'nameL':nameL, 'nameB':nameF, 'email':email},
       success: function(comments) {
+        userData.email = this.state.email;
+        userData.name = this.state.nameF + this.state.nameL;
         this.setState({id:comments.id});
         this.email(this.state.email, this.state.id);
       }.bind(this)
     });
-/*
-    $.ajax({
-      type : 'POST',
-      url : '/hotwire',
-      dataType : "json",
-      data : {sum: 1000, location:'Atlanta, GA', dates:['04/20/2017', '04/23/2017', '3']},
-      success : function(data) {
-        console.log(data, "DATA");
-      }.bind(this)
-    });
-*/
   };
 
 
@@ -89,3 +79,4 @@ class Signup extends React.Component {
 }
 
 export default Signup;
+

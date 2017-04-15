@@ -12,6 +12,7 @@ import TripPreferencesForm from './components/TripPreferencesForm.jsx';
 import TripRoom from './components/tripRoom/TripRoom.jsx';
 import Signin from './components/authentication/Signin.jsx';
 import Signup from './components/authentication/Signup.jsx';
+import PostRegistration from './components/authentication/PostRegistration.jsx'
 
 // Routes
 const routes = (
@@ -29,6 +30,7 @@ const routes = (
       <Route path="profile" component={Profile} >
         <Route path="trip-room/:tripId" component={TripRoom} />
       </Route>
+      <Route path="postRegistration" component={postRegistration}/>
 
     </Route>
 

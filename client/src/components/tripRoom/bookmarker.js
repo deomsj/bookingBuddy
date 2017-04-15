@@ -1,4 +1,5 @@
 import React from 'react';
+import {tripData, hotelRecomendations} from './tripRoomDummyData';
 /////////////////////////
 // Add New Bookmark Bar
 /////////////////////////
@@ -28,12 +29,26 @@ class Bookmarker extends React.Component {
     });
   }
 
+  bookmarktoDB(item) {
+    //using test data but works!
+    $.ajax({
+      type: 'POST',
+      url: '/addTripBookmark',
+      dataType: 'json',
+      data: {'bookmark': item, 'tripname': tripData.tripName, 'email': 'johndoe@gmail.com'},
+      success: function(comments) {
+        console.log(comments, 'Bookmark Added');
+      }.bind(this)
+    });
+
+  }
+
   render() {
     return (
       <div>
         <form onSubmit={this.bookmarkThisOne} >
           <textarea className="materialize-textarea" onChange={this.changeBookmarkComment} placeholder="Want to stay here? Write a quick note to your buddies about why you like this one, then bookmark it to highlight this option for your friends to see!" defaultValue={this.state.bookmarkComment} /> <br/>
-          <button className="btn-large waves-effect waves-light orange" type="submit">Add Bookmark!</button>
+          <button className="btn-large waves-effect waves-light orange" type="submit" onClick={(e)=> {this.bookmarktoDB(this.state.bookmarkComment ) } }>Add Bookmark!</button>
         </form>
       </div>
     );

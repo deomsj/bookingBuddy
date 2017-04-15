@@ -43,3 +43,24 @@ module.exports.email = function(obj) {
     console.log('Message %s sent: %s', info.messageId, info.response);
   });
 };
+
+module.exports.userTripNames = function(req, res) {
+  console.log(req.body);
+  db.query('SELECT trip_id FROM userTrips WHERE user_id = (SELECT id FROM users WHERE email = ($1))', [req.body.email], 
+    function(err, data) {
+      res.send(data.rows);
+  });
+};
+
+module.exports.getUserLocations = function(req, res) {
+  //gets a single users location preferences based on trip id
+    //key references some data specific to user, can be an object
+  db.query('SELECT * FROM locations WHERE trip_id = (SELECT id FROM userTrips WHERE user_id = (SELECT id FROM users WHERE email = ($1)))', [req.body.email], function(err, data) {
+    if (err) {
+      res.send(404);
+      console.log(err, 'ERR');
+    }
+    console.log(data.rows);
+    res.send(data.rows);
+  });
+};
