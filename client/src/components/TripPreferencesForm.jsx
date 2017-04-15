@@ -71,34 +71,60 @@ class TripPreferencesForm extends Component {
   // showWhen() {
   // }
 
+  componentDidMount() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
+  }
+
   render() {
     return (
       <div className="row">
-        <form className="col s12">
-          <h3>Trip Preferences Form</h3>
-          <div className="row">
-            <div className="input-field col s6">
-              <input placeholder="Enter a destination you are interested in" onChange={this.changeLocation} value={this.state.location} />
-            </div>
-            <div className="input-field col s6">
-              <input placeholder="Enter your maximum budget for this trip" onChange={this.changeBudget} value={this.state.budget} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s6">
-              <input type="date" className="datepicker" placeholder="Enter beginning date for this trip" onChange={this.changeBeginDate} value={this.state.beginDate} /> <br/>
-            </div>
-            <div className="input-field col s6">
-              <input type="date" className="datepicker" placeholder="Enter ending date for this trip" onChange={this.changeEndDate} value={this.state.endDate} /> <br/>
-            </div>
-          </div>
-            <Link className="waves-effect waves-light orange btn" to="">Submit</Link>
-        </form>
+        <div className="section">
+          <ul className="collapsible popout" data-collapsible="accordion">
+            <li>
+              <div className="collapsible-header">
+                <strong><i className="material-icons green-text darken-2">location_on</i>Location</strong>
+              </div>
+              <div className="collapsible-body">
+                <div className="row">
+                  <div className="col s8">
+                    <input type="text" placeholder="Location" />
+                  </div>
+                  <div className="col s4">
+                    <button className="btn btn-large waves-effect waves-light orange">Add Location</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div className="collapsible-header">
+                <strong><p className="bling green-text darken-2">$</p>Budget</strong>
+              </div>
+              <div className="collapsible-body">
+                <p>description</p>
+                <button className="btn orange">View Trip Room</button>
+                <button className="btn orange">My Trip Preferences</button>
+              </div>
+            </li>
+            <li>
+              <div className="collapsible-header">
+                <strong><i className="material-icons green-text darken-2">today</i>Durations</strong>
+              </div>
+              <div className="collapsible-body">
+                <p>description</p>
+                <button className="btn orange">View Trip Room</button>
+                <button className="btn orange">My Trip Preferences</button>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }
 
 }
+
 // const TripPreferencesForm = () => (
 //   <h2>Trip Preferences Form</h2>
 // );
