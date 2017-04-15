@@ -64,7 +64,6 @@ class TripRoomComponents extends React.Component {
 
 };
 
-
 class TripRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -138,5 +137,5 @@ class TripRoom extends React.Component {
     );
   }
 }
-
 export default TripRoom;
+
