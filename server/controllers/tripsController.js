@@ -78,12 +78,12 @@ module.exports.addTripBookmark = function(req, res, next) {
         console.log(data.rows)
         db.query('INSERT INTO \
                       bookmarks(bookmark, user_trip_id, email, trip_id) \
-                      VALUES($1, $2, $3, $4) RETURNING id',
-                      [req.body.bookmark, data.rows[0].id, key.email, trip.rows[0].id], function(err, userResults) {
+                      VALUES($1, $2, $3, $4) RETURNING bookmark',
+                      [req.body.bookmark, data.rows[0].id, req.body.email, trip.rows[0].id], function(err, userResults) {
                         if (err) {
                           res.send(err)
                         }
-                        res.sendStatus(200);
+                        res.send({results:userResults.rows});
                       });
       });
   })
