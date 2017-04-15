@@ -38,10 +38,11 @@ class LandingPage extends Component {
           <div className="parallax-container">
             <div className="parallax"><img src="https://images.trvl-media.com/media/content/expus/graphics/launch/activity1320x742.jpg" alt="photo" /></div>
           </div>
-          <div className="section white">
-            <div className="row container">
+          <div className="section container white">
+            <div className="row">
+              <br />
               <h5 className="header col s12 light">We'll organize all this information and share it with you and your buddies.</h5>
-              <br /><br />
+              <br /><br /><br />
               <table className="highlight responsive-table">
                 <thead>
                   <tr>
@@ -82,12 +83,7 @@ class LandingPage extends Component {
 
               <br /><br />
             </div>
-          </div>
-          <div className="parallax-container">
-            <div className="parallax"><img src="images/parallax2.jpg" /></div>
-          </div>
-          <div className="container">
-            <h5 className="header col s12 light">Chat with your buddies about the results and brainstorm ideas.</h5>
+            <h5 className="header col s12 light">Chat with your friends about the results and brainstorm ideas.</h5>
             <br />
 
             <div className="col s12 m6">
@@ -105,8 +101,16 @@ class LandingPage extends Component {
                 </div>
               </div>
             </div>
+          </div>
+
+          <br />
+          <div className="parallax-container">
+            <div className="parallax"><img src="http://aweinclusive.com/wp-content/uploads/2013/03/Beachchairs.jpg" alt="photo" /></div>
+          </div>
+          <div className="container">
 
             <br /><br />
+
             <h5 className="header col s12 light">Scroll through and pin favorites from the vacations we find for you</h5>
             <div className="carousel">
               <a className="carousel-item" href="#one!"><img src="http://lorempixel.com/250/250/nature/1" alt="pic" /></a>
@@ -124,6 +128,12 @@ class LandingPage extends Component {
               <img src="http://lorempixel.com/250/250/nature/3" alt="pic" />
             </div>
             <br /><br />
+          </div>
+          <div className="parallax-container">
+            <div className="parallax"><img src="http://www.parisaddress.com/var/source/district/new/tour_eiffel-paris.jpg" alt="photo" /></div>
+          </div>
+          <div className="container">
+            <br /><br />
             <h4 className="header col s12 light">What are you waiting for?</h4>
             <br />
             <div className="row center">
@@ -131,7 +141,6 @@ class LandingPage extends Component {
             </div>
             <br /><br />
           </div>
-
           <footer className="page-footer orange">
             <div className="container">
               <div className="row">
