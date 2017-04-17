@@ -25,11 +25,11 @@ var DisplayCurrentRec = function({currentRec}) {
 
   var imageContainerStyle = {
     width: '450px',
-    'max-width': '100%',
+    maxWidth: '100%',
     height: '400px',
     overflow: 'hidden',
-    'background-size': 'cover',
-    'background-position': 'center',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     backgroundImage: 'url(' + currentRec.Image + ')'
   };
 

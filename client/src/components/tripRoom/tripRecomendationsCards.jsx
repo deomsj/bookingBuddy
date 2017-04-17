@@ -48,7 +48,7 @@ class TripRecomendationsCards extends React.Component {
   render() {
     return (
       <div className="row">
-        <div className="col s12 m6 l5">
+        <div className="col s12 m8 l6">
           <div className="card">
             <DisplayCurrentRec
               currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]}
