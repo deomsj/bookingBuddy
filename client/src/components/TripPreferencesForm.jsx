@@ -6,71 +6,71 @@ import {
 } from 'react-router-dom';
 
 
+const LocationsList = ({locations
+}) => {
+  var locations = locations.map(
+    (location, index) => {
+    return ( 
+      <div>
+        <input type="checkbox" className="filled-in" id="filled-in-box" checked="checked"></input>
+        <label htmlFor="filled-in-box">{location}</label>
+      </div>
+    );
+  });
+  return (
+    <div>
+       <span>{locations}</span> 
+    </div>
+  );
+};
+
 class TripPreferencesForm extends Component {
   constructor(props) {
     super(props);
     this.changeLocation = this.changeLocation.bind(this);
+    this.addLocation = this.addLocation.bind(this);
     // this.changeBudget = this.changeBudget.bind(this);
     // this.changeBeginDate = this.changeBeginDate.bind(this);
     // this.changeEndDate = this.changeEndDate.bind(this);
     this.state = {
-      location: '',
+      locations: [],
       budget: '',
       beginDate: '',
-      endDate: ''
+      endDate: '',
+      location: ''
       //membersInvited: [],
       //tripName: '',
       //tripSummary: ''
     };
   }
-  // componentDidMount() {
-  //   $(document).ready(function() {
-  //     $('.modal').modal();
-  //   });
-  // }
+  
+  addLocation (e) {
+
+    e.preventDefault();
+
+    this.setState((prevState) => ({
+      locations: prevState.locations.concat(prevState.location),
+      location: ''
+    }));
+  }
+
+
   changeLocation(e) {
     this.setState({
       location: e.target.value,
     });
   }
-  changeBudget(e) {
-    this.setState({
-      budget: e.target.value,
-    });
-  }
-  changeBeginDate(e) {
-    this.setState({
-      tripType: e.target.value,
-    });
-  }
-  changeEndDate(e) {
-    this.setState({
-      when: e.target.value,
-    });
-  }
-  showLocation() {
-    if (this.state.location) {
-      this.setState({
-        location: ''
-      });
-    } else {
-      this.setState({
-        location: (
-          <div>
-            <p>{this.props.location}</p>
-            <button>View Trip Room</button>
-            <button>My Trip Preferences</button>
-          </div>
-          )
-      });
-    }
-  }
-  // showbudget() {
+  // changeBeginDate(e) {
+  //   this.setState({
+  //     tripType: e.target.value,
+  //   });
   // }
-  // showTripType() {
+  // changeEndDate(e) {
+  //   this.setState({
+  //     when: e.target.value,
+  //   });
   // }
-  // showWhen() {
-  // }
+ 
   
 
   componentDidMount() {
@@ -107,11 +107,14 @@ class TripPreferencesForm extends Component {
               <div className="collapsible-body">
                 <div className="row">
                   <div className="col s8">
-                    <input type="text" id="autocomplete-input" className="autocomplete" placeholder="Location" />
+                    <input type="text" id="autocomplete-input" className="autocomplete" placeholder="Location" onChange={this.changeLocation} value={this.state.location} />
                   </div>
                   <div className="col s4">
-                    <button className="btn btn-large waves-effect waves-light orange">Add Location</button>
+                    <button onClick={this.addLocation} className="btn btn-large waves-effect waves-light orange">Add Location</button>
                   </div>
+                  <div>
+                    <LocationsList locations={this.state.locations} />
+                  </div>  
                 </div>
               </div>
             </li>
@@ -133,12 +136,14 @@ class TripPreferencesForm extends Component {
                 <strong><i className="material-icons green-text darken-2">today</i>Durations</strong>
               </div>
               <div className="collapsible-body">
-                <p>Tell us when you would like to go on your trip?</p>
-                <div className="col s6">
-                  <input type="date" className="datepicker" placeholder="Select a start date:"></input>
-                </div>
-                <div className="col s6">  
-                  <input type="date" className="datepicker" placeholder="Select an end date:"></input>                  
+                <div>
+                  <p>Tell us when you would like to go on your trip?</p>
+                  <div className="col s6">
+                    <input type="date" className="datepicker" placeholder="Select a start date:"></input>
+                  </div>
+                  <div className="col s6">  
+                    <input type="date" className="datepicker" placeholder="Select an end date:"></input>
+                  </div>                  
                 </div>
               </div>
             </li>
