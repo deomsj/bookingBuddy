@@ -17,8 +17,8 @@ class LandingPage extends Component {
   render() {
     return (
       <div>
-        <div className="section" id="index-banner">
-          <div className="container">
+        <div className="no-pad-bot" id="index-banner">
+          <div className="parallax-container">
             <br /><br />
             <h1 className="header center orange-text">Planning a trip with friends? Let us Help!</h1>
             <div className="row center">
@@ -34,10 +34,9 @@ class LandingPage extends Component {
               <a href="http://materializecss.com/getting-started.html" id="download-button" className="btn-large waves-effect waves-light orange">Travel budgets</a>
             </div>
             <br /><br />
-          </div>
-          <div className="parallax-container">
             <div className="parallax"><img src="https://images.trvl-media.com/media/content/expus/graphics/launch/activity1320x742.jpg" alt="photo" /></div>
           </div>
+
           <div className="section container white">
             <div className="row">
               <br />
