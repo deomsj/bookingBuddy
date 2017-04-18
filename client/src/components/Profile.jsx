@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import 'materialize-css';
 import $ from 'jquery';
+import {userData} from './tripRoom/tripRoomDynamicData';
+
 
 
 var ProfileUser = ({userInfo}) => (
@@ -24,7 +26,30 @@ var ProfileUser = ({userInfo}) => (
   </div>
 );
 
+
 class ProfileTrip extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tripName: '',
+    };
+  }
+
+  componentWillMount() {
+    //this ajax request will get all trips assiciated with any user according to thier email address
+    //only thing that will change is the email address from the data object below
+    $.ajax({
+      type: 'POST',
+      url: '/userTripNames',
+      dataType: 'json',
+      data: {email:'johndoe@gmail.com'},
+      success: function(data) {
+        this.setState({tripName : data[0].name});
+        console.log(data, "Getting tripNames...");
+      }.bind(this)
+    });
+  }
+
   componentDidMount() {
     $(document).ready(function() {
       $('.collapsible').collapsible();
@@ -35,7 +60,7 @@ class ProfileTrip extends Component {
     return (
       <li>
         <div className="collapsible-header">
-          <strong>{this.props.trip.tripName}</strong>
+          <strong>{this.state.tripName}</strong>
         </div>
         <div className="collapsible-body">
           <p>{this.props.trip.tripDescription}</p>
@@ -54,7 +79,6 @@ var Profile = function ({userInfo}) {
   var tripList = userInfo.trips.map((trip, index) => (
       <ProfileTrip trip={trip} key={index} />
     ));
-
 
   return (
     <div className="Profile section">
