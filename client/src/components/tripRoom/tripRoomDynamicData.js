@@ -1,7 +1,9 @@
 var expediaData = {};
 var hotwireData = {};
+var userData = {};
 
 module.exports = {
   expediaData : expediaData,
-  hotwireData : hotwireData
+  hotwireData : hotwireData,
+  userData : userData
 }
