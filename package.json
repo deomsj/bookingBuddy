@@ -15,10 +15,12 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "eslint": "^3.19.0",
+    "expedia": "0.0.3",
     "express": "^4.15.2",
     "hotwire": "0.0.1",
     "material-ui": "^0.17.3",
     "materialize-css": "^0.98.1",
+    "md5": "^2.2.1",
     "nodemailer": "^4.0.0",
     "pg": "^6.1.5",
     "react": "^15.4.0",

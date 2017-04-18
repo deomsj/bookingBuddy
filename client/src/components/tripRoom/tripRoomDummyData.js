@@ -10,7 +10,8 @@ var tripData = {
   priceRange: '$1,500-$2,500',
   dateRange: '12/10 - 12/21',
   buddyList: ['Lou', 'Preston', 'Max', 'Nate', 'Jesse'],
-  bookmarkedTrips: []
+  bookmarkedTrips: [],
+  url:''
 };
 
 var hotelRecomendations = [{

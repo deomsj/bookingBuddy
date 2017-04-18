@@ -24,7 +24,7 @@ var tripMaster1 = {
   locations: ['New York', 'Atlanta', 'Pheonix'],
   invites: ['f1', 'f2', 'f2'],
   startDate: '01/26/2017',
-  endDate: '03/16/2017',
+  endDate: '10/16/2017',
   duration: '7',
   budget: 1100,
   tripname: 'abc123'
@@ -47,11 +47,11 @@ var tripUser1 = {
 
 var tripUser3 = {
   //tripUser === invitee
-  email: 'lifeisgood@gmail.com',
-  nameF: 'Lyle',
-  nameL: 'Jones',
+  email: 'lifetoogood@gmail.com',
+  nameF: 'Ion',
+  nameL: 'Sphere',
   locations: ['Oakland', 'Atlanta', 'New York'],
-  startDate: '01/02/2017',
+  startDate: '02/02/2017',
   endDate: '12/22/2017',
   duration: '7',
   budget: 1200,
