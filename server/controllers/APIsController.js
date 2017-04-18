@@ -7,8 +7,8 @@ var options = {
       secret: 'bvp038hq772sm',
       sig: md5("65cc419lbqf590p1njeuv4p0q0" + "bvp038hq772sm" + Math.floor(new Date() / 1000)),
       // sig: "d44f9fb2c7c70f13bd8ea1bc4019a859",
-      locale  : "en_US",  // optional defaults to en_US 
-      currencyCode :"USD"  // optional defaults to USD 
+      locale  : "en_US",  // optional defaults to en_US
+      currencyCode :"USD"  // optional defaults to USD
 };
 
 var expedia = require("expedia")(options);
@@ -47,12 +47,14 @@ var hotwire = new Hotwire(process.env.HOTWIRE_API_KEY || hotWireApiKey);
         // secret : "bvp038hq772sm"
     };
 
+var Hotwire = require('hotwire');
+var hotwire = new Hotwire(process.env.HOTWIRE_API_KEY || hotWireApiKey);
+
 module.exports.hotwirePostRequest = function(req, res, next) {
   console.log("Inside Hotwire Api...");
   hotwire.hotelDeals({format: 'json',
     price: '*~' + req.body.sum,
     limit: 10,
-    dest: req.body.location,
     startdate: req.body.dates[0] + '~' + req.body.dates[1],
     duration: parseInt(req.body.dates[2])
   }, function (err, response, body) {

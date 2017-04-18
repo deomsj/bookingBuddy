@@ -48,9 +48,12 @@ class TripRecomendationsCards extends React.Component {
   render() {
     return (
       <div className="row">
-        <div className="col s12 m7">
+        <div className="col s12 m8 l6">
           <div className="card">
-            <DisplayCurrentRec currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]} />
+            <DisplayCurrentRec
+              currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]}
+              className="card-action"
+            />
             <div className="card-action">
               <a onClick={this.advanceToNextRec}>Next</a>
             </div>
