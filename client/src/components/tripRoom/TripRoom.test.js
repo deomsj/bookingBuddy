@@ -1,7 +1,8 @@
 import React from 'react';
-import TripRoom from './TripRoom.jsx';
-import getTotal from './getTotal';
 import renderer from 'react-test-renderer';
+
+import TripRoom from './TripRoom.jsx';
+import {getTotal} from './APIsRouter';
 
 it('renders correctly', () => {
   const tripRoom = renderer.create(
@@ -16,5 +17,5 @@ it('get\'s totals', () => {
 
   setTimeout(() => {
     expect(obj.sum).toBe(4700);
-  }, 3000);
+  }, 500);
 });

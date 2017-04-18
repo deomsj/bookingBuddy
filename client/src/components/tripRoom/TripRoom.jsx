@@ -4,7 +4,7 @@ import {expediaData, hotwireData} from './tripRoomDynamicData';
 import TripRecomendationsCards from './tripRecomendationsCards.jsx';
 import GroupPreferencesBar from './groupPreferencesBar';
 
-import getTotal from './getTotal';
+import {getTotal} from './APIsRouter';
 
 // Used for testing
 import $ from 'jquery';

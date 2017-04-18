@@ -15,4 +15,6 @@ var getTotal = function(obj) {
   });
 }.bind(this);
 
-module.exports = getTotal;
+module.exports = {
+  getTotal: getTotal
+};
