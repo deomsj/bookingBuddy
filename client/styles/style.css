@@ -25,3 +25,7 @@ h5, h4 {
   font-size: 22px;
   padding: 0 23px 0 8px;
 }
+
+.collapsible-body {
+  padding: 10px 10px 10px 10px;
+}
