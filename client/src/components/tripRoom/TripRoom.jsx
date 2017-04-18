@@ -3,7 +3,11 @@ import {tripData, hotelRecomendations} from './tripRoomDummyData';
 import {expediaData, hotwireData} from './tripRoomDynamicData';
 import TripRecomendationsCards from './tripRecomendationsCards.jsx';
 import GroupPreferencesBar from './groupPreferencesBar';
-import TripBookmarksList from './tripBookmarksList';
+
+import getTotal from './getTotal';
+
+// Used for testing
+import $ from 'jquery';
 
 /////////////////////////
 // Trip Room Components
@@ -85,7 +89,7 @@ class TripRoomComponents extends React.Component {
     );
   }
 
-};
+}
 
 
 class TripRoom extends React.Component {
@@ -97,17 +101,9 @@ class TripRoom extends React.Component {
   componentDidMount() {
   {/*
     var obj = {};
-    $.ajax({
-      type: 'POST',
-      url: '/getTotal',
-      dataType: 'json',
-      data: {'id': 1},
-      success: function(comments) {
-        obj['sum'] = comments.sum;
-        console.log(comments, 'Sum...');
-        this.setState({budgetSum: comments.sum});
-      }.bind(this)
-    });
+
+    getTotal(obj);
+
     $.ajax({
       type: 'POST',
       url: '/commonTripLocations',
@@ -164,7 +160,6 @@ class TripRoom extends React.Component {
       });
      }, 1000);
 */}
-  }
 
   render() {
     return (

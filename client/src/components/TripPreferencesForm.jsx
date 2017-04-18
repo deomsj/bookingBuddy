@@ -8,25 +8,6 @@ import {
 import {worldCities} from '../../../worldcities.js'
 
 
-const LocationsList = ({locations
-}) => {
-  console.log(tripData,"tripData!")
-  var locations = locations.map(
-    (location, index) => {
-
-    return ( 
-      <div key={index}>
-        <input type="checkbox" className="filled-in" id="filled-in-box" checked="checked"></input>
-        <label htmlFor="filled-in-box">{location}</label>
-      </div>
-    );
-  });
-  return (
-    <div>
-       <span>{locations}</span>
-    </div>
-  );
-};
 
 
 class TripPreferencesForm extends Component {
@@ -110,18 +91,6 @@ class TripPreferencesForm extends Component {
     });
   }
 
-  changeBeginDate(e) {
-    console.log(e.target.value);
-    this.setState({
-      beginDate: e.target.value,
-    });
-  }
-  changeEndDate(e) {
-    this.setState({
-      endDate: e.target.value,
-    });
-  }
- 
 
   componentDidMount() {
     $(document).ready((function() {
@@ -172,20 +141,20 @@ class TripPreferencesForm extends Component {
               </div>
               <div className="collapsible-body">
                 <div className="row">
-                  <div className="input-field col s12"> 
+                  <div className="input-field col s12">
                   <p>Tell us how many nights you want to spend on your getaway?</p>
                     <form action="#">
                       <p id="totalNights" className="bling green-text darken-2"><strong>Nights: {this.state.duration} </strong></p>
                     </form>
-                    <form action="#">  
+                    <form action="#">
                     <p className="range-field">
-                    <input type="range" min="1" max="28" onChange={this.changeDuration} value={this.state.duration} />
+                      <input type="range" id="budgetRange" min="0" max="100000" />
                     </p>
                     </form>
                     </div>
                   </div>
                 </div>
-              </li> 
+              </li>
               <li>
                 <div className="collapsible-header">
                 <strong><i className="material-icons green-text darken-2">today</i>When</strong>
@@ -196,30 +165,37 @@ class TripPreferencesForm extends Component {
                       <p>Tell us when you would like to go on your trip?</p>
                     </div>
                   </div>
-                  <div className="row">    
+                  <div className="row">
                     <form action="#">
                     <div className="col s6">
                       <input type="date" className="datepicker" placeholder="Select a start date:" onChange={this.changeBeginDate} value={this.state.beginDate}></input>
                     </div>
                     </form>
                     <form action="#">
-                    <div className="col s6">  
+                    <div className="col s6">
                       <input type="date" className="datepicker" placeholder="Select an end date:" onChange={this.changeEndDate} value={this.state.endDate}></input>
-                    </div> 
+                    </div>
                     </form>
                   </div>
-                </div>  
+                </div>
             </li>
             <li>
               <div className="collapsible-header">
                 <strong><p className="bling green-text darken-2">$</p>Budget</strong>
               </div>
               <div className="collapsible-body">
+                <p>Tell us when you would like to go on your trip?</p>
+                <div className="col s6">
+                  <input type="date" className="datepicker" placeholder="Select a start date:"></input>
+                </div>
+                <div className="col s6">
+                  <input type="date" className="datepicker" placeholder="Select an end date:"></input>
+                </div>
 
                 <form action="#">
                   <p id="totalBudget" className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
                   </strong>
-                  
+
                   </p>
                 </form>
                 <p>What's your nightly budget for <b>hotel</b> accommodations?</p>
@@ -233,13 +209,13 @@ class TripPreferencesForm extends Component {
                     <p className="range-field">
                     <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
                     </p>
-                  </form> 
+                  </form>
                   <p>What's your daily budget for <b>activities</b>?</p>
                   <form action="#">
                     <p className="range-field">
                     <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
                     </p>
-                  </form>  
+                  </form>
               </div>
             </li>
           </ul>
