@@ -15,6 +15,7 @@ class TripRoomComponents extends React.Component {
     super(props);
     this.setLocation = this.setLocation.bind(this);
     this.addBookmark = this.addBookmark.bind(this);
+    this.updateBookmarkVote = this.updateBookmarkVote.bind(this);
     this.state = {
       priceRange: props.tripData.priceRange,
       dateRange: props.tripData.dateRange,
@@ -36,13 +37,29 @@ class TripRoomComponents extends React.Component {
       buddyName: buddyName,
       buddyVote: 0
     }));
+    newBookmark['bookmarkId'] = this.state.bookmarkedTrips.length;
+
     this.setState({
       bookmarkedTrips: this.state.bookmarkedTrips.concat(newBookmark)
     });
   }
 
-  voteYes() {
+  updateBookmarkVote(bookmarkId, buddyName, newVote) {
 
+    var updatedBookmarks = this.state.bookmarkedTrips.map((bookmark) => {
+      if (bookmark.bookmarkId === bookmarkId) {
+        bookmark.buddyVotes.forEach( (buddyVoteObj) => {
+          if(buddyVoteObj.buddyName === buddyName) {
+            buddyVoteObj.buddyVote = newVote;
+          }
+        });
+      }
+      return bookmark;
+    });
+
+    this.setState({
+      bookmarkedTrips: updatedBookmarks
+    });
   }
 
   render() {
@@ -62,6 +79,7 @@ class TripRoomComponents extends React.Component {
         />
         <TripBookmarksList
           bookmarkedTrips={this.state.bookmarkedTrips}
+          updateBookmarkVote={this.updateBookmarkVote}
         />
       </div>
     );
@@ -69,6 +87,16 @@ class TripRoomComponents extends React.Component {
 
 };
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+>>>>>>> display buddy vote sliders in trip room bookmarks list
 class TripRoom extends React.Component {
   constructor(props) {
     super(props);

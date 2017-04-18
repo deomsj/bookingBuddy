@@ -1,16 +1,22 @@
 import React from 'react';
 import BuddyVotesWindow from './BuddyVotesWindow';
 
-var TripBookmarksList = function({bookmarkedTrips}) {
+var TripBookmarksList = function({bookmarkedTrips, updateBookmarkVote}) {
 
-  var bookmarksList = bookmarkedTrips.map(bookmark => (
-    <div key={'' + bookmark.hotelRecomendationId} className="row">
+  var bookmarksList = bookmarkedTrips.map( (bookmark, bookmarkId) => (
+    <div key={bookmarkId} className="row">
       <div className="col s12 m6">
-        <img src={bookmark.hotelRecomendationObj.Image} style={{height:'300px'}}alt="picture"/>
-        <span>{bookmark.hotelRecomendationObj.HotelName}</span>
-        <p>{bookmark.bookmarkComment}</p>
+        <h5>{bookmark.hotelRecomendationObj.HotelName}</h5>
+        <div className="col s12 m6">
+          <img src={bookmark.hotelRecomendationObj.Image} style={{'max-height':'300px', 'max-width':'100%'}} alt="picture"/>
+        </div>
+        <div className="col s12 m6">
+          <p>{bookmark.bookmarkComment}</p>
+        </div>
       </div>
-      <BuddyVotesWindow buddyVotes={bookmark.buddyVotes} className="col s12 m6"/>
+      <div className="col s12 m6">
+        <BuddyVotesWindow bookmarkId={bookmarkId} buddyVotes={bookmark.buddyVotes} updateBookmarkVote={updateBookmarkVote}/>
+      </div>
     </div>
   ));
 

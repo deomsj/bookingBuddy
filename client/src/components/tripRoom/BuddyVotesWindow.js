@@ -1,9 +1,9 @@
 import React from 'react';
 import BuddyVoteSlider from './BuddyVoteSlider';
 
-var BuddyVotesWindow = function ({buddyVotes}) {
+var BuddyVotesWindow = function ({bookmarkId, buddyVotes, updateBookmarkVote}) {
   var buddySliders = buddyVotes.map(buddyVoteObj => (
-    <BuddyVoteSlider buddyVoteObj={buddyVoteObj} key={buddyVoteObj.buddyName}/>
+    <BuddyVoteSlider bookmarkId={bookmarkId} buddyVoteObj={buddyVoteObj} key={buddyVoteObj.buddyName} updateBookmarkVote={updateBookmarkVote} />
   ));
 
   return (
