@@ -2,7 +2,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import TripRoom from './TripRoom.jsx';
-import {getTotal} from './APIsRouter';
+import Promise from 'bluebird';
+var getTotal = Promise.promisify(require("./APIsRouter").getTotal);
 
 it('renders correctly', () => {
   const tripRoom = renderer.create(
@@ -13,9 +14,9 @@ it('renders correctly', () => {
 
 it('get\'s totals', () => {
   var obj = {};
-  getTotal(obj);
-
-  setTimeout(() => {
+  getTotal(obj)
+  .then(() => {
     expect(obj.sum).toBe(4700);
-  }, 500);
+  });
+
 });

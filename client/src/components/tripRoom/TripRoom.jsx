@@ -4,7 +4,12 @@ import {expediaData, hotwireData} from './tripRoomDynamicData';
 import TripRecomendationsCards from './tripRecomendationsCards.jsx';
 import GroupPreferencesBar from './groupPreferencesBar';
 
-import {getTotal} from './APIsRouter';
+import Promise from 'bluebird';
+// I couldn;t figure out to do this with import
+var getTotal = Promise.promisify(require("./APIsRouter").getTotal);
+var postCommonTrip = Promise.promisify(require("./APIsRouter").postCommonTrip);
+var postCommonDate = Promise.promisify(require("./APIsRouter").postCommonDate);
+var postToHotWire = Promise.promisify(require("./APIsRouter").postToHotWire);
 
 // Used for testing
 import $ from 'jquery';
@@ -99,67 +104,16 @@ class TripRoom extends React.Component {
   }
 
   componentDidMount() {
-  {/*
+  {
     var obj = {};
 
-    getTotal(obj);
 
-    $.ajax({
-      type: 'POST',
-      url: '/commonTripLocations',
-      dataType: 'json',
-      data: {'id': 1},
-      success: function(comments) {
-        obj.location = comments.commonTrips;
-        console.log(comments, 'Common trip(s)...');
-        this.setState({commonLocation: comments.commonTrips});
-      }.bind(this)
-    });
-    $.ajax({
-      type: 'POST',
-      url: '/commonTripDates',
-      dataType: 'json',
-      data: {'id': 1},
-      success: function(comments) {
-        obj.dates = [comments.beginning, comments.ending, comments.duration];
-        console.log(comments, 'Common Date(s)');
-        this.setState({commonDateB: comments.beginning, commonDateE: comments.ending});
-      }.bind(this)
-    });
+    getTotal(obj)
+    .then(postCommonTrip(obj))
+    .then(postCommonDate(obj))
+    .then(postToHotWire(obj));
 
-    var holdThis = this;
-    setTimeout(function() {
-      $.ajax({
-        type: 'POST',
-        url: '/hotwire',
-        dataType: 'json',
-        data: obj,
-        success: function(data) {
-          console.log(data, "Hotwire Hotel Data...");
-          tripData.url = data.Result[0].Url;
-          hotwireData.data = data.Result;
-          holdThis.setState({url:data.Result[0].Url})
-        }.bind(this)
-      });
-    }, 1000);
-
-    setTimeout(function() {
-     $.ajax({
-        type: 'POST',
-        url: '/expedia',
-        dataType: 'json',
-        data: {location:holdThis.state.commonLocation},
-        success: function(data) {
-          console.log(data, "Expedia Hotel Data...");
-          var qualityImage = data.HotelSummary[0].thumbNailUrl.split('').reverse().join('').replace(/t/i,'z');
-          qualityImage = qualityImage.split('').reverse().join('');
-          console.log(qualityImage);
-          holdThis.setState({hotelImage:"http://images.trvl-media.com/"+qualityImage});
-          expediaData.data = data.HotelSummary;
-        }.bind(this)
-      });
-     }, 1000);
-*/}
+  }
 
   render() {
     return (

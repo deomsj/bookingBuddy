@@ -16,6 +16,7 @@
   "dependencies": {
     "auth0-lock": "^10.14.0",
     "babel-jest": "^19.0.0",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "eslint": "^3.19.0",
     "expedia": "0.0.3",
