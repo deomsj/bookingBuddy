@@ -10,6 +10,7 @@ var viewBookmarkController = require('./controllers/tripsController');
 var getUserTripNames = require('./controllers/usersController');
 var userLocations = require('./controllers/usersController');
 
+router.post('/expedia', APIsController.expediaAPI);
 router.post('/hotwire', APIsController.hotwirePostRequest);
 router.post('/getTotal', tripsController.getTotalBudgetForTrip);
 router.post('/commonTripLocations', tripsController.commonTripLocations);

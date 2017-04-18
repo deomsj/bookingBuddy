@@ -1,8 +1,7 @@
 var db = require('../db/db');
 
 module.exports.getTotalBudgetForTrip = function(req, res, next) {
-  console.log('getTotal');
-  console.log(req.body);
+  console.log(req.body, "Getting total trip budget...");
   //key represents the trip id
     //SELECT * FROM trips <------ to see your current trip id(s)!
     //gets total contribution (sum) associated with a single trip
@@ -15,7 +14,6 @@ module.exports.getTotalBudgetForTrip = function(req, res, next) {
         }
         sum += parseInt(data.rows[0].total);
         if (ind === coll.length - 1) {
-          //console.log(sum, "sum")
           res.send({sum: sum});
         }
       });
@@ -25,7 +23,6 @@ module.exports.getTotalBudgetForTrip = function(req, res, next) {
 
 
 module.exports.commonTripLocations = function(req, res, next) {
-  console.log('COMMON TRIP', req.body);
   //key represents the trip id
   //gets common trip location(s) out of all user locations associated with a certain trip
   var commonTrips = [];
@@ -59,7 +56,7 @@ module.exports.commonTripLocations = function(req, res, next) {
                 commonTrips.push(key);
               }
             }
-            console.log('CT', commonTrips);
+            console.log(commonTrips, "Common trip(s)...");
             res.send({commonTrips: commonTrips, tripName:tripName});
           }
         });
@@ -71,7 +68,7 @@ module.exports.commonTripLocations = function(req, res, next) {
 module.exports.addTripBookmark = function(req, res, next) {
   //must be sent with tripname, email addres of user making bookmark, and the actual bookmark message 
   //ex. addTripBookmark({email:'lifeisgood@gmail.com', bookmark:'The best trip is now here!', tripname:'abc123'});
-  console.log(req.body);
+  console.log(req.body, "Adding Trip Bookmark");
   db.query('SELECT id FROM trips WHERE name = ($1)', [req.body.tripname], function(err, trip) {
     db.query('SELECT id FROM userTrips WHERE user_id = (SELECT id FROM users WHERE email = ($1)) AND trip_id  = (SELECT id FROM trips WHERE name = ($2))', [req.body.email, req.body.tripname],
       function(err, data) { 
@@ -91,7 +88,7 @@ module.exports.addTripBookmark = function(req, res, next) {
 
 module.exports.viewTripBookmark = function(req, res, next) {
   //example // viewTripBookmark({tripname : 'abc123'})
-  console.log(req.body);
+  console.log(req.body, "<--- Trip Bookmarks...");
   db.query('SELECT * FROM bookmarks WHERE trip_id = (SELECT id FROM trips WHERE name = ($1))', [req.body.tripname],
     function(err, data) {
       res.send({data:data.rows});
@@ -100,7 +97,7 @@ module.exports.viewTripBookmark = function(req, res, next) {
 
 
 module.exports.commonTripDates = function(req, res, next) {
-  console.log('COMMON DATE');
+  console.log(req.body,'Getting common date(s)...');
   //key represents the trip id
   //gets common trip location(s) out of all user locations associated with a certain trip
   var commonDateObj = {beginning: '', ending: '', duration: ''};
@@ -129,7 +126,7 @@ module.exports.commonTripDates = function(req, res, next) {
       commonDateObj.ending += Math.min(...endHighMon) + '/';
       commonDateObj.ending += Math.min(...endHighDay) + '/';
       commonDateObj.ending += Math.min(...endHighYear);
-      console.log(777, commonDateObj);
+      console.log(commonDateObj, "Common Dates...");
       db.query('SELECT duration FROM dates WHERE trip_number = ($1)', [req.body.id], function(err, data) {
         commonDateObj.duration = data.rows[0].duration;
         res.send(commonDateObj);
