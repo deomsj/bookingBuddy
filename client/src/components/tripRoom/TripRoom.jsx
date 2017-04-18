@@ -87,92 +87,13 @@ class TripRoomComponents extends React.Component {
 
 };
 
-<<<<<<< HEAD
-=======
 
-
-
-
-
-
-
->>>>>>> display buddy vote sliders in trip room bookmarks list
 class TripRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-<<<<<<< HEAD
-  componentDidMount() {
-    var obj = {};
-    $.ajax({
-      type: 'POST',
-      url: '/getTotal',
-      dataType: 'json',
-      data: {'id': 1},
-      success: function(comments) {
-        obj['sum'] = comments.sum;
-        console.log(comments, 'Sum...');
-        this.setState({budgetSum: comments.sum});
-      }.bind(this)
-    });
-    $.ajax({
-      type: 'POST',
-      url: '/commonTripLocations',
-      dataType: 'json',
-      data: {'id': 1},
-      success: function(comments) {
-        obj.location = comments.commonTrips;
-        console.log(comments, 'Common trip(s)...');
-        this.setState({commonLocation: comments.commonTrips});
-      }.bind(this)
-    });
-    $.ajax({
-      type: 'POST',
-      url: '/commonTripDates',
-      dataType: 'json',
-      data: {'id': 1},
-      success: function(comments) {
-        obj.dates = [comments.beginning, comments.ending, comments.duration];
-        console.log(comments, 'Common Date(s)');
-        this.setState({commonDateB: comments.beginning, commonDateE: comments.ending});
-      }.bind(this)
-    });
 
-    var holdThis = this;
-    setTimeout(function() {
-      $.ajax({
-        type: 'POST',
-        url: '/hotwire',
-        dataType: 'json',
-        data: obj,
-        success: function(data) {
-          console.log(data, "Hotwire Hotel Data...");
-          tripData.url = data.Result[0].Url;
-          hotwireData.data = data.Result;
-          holdThis.setState({url:data.Result[0].Url})
-        }.bind(this)
-      });
-    }, 1000);
-
-    setTimeout(function() {
-     $.ajax({
-        type: 'POST',
-        url: '/expedia',
-        dataType: 'json',
-        data: {location:holdThis.state.commonLocation},
-        success: function(data) {
-          console.log(data, "Expedia Hotel Data...");
-          var qualityImage = data.HotelSummary[0].thumbNailUrl.split('').reverse().join('').replace(/t/i,'z');
-          qualityImage = qualityImage.split('').reverse().join('');
-          holdThis.setState({hotelImage:"http://images.trvl-media.com/"+qualityImage});
-          expediaData.data = data.HotelSummary;
-        }.bind(this)
-      });
-     }, 1000);
-
-  }
-=======
   // componentDidMount() {
   //   var obj = {};
   //   $.ajax({
@@ -182,33 +103,34 @@ class TripRoom extends React.Component {
   //     data: {'id': 1},
   //     success: function(comments) {
   //       obj['sum'] = comments.sum;
-  //       console.log(comments, 'RESPONSE!');
+  //       console.log(comments, 'Sum...');
   //       this.setState({budgetSum: comments.sum});
   //     }.bind(this)
   //   });
   //   $.ajax({
   //     type: 'POST',
-  //     url: '/commonTrip',
+  //     url: '/commonTripLocations',
   //     dataType: 'json',
   //     data: {'id': 1},
   //     success: function(comments) {
   //       obj.location = comments.commonTrips;
-  //       console.log(comments, 'COMMON');
+  //       console.log(comments, 'Common trip(s)...');
   //       this.setState({commonLocation: comments.commonTrips});
   //     }.bind(this)
   //   });
   //   $.ajax({
   //     type: 'POST',
-  //     url: '/commonDate',
+  //     url: '/commonTripDates',
   //     dataType: 'json',
   //     data: {'id': 1},
   //     success: function(comments) {
   //       obj.dates = [comments.beginning, comments.ending, comments.duration];
-  //       console.log(comments, 'COMMON DATES');
+  //       console.log(comments, 'Common Date(s)');
   //       this.setState({commonDateB: comments.beginning, commonDateE: comments.ending});
   //     }.bind(this)
   //   });
 
+  //   var holdThis = this;
   //   setTimeout(function() {
   //     $.ajax({
   //       type: 'POST',
@@ -216,12 +138,31 @@ class TripRoom extends React.Component {
   //       dataType: 'json',
   //       data: obj,
   //       success: function(data) {
-  //         console.log(data);
+  //         console.log(data, "Hotwire Hotel Data...");
+  //         tripData.url = data.Result[0].Url;
+  //         hotwireData.data = data.Result;
+  //         holdThis.setState({url:data.Result[0].Url})
   //       }.bind(this)
   //     });
   //   }, 1000);
+
+  //   setTimeout(function() {
+  //    $.ajax({
+  //       type: 'POST',
+  //       url: '/expedia',
+  //       dataType: 'json',
+  //       data: {location:holdThis.state.commonLocation},
+  //       success: function(data) {
+  //         console.log(data, "Expedia Hotel Data...");
+  //         var qualityImage = data.HotelSummary[0].thumbNailUrl.split('').reverse().join('').replace(/t/i,'z');
+  //         qualityImage = qualityImage.split('').reverse().join('');
+  //         holdThis.setState({hotelImage:"http://images.trvl-media.com/"+qualityImage});
+  //         expediaData.data = data.HotelSummary;
+  //       }.bind(this)
+  //     });
+  //    }, 1000);
+
   // }
->>>>>>> render boomarks list and display buddy votes view for each bookmark
 
   render() {
     return (
@@ -230,12 +171,12 @@ class TripRoom extends React.Component {
           tripData={tripData}
           hotelRecomendations={hotelRecomendations}
         />
-          <iframe src={this.state.url} width='750' height='350'></iframe>
-          <img src={this.state.hotelImage}/>
-       
       </div>
     );
   }
+
+            // <iframe src={this.state.url} width='750' height='350'></iframe>
+          // <img src={this.state.hotelImage}/>
 
   // renderComment({body, author}) {
   //   return (
