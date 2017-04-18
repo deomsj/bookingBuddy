@@ -45,7 +45,6 @@ class ProfileTrip extends Component {
       data: {email:'johndoe@gmail.com'},
       success: function(data) {
         this.setState({tripName : data[0].name});
-        console.log(data, "Getting tripNames...");
       }.bind(this)
     });
   }
@@ -97,7 +96,7 @@ var Profile = function ({userInfo}) {
               </div>
               <div className="divider"></div>
               <div className="section">
-                <button className="btn btn-large waves-effect waves-light orange">Create New Trip</button>
+                <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-create">CREATE NEW TRIP</Link>
               </div>
             </div>
           </div>

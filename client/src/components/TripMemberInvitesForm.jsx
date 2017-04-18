@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import {tripData} from './tripRoom/tripRoomDynamicData';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 
 const InvitedMember = ({name, email}) => (
   <tr>
@@ -47,8 +53,9 @@ class TripMemberInvitesForm extends Component {
   render() {
 
     return (
+    <div>
       <div className="row">
-        <form className="col s12" onSubmit={this.addBuddy}>
+        <form className="col s12" onSubmit={this.addBuddy }>
           <div className="row">
             <h3>Invite Your Buddies:</h3>
             <InvitedMemberList invitedMembers={this.state.invitedMembers}/>
@@ -59,9 +66,13 @@ class TripMemberInvitesForm extends Component {
               <input type="email" placeholder="email" onChange={this.changeBuddyEmail} value={this.state.buddyEmail} /> <br />
             </div>
           </div>
-          <button className="waves-effect waves-light orange btn" >Invite Friends</button>
-        </form>
+          <button className="waves-effect waves-light orange btn" >Invite Friend(s)</button>
+        </form> 
       </div>
+      <div>
+       <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-preferences">Continue</Link>
+      </div>
+    </div>
     );
   }
 
@@ -79,14 +90,13 @@ class TripMemberInvitesForm extends Component {
   }
 
   addBuddy (e) {
-
     e.preventDefault();
-
     var buddy = {
       name: this.state.buddyName,
       email: this.state.buddyEmail
     };
-
+    tripData.buddyData.push(buddy);
+    console.log(tripData);
     this.setState((prevState) => ({
       invitedMembers: prevState.invitedMembers.concat(buddy),
       buddyName: '',
