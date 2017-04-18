@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {tripData} from './tripRoom/tripRoomDynamicData';
 import {
   BrowserRouter as Router,
   Route,
@@ -10,6 +11,7 @@ import {worldCities} from '../../../worldcities.js'
 
 const LocationsList = ({locations
 }) => {
+  console.log(tripData,"tripData!")
   var locations = locations.map(
     (location, index) => {
     return ( 
@@ -54,6 +56,11 @@ class TripPreferencesForm extends Component {
       locations: prevState.locations.concat(prevState.location),
       location: ''
     }));
+  }
+
+  preserveLocation() {
+    tripData.locations = this.state.locations;
+    console.log(tripData, "Adding Locations!");
   }
 
 
