@@ -9,6 +9,24 @@ import {worldCities} from '../../../worldcities.js'
 
 
 
+const LocationsList = ({locations
+}) => {
+  console.log(tripData,"tripData!")
+  var locations = locations.map(
+    (location, index) => {
+    return (
+      <div>
+        <input type="checkbox" className="filled-in" id="filled-in-box" checked="checked"></input>
+        <label htmlFor="filled-in-box">{location}</label>
+      </div>
+    );
+  });
+  return (
+    <div>
+       <span>{locations}</span>
+    </div>
+  );
+};
 
 class TripPreferencesForm extends Component {
   constructor(props) {
@@ -92,6 +110,7 @@ class TripPreferencesForm extends Component {
   }
 
 
+
   componentDidMount() {
     $(document).ready((function() {
       $('.collapsible').collapsible();
@@ -148,7 +167,7 @@ class TripPreferencesForm extends Component {
                     </form>
                     <form action="#">
                     <p className="range-field">
-                      <input type="range" id="budgetRange" min="0" max="100000" />
+                    <input type="range" id="budgetRange" min="0" max="50000" />
                     </p>
                     </form>
                     </div>
@@ -184,14 +203,56 @@ class TripPreferencesForm extends Component {
                 <strong><p className="bling green-text darken-2">$</p>Budget</strong>
               </div>
               <div className="collapsible-body">
-                <p>Tell us when you would like to go on your trip?</p>
-                <div className="col s6">
-                  <input type="date" className="datepicker" placeholder="Select a start date:"></input>
+                <div>
+                  <p>Tell us how many nights you want to spend on your getaway?</p>
+                    <div className="input-field col s12">
+                      <select>
+                        <option value="Choose your option">Any length is fine with me!</option>
+                        <option value="1">1 Night</option>
+                        <option value="2">2 Nights</option>
+                        <option value="3">3 Nights</option>
+                        <option value="4">4 Nights</option>
+                        <option value="5">5 Nights</option>
+                        <option value="6">6 Nights</option>
+                        <option value="7">7 Nights</option>
+                        <option value="8">8 Nights</option>
+                        <option value="9">9 Nights</option>
+                        <option value="10">10 Nights</option>
+                        <option value="11">11 Nights</option>
+                        <option value="12">12 Nights</option>
+                        <option value="13">13 Nights</option>
+                        <option value="14">14 Nights</option>
+                        <option value="15">15 Nights</option>
+                        <option value="16">16 Nights</option>
+                        <option value="17">17 Nights</option>
+                        <option value="18">18 Nights</option>
+                        <option value="19">19 Nights</option>
+                        <option value="20">20 Nights</option>
+                        <option value="21">21 Nights</option>
+                        <option value="22">22 Nights</option>
+                        <option value="23">23 Nights</option>
+                        <option value="24">24 Nights</option>
+                        <option value="25">25 Nights</option>
+                        <option value="26">26 Nights</option>
+                        <option value="27">27 Nights</option>
+                        <option value="28">28 Nights</option>
+                        <option value="29">29 Nights</option>
+                        <option value="30">30 Nights</option>
+                        <option value="31">31 Nights</option>
+                        <option value="30">2 Months</option>
+                        <option value="31">3 Months</option>
+                      </select>
+                    </div>
+                  </div>
+                  <p>Tell us when you would like to go on your trip?</p>
+                  <div className="col s6">
+                    <input type="date" className="datepicker" placeholder="Select a start date:"></input>
+                  </div>
+                  <div className="col s6">
+                    <input type="date" className="datepicker" placeholder="Select an end date:"></input>
+                  </div>
                 </div>
-                <div className="col s6">
-                  <input type="date" className="datepicker" placeholder="Select an end date:"></input>
-                </div>
-              </div>
+
             </li>
           </ul>
         </div>

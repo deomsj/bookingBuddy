@@ -3,13 +3,7 @@ import {tripData, hotelRecomendations} from './tripRoomDummyData';
 import {expediaData, hotwireData} from './tripRoomDynamicData';
 import TripRecomendationsCards from './tripRecomendationsCards.jsx';
 import GroupPreferencesBar from './groupPreferencesBar';
-
-import Promise from 'bluebird';
-// I couldn;t figure out to do this with import
-var getTotal = Promise.promisify(require("./APIsRouter").getTotal);
-var postCommonTrip = Promise.promisify(require("./APIsRouter").postCommonTrip);
-var postCommonDate = Promise.promisify(require("./APIsRouter").postCommonDate);
-var postToHotWire = Promise.promisify(require("./APIsRouter").postToHotWire);
+import fetchInformation from './APIsRouter';
 
 // Used for testing
 import $ from 'jquery';
@@ -94,7 +88,7 @@ class TripRoomComponents extends React.Component {
     );
   }
 
-}
+};
 
 
 class TripRoom extends React.Component {
@@ -105,22 +99,14 @@ class TripRoom extends React.Component {
 
   componentDidMount() {
 
-    var comments = {};
-
-
-    Promise.all(getTotal(), postCommonTrip(), postCommonTrip())
-      .then(postToHotWire())
-      .then(function(data) {
-        comments = data;
+    fetchInformation()
+      .then((data) => {
         this.setState({
-          budgetSum: comments.sum,
-          commonLocation: comments.commonTrips,
-          commonDateB: comments.beginning,
-          commonDateE: comments.ending
+          budgetSum: data.sum,
+          commonLocation: data.commonTrips,
+          commonDateB: data.beginning,
+          commonDateE: data.ending
         });
-      })
-      .catch(function(error) {
-        console.error('Error in TripRoom:', error);
       });
   }
 
@@ -147,4 +133,3 @@ class TripRoom extends React.Component {
   // }
 }
 export default TripRoom;
-

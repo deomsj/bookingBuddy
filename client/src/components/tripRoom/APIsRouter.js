@@ -4,7 +4,7 @@ import $ from 'jquery';
 var obj = {};
 
 var getTotal = function() {
-  $.ajax({
+  return $.ajax({
     type: 'POST',
     url: '/getTotal',
     dataType: 'json',
@@ -17,7 +17,7 @@ var getTotal = function() {
 };
 
 var postCommonTrip = function() {
-  $.ajax({
+  return $.ajax({
     type: 'POST',
     url: '/commonTrip',
     dataType: 'json',
@@ -30,7 +30,7 @@ var postCommonTrip = function() {
 };
 
 var postCommonDate = function() {
-  $.ajax({
+  return $.ajax({
     type: 'POST',
     url: '/commonDate',
     dataType: 'json',
@@ -43,7 +43,7 @@ var postCommonDate = function() {
 };
 
 var postToHotWire = function() {
-  $.ajax({
+  return $.ajax({
     type: 'POST',
     url: '/hotwire',
     dataType: 'json',
@@ -55,9 +55,12 @@ var postToHotWire = function() {
   });
 };
 
-module.exports = {
-  getTotal: getTotal,
-  postCommonTrip: postCommonTrip,
-  postCommonDate: postCommonDate,
-  postToHotWire: postToHotWire
+var fetchInformation = function() {
+  Promise.all(getTotal(), postCommonTrip(), postCommonDate())
+    .then(postToHotWire)
+    .catch(function(error) {
+      console.error('Error posting to Hotwire:', error);
+    });
 };
+
+export default fetchInformation;
