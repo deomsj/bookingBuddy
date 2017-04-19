@@ -1,7 +1,9 @@
 // Used for testing
 import $ from 'jquery';
 
-var getTotal = function(obj) {
+var obj = {};
+
+var getTotal = function() {
   $.ajax({
     type: 'POST',
     url: '/getTotal',
@@ -10,12 +12,11 @@ var getTotal = function(obj) {
     success: function(comments) {
       obj['sum'] = comments.sum;
       console.log(comments, 'RESPONSE!');
-      this.setState({budgetSum: comments.sum});
     }.bind(this)
   });
-}.bind(this);
+};
 
-var postCommonTrip = function(obj) {
+var postCommonTrip = function() {
   $.ajax({
     type: 'POST',
     url: '/commonTrip',
@@ -24,12 +25,11 @@ var postCommonTrip = function(obj) {
     success: function(comments) {
       obj.location = comments.commonTrips;
       console.log(comments, 'COMMON');
-      this.setState({commonLocation: comments.commonTrips});
     }.bind(this)
   });
-}.bind(this);
+};
 
-var postCommonDate = function(obj) {
+var postCommonDate = function() {
   $.ajax({
     type: 'POST',
     url: '/commonDate',
@@ -38,12 +38,11 @@ var postCommonDate = function(obj) {
     success: function(comments) {
       obj.dates = [comments.beginning, comments.ending, comments.duration];
       console.log(comments, 'COMMON DATES');
-      this.setState({commonDateB: comments.beginning, commonDateE: comments.ending});
     }.bind(this)
   });
-}.bind(this);
+};
 
-var postToHotWire = function(obj) {
+var postToHotWire = function() {
   $.ajax({
     type: 'POST',
     url: '/hotwire',
@@ -51,9 +50,10 @@ var postToHotWire = function(obj) {
     data: obj,
     success: function(data) {
       console.log(data);
-    }.bind(this)
+      return data;
+    }
   });
-}.bind(this);
+};
 
 module.exports = {
   getTotal: getTotal,

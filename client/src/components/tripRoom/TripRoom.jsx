@@ -104,15 +104,24 @@ class TripRoom extends React.Component {
   }
 
   componentDidMount() {
-  {
-    var obj = {};
+
+    var comments = {};
 
 
-    getTotal(obj)
-    .then(postCommonTrip(obj))
-    .then(postCommonDate(obj))
-    .then(postToHotWire(obj));
-
+    Promise.all(getTotal(), postCommonTrip(), postCommonTrip())
+      .then(postToHotWire())
+      .then(function(data) {
+        comments = data;
+        this.setState({
+          budgetSum: comments.sum,
+          commonLocation: comments.commonTrips,
+          commonDateB: comments.beginning,
+          commonDateE: comments.ending
+        });
+      })
+      .catch(function(error) {
+        console.error('Error in TripRoom:', error);
+      });
   }
 
   render() {
