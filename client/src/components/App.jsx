@@ -60,13 +60,11 @@ class App extends Component {
       <Router>
         <div>
           <NavBarLinks isLoggedIn={this.state.isLoggedIn} logInOrOut={this.logInOrOut} />
-          <Route
-            exact path="/"
+          <Route exact path="/"
             render={() =>
               !this.state.isLoggedIn ? <LandingPage /> : <Redirect to='/profile' />
           } />
-          <Route
-            path="/profile"
+          <Route path="/profile"
             render={() => <Profile profile={this.state.profile}/> }
           />
           <Route exact path="/landingPage" component={LandingPage} />
