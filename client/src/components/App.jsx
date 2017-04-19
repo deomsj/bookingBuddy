@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
   NavLink
 } from 'react-router-dom';
 import {
@@ -24,7 +25,7 @@ import Signup from './authentication/Signup.jsx';
 import AuthService from '../auth/AuthService';
 
 const LoginStatusDisplay = ({isloggedIn, logInOrOut}) => (
-  <NavLink onClick={logInOrOut} className='loginStatusDisplay'>
+  <NavLink to="/" onClick={logInOrOut} className='loginStatusDisplay'>
     {isloggedIn ? 'Log Out' : 'Log In'}
   </NavLink>
 );
@@ -114,13 +115,16 @@ class App extends Component {
           />
           <Route
             exact path="/"
-            render={() =>
-            !this.state.isLoggedIn ?
-            <LandingPage /> :
-            <Redirect to='/profile' />
+            render={() => (
+              !this.state.isLoggedIn ?
+              <LandingPage /> :
+              <Redirect to='/profile' />
+            )
           } />
           <Route
-            path="/profile" render={() => <Profile userInfo={this.state.profile}/> }/>
+            path="/profile"
+            render={() => <Profile profile={this.state.profile}/> }
+          />
           <Route path="/start-planning" component={StartPlanning} />
           <Route path="/postRegistration" component={PostRegistration}/>
           <Route path="/trip-room/:tripId" component={TripRoom} />
