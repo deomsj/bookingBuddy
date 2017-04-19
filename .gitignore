@@ -9,3 +9,4 @@ dist/
 .DS_Store
 
 server/config.js
+env.config.js
