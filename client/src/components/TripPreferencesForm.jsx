@@ -191,31 +191,6 @@ class TripPreferencesForm extends Component {
                 <div className="col s6">
                   <input type="date" className="datepicker" placeholder="Select an end date:"></input>
                 </div>
-
-                <form action="#">
-                  <p id="totalBudget" className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
-                  </strong>
-
-                  </p>
-                </form>
-                <p>What's your nightly budget for <b>hotel</b> accommodations?</p>
-                  <form action="#">
-                    <p className="range-field">
-                    <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
-                    </p>
-                  </form>
-                <p>How much can you spend on <b>flight</b> travel?</p>
-                  <form action="#">
-                    <p className="range-field">
-                    <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
-                    </p>
-                  </form>
-                  <p>What's your daily budget for <b>activities</b>?</p>
-                  <form action="#">
-                    <p className="range-field">
-                    <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
-                    </p>
-                  </form>
               </div>
             </li>
           </ul>
