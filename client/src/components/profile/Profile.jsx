@@ -37,6 +37,7 @@ class ProfileTrip extends Component {
   }
 
   componentWillMount() {
+    console.log(789);
     //this ajax request will get all trips assiciated with any user according to thier email address
     //only thing that will change is the email address from the data object below
     $.ajax({
@@ -51,6 +52,7 @@ class ProfileTrip extends Component {
   }
 
   componentDidMount() {
+    console.log("HELLO!");
     $(document).ready(function() {
       $('.collapsible').collapsible();
     });
@@ -76,6 +78,17 @@ class ProfileTrip extends Component {
 // Functional, stateless component
 // destructure props object
 var Profile = function ({profile}) {
+  console.log(profile.email);
+   console.log("HELLO2!");
+    $.ajax({
+      type: 'POST',
+      url: '/userTripNames',
+      dataType: 'json',
+      data: {email:'johndoe@gmail.com'},
+      success: function(data) {
+        console.log(data, "TriproomData");
+      }.bind(this)
+    });
   // var tripList = userData.trips.map((trip, index) => (
   //     <ProfileTrip trip={trip} key={index} />
   //   ));

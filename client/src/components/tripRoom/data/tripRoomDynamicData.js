@@ -3,12 +3,15 @@ var hotwireData = {};
 var userData = {};
 var tripData = {
   tripName : "",
-  buddyData : []
+  buddyData : [],
+  profile : "test"
 };
+
 
 module.exports = {
   expediaData : expediaData,
   hotwireData : hotwireData,
   userData : userData,
   tripData : tripData
+
 }
