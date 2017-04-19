@@ -20,7 +20,7 @@ router.post('/email', emailController.email);
 router.post('/addTripBookmark', bookmarkController.addTripBookmark);
 router.post('/viewTripBookmark', viewBookmarkController.viewTripBookmark);
 router.post('/userTripNames', getUserTripNames.userTripNames);
-router.post('/userLocations', userLocations.getUserLocations)
+router.post('/userLocations', userLocations.getUserLocations);
 
 
 var getUserDates = function(key) {

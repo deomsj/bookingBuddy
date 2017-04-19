@@ -252,7 +252,6 @@ class TripPreferencesForm extends Component {
                     <input type="date" className="datepicker" placeholder="Select an end date:"></input>
                   </div>
                 </div>
-
             </li>
           </ul>
         </div>

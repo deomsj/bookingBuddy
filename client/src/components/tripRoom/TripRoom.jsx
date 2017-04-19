@@ -3,7 +3,9 @@ import {tripData, hotelRecomendations} from './tripRoomDummyData';
 import {expediaData, hotwireData} from './tripRoomDynamicData';
 import TripRecomendationsCards from './tripRecomendationsCards.jsx';
 import GroupPreferencesBar from './groupPreferencesBar';
+import TripBookmarksList from './tripBookmarksList';
 import fetchInformation from './APIsRouter';
+import axios from 'axios';
 
 // Used for testing
 import $ from 'jquery';
@@ -99,15 +101,15 @@ class TripRoom extends React.Component {
 
   componentDidMount() {
 
-    fetchInformation()
-      .then((data) => {
-        this.setState({
-          budgetSum: data.sum,
-          commonLocation: data.commonTrips,
-          commonDateB: data.beginning,
-          commonDateE: data.ending
-        });
-      });
+    // fetchInformation()
+    //   .then((data) => {
+    //     this.setState({
+    //       budgetSum: data.sum,
+    //       commonLocation: data.commonTrips,
+    //       commonDateB: data.beginning,
+    //       commonDateE: data.ending
+    //     });
+    //   });
   }
 
   render() {
