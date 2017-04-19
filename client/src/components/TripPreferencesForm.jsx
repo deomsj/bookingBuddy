@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+var React, { Component } = require('react');
 import {tripData} from './tripRoom/tripRoomDynamicData';
 import {
   BrowserRouter as Router,
@@ -14,7 +14,7 @@ const LocationsList = ({locations
   console.log(tripData,"tripData!")
   var locations = locations.map(
     (location, index) => {
-    return ( 
+    return (
       <div>
         <input type="checkbox" className="filled-in" id="filled-in-box" checked="checked"></input>
         <label htmlFor="filled-in-box">{location}</label>
@@ -23,7 +23,7 @@ const LocationsList = ({locations
   });
   return (
     <div>
-       <span>{locations}</span> 
+       <span>{locations}</span>
     </div>
   );
 };
@@ -47,7 +47,7 @@ class TripPreferencesForm extends Component {
       //tripSummary: ''
     };
   }
-  
+
   addLocation (e) {
 
     e.preventDefault();
@@ -79,8 +79,8 @@ class TripPreferencesForm extends Component {
   //     when: e.target.value,
   //   });
   // }
- 
-  
+
+
 
   componentDidMount() {
     $(document).ready(function() {
@@ -120,7 +120,7 @@ class TripPreferencesForm extends Component {
                   </div>
                   <div>
                     <LocationsList locations={this.state.locations} />
-                  </div>  
+                  </div>
                 </div>
               </div>
             </li>
@@ -182,14 +182,14 @@ class TripPreferencesForm extends Component {
                         <option value="31">3 Months</option>
                       </select>
                     </div>
-                  </div> 
+                  </div>
                   <p>Tell us when you would like to go on your trip?</p>
                   <div className="col s6">
                     <input type="date" className="datepicker" placeholder="Select a start date:"></input>
                   </div>
-                  <div className="col s6">  
+                  <div className="col s6">
                     <input type="date" className="datepicker" placeholder="Select an end date:"></input>
-                  </div> 
+                  </div>
                 </div>
 
             </li>
