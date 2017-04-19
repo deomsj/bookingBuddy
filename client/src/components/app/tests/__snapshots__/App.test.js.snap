@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="App"
+>
+  <div>
+    <nav
+      className="green lighten-1"
+      role="navigation"
+    >
+      <div
+        className="nav-wrapper container"
+      >
+        <a
+          className="brand-logo"
+          href="/"
+          id="logo-container"
+          onClick={[Function]}
+          style={undefined}
+        >
+          Booking Buddy
+        </a>
+        <ul
+          className="right hide-on-med-and-down"
+        >
+          <li>
+            <a
+              className={undefined}
+              href="/landingPage"
+              onClick={[Function]}
+              style={undefined}
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              className={undefined}
+              href="/start-planning"
+              onClick={[Function]}
+              style={undefined}
+            >
+              Start Planning
+            </a>
+          </li>
+          <li>
+            <a
+              className="loginStatusDisplay"
+              href="/"
+              onClick={[Function]}
+              style={undefined}
+            >
+              Log In
+            </a>
+          </li>
+        </ul>
+        <ul
+          className="side-nav"
+          id="nav-mobile"
+        >
+          <li>
+            <a
+              className={undefined}
+              href="/landingPage"
+              onClick={[Function]}
+              style={undefined}
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              className={undefined}
+              href="/start-planning"
+              onClick={[Function]}
+              style={undefined}
+            >
+              Start Planning
+            </a>
+          </li>
+          <li>
+            <a
+              className="loginStatusDisplay"
+              href="/"
+              onClick={[Function]}
+              style={undefined}
+            >
+              Log In
+            </a>
+          </li>
+        </ul>
+        <a
+          className="button-collapse"
+          data-activates="nav-mobile"
+          href="#"
+        >
+          <i
+            className="material-icons"
+          >
+            menu
+          </i>
+        </a>
+      </div>
+    </nav>
+  </div>
+</div>
+`;

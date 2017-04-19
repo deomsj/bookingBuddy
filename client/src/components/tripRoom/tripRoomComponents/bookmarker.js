@@ -1,5 +1,5 @@
 import React from 'react';
-import {tripData, hotelRecomendations} from './tripRoomDummyData';
+import {tripData, hotelRecomendations} from '../data/tripRoomDummyData';
 /////////////////////////
 // Add New Bookmark Bar
 /////////////////////////

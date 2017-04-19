@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="container"
+>
+  <h2>
+    Start Planning
+  </h2>
+  <div>
+    <div>
+      <a
+        className="waves-effect waves-light orange btn"
+        href="/start-planning/trip-create"
+        onClick={[Function]}
+      >
+        Create Trip
+      </a>
+      <a
+        className="waves-effect waves-light orange btn"
+        href="/start-planning/trip-preferences"
+        onClick={[Function]}
+      >
+        Trip Preferences
+      </a>
+    </div>
+  </div>
+</div>
+`;

@@ -1,9 +1,9 @@
 import React from 'react';
-import {tripData, hotelRecomendations} from './tripRoomDummyData';
-import {expediaData, hotwireData} from './tripRoomDynamicData';
-import TripRecomendationsCards from './tripRecomendationsCards.jsx';
-import GroupPreferencesBar from './groupPreferencesBar';
-import TripBookmarksList from './tripBookmarksList';
+import {tripData, hotelRecomendations} from './data/tripRoomDummyData';
+import {expediaData, hotwireData} from './data/tripRoomDynamicData';
+import TripRecomendationsCards from './tripRoomComponents/tripRecomendationsCards.jsx';
+import GroupPreferencesBar from './tripRoomComponents/groupPreferencesBar';
+import TripBookmarksList from './tripRoomComponents/tripBookmarksList';
 import fetchInformation from './APIsRouter';
 import axios from 'axios';
 

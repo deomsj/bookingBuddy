@@ -6,8 +6,8 @@ import {
 } from 'react-router-dom';
 
 // Components
-import TripCreationForm from './TripCreationForm.jsx';
-import TripPreferencesForm from './TripPreferencesForm.jsx';
+import TripCreationForm from './startPlanningComponents/TripCreationForm.jsx';
+import TripPreferencesForm from './startPlanningComponents/TripPreferencesForm.jsx';
 
 const PlanningLinks = () => (
   <div>

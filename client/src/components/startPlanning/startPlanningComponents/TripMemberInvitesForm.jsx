@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {tripData} from './tripRoom/tripRoomDynamicData';
+import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
 import {
   BrowserRouter as Router,
   Route,
