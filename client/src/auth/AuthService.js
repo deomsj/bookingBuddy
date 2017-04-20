@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import Auth0Lock from 'auth0-lock';
 import { isTokenExpired } from './jwtHelper';
-import {tripData} from '../components/tripRoom/tripRoomDynamicData';
+import {tripData} from '../components/tripRoom/data/tripRoomDynamicData';
 
 export default class AuthService extends EventEmitter {
   constructor(clientId, domain) {
