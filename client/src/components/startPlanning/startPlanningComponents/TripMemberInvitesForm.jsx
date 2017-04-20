@@ -50,6 +50,10 @@ class TripMemberInvitesForm extends Component {
     };
   }
 
+  addTripName() {
+    tripData.tripNameArray.push(tripData.tripName);
+  }
+
   render() {
 
     return (
@@ -70,7 +74,7 @@ class TripMemberInvitesForm extends Component {
         </form>
       </div>
       <div>
-       <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-preferences">Continue</Link>
+       <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-preferences"><button onClick={this.addTripName()}> Continue </button></Link>
       </div>
     </div>
     );

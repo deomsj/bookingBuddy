@@ -1,8 +1,9 @@
 var expediaData = {};
 var hotwireData = {};
-var userData = {};
+var userData = {seven:7};
 var tripData = {
   tripName : "",
+  tripNameArray : [],
   buddyData : [],
   profile : "test"
 };

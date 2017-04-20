@@ -65,7 +65,7 @@ export default class AuthService extends EventEmitter {
   setProfile(userProfile) {
     localStorage.setItem('user_profile', JSON.stringify(userProfile));
     // Triggers profile_updated event to update the UI
-    tripData.profile = JSON.stringify(userProfile);
+    tripData.profile = userProfile.email;
     this.emit('profile_updated', userProfile);
   }
 

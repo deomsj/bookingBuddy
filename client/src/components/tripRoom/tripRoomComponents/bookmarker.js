@@ -1,8 +1,11 @@
 import React from 'react';
 import {tripData, hotelRecomendations} from '../data/tripRoomDummyData';
-/////////////////////////
-// Add New Bookmark Bar
-/////////////////////////
+import {expediaData, hotwireData} from './tripRoomDynamicData';
+
+//////////////////////////
+// Add New Bookmark Bar //
+//////////////////////////
+
 
 class Bookmarker extends React.Component {
   constructor (props) {

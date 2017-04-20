@@ -38,7 +38,7 @@ class TripCreationForm extends Component {
         <form className="col s12">
           <div className="row">
             <div className="input-field col s12">
-              <input placeholder="Trip Name" className="validate" onChange={this.changeTripName, this.viewProfile} value={this.state.tripName} /> <br />
+              <input placeholder="Trip Name" className="validate" onChange={this.changeTripName} value={this.state.tripName} /> <br />
             </div>
           </div>
           <div className="row">
