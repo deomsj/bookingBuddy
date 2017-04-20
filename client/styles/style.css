@@ -39,7 +39,8 @@ span[class^="preferences-"] .material-icons {
 
 /* # Homepage
 ---------------------------------------- */
-<<<<<<< Updated upstream
+
+
 .parallax-container {
   min-height: 400px;
   line-height: 0;
@@ -48,10 +49,13 @@ span[class^="preferences-"] .material-icons {
 .parallax-container .section {
   width: 100%;
 }
-=======
+
 
 .collapsible-body {
   padding: 10px 10px 10px 10px;
 }
 
->>>>>>> Stashed changes
+#totalBudget {
+  text-align: right;
+
+}

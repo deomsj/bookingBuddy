@@ -68,10 +68,10 @@ class TripPreferencesForm extends Component {
     }));
   }
 
-  // preserveLocation() {
-  //   tripData.locations = this.state.locations;
-  //   console.log(tripData, "Adding Locations!");
-  // }
+  preserveLocation() {
+    tripData.locations = this.state.locations;
+    console.log(tripData, "Adding Locations!");
+  }
 
 
   changeLocation(e) {
@@ -218,23 +218,23 @@ class TripPreferencesForm extends Component {
               </div>
               <div className="collapsible-body">
                 <form action="#">
-                  <p id="totalBudget" className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
-                  </strong>
+                  <p className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
+                  </strong>  
                   </p>
                 </form>
-                <p>What's your nightly budget for <b>hotel</b> accommodations?</p>
+                <span className="col s10">What's your nightly budget for <b>hotel</b> accommodations?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
                   <form action="#">
                     <p className="range-field">
                     <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
                     </p>
                   </form>
-                <p>How much can you spend on <b>flight</b> travel?</p>
+                <span className="col s10">How much can you spend on <b>flight</b> travel?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.flightBudget}</strong></span>
                   <form action="#">
                     <p className="range-field">
                     <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
                     </p>
-                  </form>
-                  <p>What's your daily budget for <b>activities</b>?</p>
+                  </form> 
+                  <span className="col s10">What's your daily budget for <b>activities</b>?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.activitiesBudget}</strong></span>
                   <form action="#">
                     <p className="range-field">
                     <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
