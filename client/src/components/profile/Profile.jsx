@@ -38,12 +38,6 @@ class Profile extends Component {
     });
   }
 
-  componentDidMount() {
-    $(document).ready(function() {
-      $('.collapsible').collapsible();
-    });
-  }
-
   render() {
     return (
       <div className="Profile section">

@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import ProfileTrip from './ProfileTrip.jsx';
 
-var ProfileTripsList = ({userTripsArr}) => {
-  var tripsComponent = userTripsArr.map((trip, index) => (
-    <ProfileTrip trip={trip} key={index} />
-  ));
-  return (
-    <div className="section">
-      <ul className="collapsible popout" data-collapsible="accordion">
-        {tripsComponent}
-      </ul>
-    </div>
-  )
+class ProfileTripsList extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
+  }
+
+  render() {
+    return (
+      <div className="section">
+        <ul className="collapsible popout" data-collapsible="accordion">
+          {this.props.userTripsArr.map((trip, index) => (
+            <ProfileTrip trip={trip} key={index} />
+          ))}
+        </ul>
+      </div>
+    )
+  }
 };
 
 export default ProfileTripsList;
