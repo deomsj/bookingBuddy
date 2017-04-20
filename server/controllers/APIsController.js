@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 var config = process.env || require('../../env.config');
 var hotWireApiKey = config.HOTWIRE_API_KEY;
 var md5 = require('md5');
@@ -15,20 +15,7 @@ var options = {
       locale: "en_US",  // optional defaults to en_US
       currencyCode: "USD"  // optional defaults to USD
 };
-=======
-var hotWireApiKey = require('../config').hotWireApiKey;
-//var md5 = require('md5');
 
-// var options = {
-//       cid     : "379639",
-//       apiKey  : "65cc419lbqf590p1njeuv4p0q0",
-//       secret: 'bvp038hq772sm',
-//       sig: md5("65cc419lbqf590p1njeuv4p0q0" + "bvp038hq772sm" + Math.floor(new Date() / 1000)),
-//       // sig: "d44f9fb2c7c70f13bd8ea1bc4019a859",
-//       locale  : "en_US",  // optional defaults to en_US
-//       currencyCode :"USD"  // optional defaults to USD
-// };
->>>>>>> Stashed changes
 
 //var expedia = require("expedia")(options);
 
