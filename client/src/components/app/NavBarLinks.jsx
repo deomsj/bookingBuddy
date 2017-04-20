@@ -15,11 +15,12 @@ const NavBarLinks = ({isLoggedIn, logInOrOut}) => (
       <ul className="right hide-on-med-and-down">
         {
           isLoggedIn ?
-            <span>
               <li><NavLink to="/profile">My Profile</NavLink></li>
-            </span>
           :
-            <li><NavLink exact to="/landingPage">Home</NavLink></li>
+            <span>
+              <li><NavLink exact to="/landingPage">Home</NavLink></li>
+              <li><NavLink to="/about-us">About Us</NavLink></li>
+            </span>
         }
         <li><NavLink to="/start-planning">Start Planning</NavLink></li>
         <li><LoginStatusDisplay isLoggedIn={isLoggedIn} logInOrOut={logInOrOut} /></li>
@@ -28,11 +29,12 @@ const NavBarLinks = ({isLoggedIn, logInOrOut}) => (
       <ul id="nav-mobile" className="side-nav">
         {
           isLoggedIn ?
-            <span>
               <li><NavLink to="/profile">My Profile</NavLink></li>
-            </span>
           :
-            <li><NavLink exact to="/landingPage">Home</NavLink></li>
+            <span>
+              <li><NavLink exact to="/landingPage">Home</NavLink></li>
+              <li><NavLink to="/about-us">About Us</NavLink></li>
+            </span>
         }
         <li><NavLink to="/start-planning">Start Planning</NavLink></li>
         <li><LoginStatusDisplay isLoggedIn={isLoggedIn} logInOrOut={logInOrOut} /></li>
