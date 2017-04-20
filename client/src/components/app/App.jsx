@@ -19,6 +19,7 @@ import TripRoom from '../tripRoom/TripRoom.jsx';
 import TripCreationForm from '../startPlanning/startPlanningComponents/TripCreationForm.jsx';
 import TripPreferencesForm from '../startPlanning/startPlanningComponents/TripPreferencesForm.jsx';
 import PostRegistration from '../authentication/PostRegistration.jsx';
+import AboutUs from '../AboutUs.jsx';
 
 // Auth
 import AuthService from '../../auth/AuthService';
@@ -70,6 +71,7 @@ class App extends Component {
           <Route exact path="/landingPage" component={LandingPage} />
           <Route path="/start-planning" component={StartPlanning} />
           <Route path="/trip-room" component={TripRoom} />
+          <Route path="/about-us" component={AboutUs} />
         </div>
       </Router>
     </div>
