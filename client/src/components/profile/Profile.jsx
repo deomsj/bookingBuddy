@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom';
 import 'materialize-css';
 import $ from 'jquery';
-import {userData} from '../tripRoom/data/tripRoomDynamicData';
+import {tripsArray} from '../tripRoom/data/tripRoomDummyData';
+
 
 import ProfileUserInfo from './ProfileUserInfo.jsx';
 import ProfileTripsList from './ProfileTripsList.jsx';
@@ -16,7 +17,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tripsArray: [],
+      tripsArray: tripsArray,
     };
   }
   componentWillMount() {
@@ -32,8 +33,10 @@ class Profile extends Component {
       dataType: 'json',
       data: {email:'johndoe@gmail.com'},
       success: function(data) {
-        this.setState({tripsArray:data});
-        console.log(this.state.tripsArray, "React State")
+        // this.setState({tripsArray:data});
+        console.log('lets use our dummy data until we get real data that looks just like this:');
+        console.log(tripsArray);
+        console.log('Current real data' , data);
       }.bind(this)
     });
   }
@@ -51,7 +54,7 @@ class Profile extends Component {
                 <h2 className="header orange-text">Current Trips</h2>
                 <ProfileTripsList userTripsArr={this.state.tripsArray} />
                 <div className="divider"></div>
-                <div className="section">
+                <div className="section center-align">
                   <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-create">CREATE NEW TRIP</Link>
                 </div>
               </div>

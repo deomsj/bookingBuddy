@@ -11,8 +11,8 @@ import TripPreferencesForm from './startPlanningComponents/TripPreferencesForm.j
 
 const PlanningLinks = () => (
   <div>
-    <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-create">Create Trip</Link>
-    <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-preferences">Trip Preferences</Link>
+    <Link className="orange btn" to="/start-planning/trip-create">Create Trip</Link>
+    <Link className="orange btn" to="/start-planning/trip-preferences">Trip Preferences</Link>
   </div>
 );
 
