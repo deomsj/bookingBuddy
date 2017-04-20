@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TripMemberInvitesForm from './TripMemberInvitesForm.jsx';
-import {tripData} from './tripRoom/tripRoomDynamicData';
+import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
 
 class TripCreationForm extends Component {
 
@@ -20,7 +20,7 @@ class TripCreationForm extends Component {
       tripName: e.target.value,
     });
     tripData.tripName = this.state.tripName;
-  
+
   }
 
   changeTripSummary(e) {

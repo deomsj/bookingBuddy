@@ -1,17 +1,17 @@
 var hotWireApiKey = require('../config').hotWireApiKey;
-//var md5 = require('md5');
+var md5 = require('md5');
 
-// var options = {
-//       cid     : "379639",
-//       apiKey  : "65cc419lbqf590p1njeuv4p0q0",
-//       secret: 'bvp038hq772sm',
-//       sig: md5("65cc419lbqf590p1njeuv4p0q0" + "bvp038hq772sm" + Math.floor(new Date() / 1000)),
-//       // sig: "d44f9fb2c7c70f13bd8ea1bc4019a859",
-//       locale  : "en_US",  // optional defaults to en_US
-//       currencyCode :"USD"  // optional defaults to USD
-// };
+var options = {
+      cid     : "379639",
+      apiKey  : "65cc419lbqf590p1njeuv4p0q0",
+      secret: 'bvp038hq772sm',
+      sig: md5("65cc419lbqf590p1njeuv4p0q0" + "bvp038hq772sm" + Math.floor(new Date() / 1000)),
+      // sig: "d44f9fb2c7c70f13bd8ea1bc4019a859",
+      locale  : "en_US",  // optional defaults to en_US
+      currencyCode :"USD"  // optional defaults to USD
+};
 
-//var expedia = require("expedia")(options);
+var expedia = require("expedia")(options);
 
 module.exports.expediaAPI = function(req, res, next) {
   console.log("Inside expediaA Api...")
@@ -47,6 +47,7 @@ var hotwire = new Hotwire(process.env.HOTWIRE_API_KEY || hotWireApiKey);
         // secret : "bvp038hq772sm"
     };
 
+
 var Hotwire = require('hotwire');
 var hotwire = new Hotwire(process.env.HOTWIRE_API_KEY || hotWireApiKey);
 
@@ -64,6 +65,3 @@ module.exports.hotwirePostRequest = function(req, res, next) {
     res.send(JSON.parse(body));
   });
 };
-
-
-

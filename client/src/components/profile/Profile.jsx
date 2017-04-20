@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
@@ -6,7 +7,7 @@ import {
 } from 'react-router-dom';
 import 'materialize-css';
 import $ from 'jquery';
-import {userData} from './tripRoom/tripRoomDynamicData';
+import {userData} from '../tripRoom/data/tripRoomDynamicData';
 
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {tripData} from './tripRoom/tripRoomDynamicData';
+import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
 import {
   BrowserRouter as Router,
   Route,
@@ -67,7 +67,7 @@ class TripMemberInvitesForm extends Component {
             </div>
           </div>
           <button className="waves-effect waves-light orange btn" >Invite Friend(s)</button>
-        </form> 
+        </form>
       </div>
       <div>
        <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-preferences">Continue</Link>

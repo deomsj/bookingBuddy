@@ -8,20 +8,20 @@ import {
 import {
   AUTH0_CLIENT_ID,
   AUTH0_DOMAIN
-} from '../../../env.config.js';
+} from '../../../../env.config.js';
 
 // Components
 import NavBarLinks from './NavBarLinks.jsx';
-import Profile from './Profile.jsx';
-import LandingPage from './LandingPage.jsx';
-import StartPlanning from './StartPlanning.jsx';
-import TripRoom from './tripRoom/TripRoom.jsx';
-import TripCreationForm from './TripCreationForm.jsx';
-import TripPreferencesForm from './TripPreferencesForm.jsx';
-import PostRegistration from './authentication/PostRegistration.jsx';
+import Profile from '../profile/Profile.jsx';
+import LandingPage from '../landingPage/LandingPage.jsx';
+import StartPlanning from '../startPlanning/StartPlanning.jsx';
+import TripRoom from '../tripRoom/TripRoom.jsx';
+// import TripCreationForm from '../TripCreationForm.jsx';
+// import TripPreferencesForm from '../TripPreferencesForm.jsx';
+import PostRegistration from '../authentication/PostRegistration.jsx';
 
 // Auth
-import AuthService from '../auth/AuthService';
+import AuthService from '../../auth/AuthService';
 
 class App extends Component {
 

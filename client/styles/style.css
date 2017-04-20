@@ -25,8 +25,11 @@ h5, h4 {
   font-size: 22px;
   padding: 0 23px 0 8px;
 }
-
-.collapsible-body {
-  padding: 10px 10px 10px 10px;
+.parallax-container {
+  min-height: 400px;
+  line-height: 0;
+  height: auto;
 }
-
+.parallax-container .section {
+  width: 100%;
+}

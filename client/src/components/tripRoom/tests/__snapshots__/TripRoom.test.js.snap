@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <div
+    className="container"
+  >
+    <h1
+      className="orange-text darken-2"
+    >
+      Hiking Trip
+    </h1>
+    <div>
+      <div
+        className="row"
+      >
+        <div
+          className="col s3"
+        >
+          <span>
+            <i
+              className="material-icons green-text"
+            >
+              credit_card
+            </i>
+            $1,500-$2,500
+          </span>
+          <br />
+        </div>
+        <div
+          className="col s3"
+        >
+          <span>
+            <i
+              className="material-icons green-text"
+            >
+              today
+            </i>
+            12/10 - 12/21
+          </span>
+          <br />
+          <br />
+        </div>
+      </div>
+      <span>
+        <strong>
+          Based on your group's preferences, we found all of these trips for you!
+        </strong>
+        <select
+          onChange={[Function]}
+          value=""
+        >
+          <option
+            value="Hawaii"
+          >
+             
+            Hawaii
+             
+          </option>
+          <option
+            value="Florida"
+          >
+             
+            Florida
+             
+          </option>
+          <option
+            value="Bahamas"
+          >
+             
+            Bahamas
+             
+          </option>
+        </select>
+      </span>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col s12 m8 l6"
+      >
+        <div
+          className="card"
+        >
+          <div>
+            <div
+              className="card-image"
+              style={
+                Object {
+                  "backgroundImage": "url(https://s3-media3.fl.yelpcdn.com/bphoto/8qcpzDf8VSeYxPtHG4Lu5g/o.jpg)",
+                  "backgroundPosition": "center",
+                  "backgroundSize": "cover",
+                  "height": "400px",
+                  "maxWidth": "100%",
+                  "overflow": "hidden",
+                  "width": "450px",
+                }
+              }
+            >
+              <span
+                className="card-title"
+              >
+                Sagamore Pendry Baltimore
+              </span>
+            </div>
+            <div
+              className="card-content"
+            >
+              <p>
+                <i
+                  className="material-icons orange-text"
+                >
+                  star star star star star 
+                </i>
+                
+              </p>
+              <p>
+                Where all the ballers and shot callers come to relax and recharge
+              </p>
+              <p>
+                $
+                450.91
+                 total per person
+              </p>
+            </div>
+          </div>
+          <div
+            className="card-action"
+          >
+            <a
+              onClick={[Function]}
+            >
+              Next
+            </a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <form
+          onSubmit={[Function]}
+        >
+          <textarea
+            className="materialize-textarea"
+            defaultValue=""
+            onChange={[Function]}
+            placeholder="Want to stay here? Write a quick note to your buddies about why you like this one, then bookmark it to highlight this option for your friends to see!"
+          />
+           
+          <br />
+          <button
+            className="btn-large waves-effect waves-light orange"
+            onClick={[Function]}
+            type="submit"
+          >
+            Add Bookmark!
+          </button>
+        </form>
+      </div>
+    </div>
+    <div />
+  </div>
+</div>
+`;

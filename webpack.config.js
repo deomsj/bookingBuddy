@@ -6,7 +6,6 @@ module.exports = {
     // 'webpack-dev-server/client?http://localhost:3000',
     './client/src/index.js'
   ],
-
   output: {
     path: path.resolve(__dirname, 'client/compiled'),
     filename: 'bundle.js'
@@ -22,6 +21,10 @@ module.exports = {
         test: /\.jsx$/,
         loaders: ['babel-loader'],
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        loaders: [ 'style-loader', 'css-loader' ]
       }
     ]
   }
