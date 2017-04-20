@@ -69,13 +69,14 @@ class App extends Component {
           />
           <Route exact path="/landingPage" component={LandingPage} />
           <Route path="/start-planning" component={StartPlanning} />
-          <Route path="/postRegistration" component={PostRegistration}/>
-          <Route path="/trip-room/:tripId" component={TripRoom} />
+          <Route path="/trip-room" component={TripRoom} />
         </div>
       </Router>
     </div>
   )};
 };
+
+//<Route path="/postRegistration" component={PostRegistration}/>
 
 // Export module
 export default App;

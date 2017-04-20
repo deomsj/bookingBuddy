@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
+import { Link } from 'react-router-dom';
 
 var ProfileTrip = function({trip}) {
   return (
@@ -8,11 +9,10 @@ var ProfileTrip = function({trip}) {
       </h5>
       <div className="collapsible-body center-align">
         <p className="center-align flow-text">{trip.description}</p>
-        <button className="btn orange">View Trip Room</button>
-        <button className="btn orange">My Trip Preferences</button>
+        <Link className="orange btn" to="/trip-room">View Trip Room</Link>
+        <Link className="orange btn" to="/start-planning/trip-preferences">My Trip Preferences</Link>
       </div>
     </li>
-
   );
 };
 

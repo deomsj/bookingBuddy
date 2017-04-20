@@ -74,7 +74,7 @@ class TripMemberInvitesForm extends Component {
         </form>
       </div>
       <div>
-       <Link className="orange btn" to="/start-planning/trip-preferences"><button onClick={this.addTripName()}> Continue </button></Link>
+       <Link className="orange btn" onClick={this.addTripName()} to="/start-planning/trip-preferences"> Continue </Link>
       </div>
     </div>
     );

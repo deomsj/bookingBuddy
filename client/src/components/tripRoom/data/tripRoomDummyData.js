@@ -33,18 +33,18 @@ var tripData = {
 
 var hotelRecomendations = [{
   hotelRecomendationId: 12345,
-  HotelName: 'Sagamore Pendry Baltimore',
-  Price: 450.91,
+  HotelName: 'Villa La Estancia Beach Resort & Spa',
+  Price: 250.91,
   StarRating: 5,
-  Description: 'Where all the ballers and shot callers come to relax and recharge',
-  Image: 'https://s3-media3.fl.yelpcdn.com/bphoto/8qcpzDf8VSeYxPtHG4Lu5g/o.jpg'
+  Description: 'Paradise meets comfort at Villa La Estancia',
+  Image: 'https://media-cdn.tripadvisor.com/media/photo-s/07/45/9b/f3/villa-la-estancia.jpg'
 }, {
   hotelRecomendationId: 21218,
-  HotelName: 'Hotel Indigo Baltimore Downtown',
-  Price: 180.27,
-  StarRating: 4.5,
-  Description: 'Calm and relaxing',
-  Image: 'https://s3-media2.fl.yelpcdn.com/bphoto/FHD4nLq6s1C7itT-UNf6gQ/o.jpg'
+  HotelName: 'Cabo Azul Resort by Diamond Resorts',
+  Price: 189.27,
+  StarRating: 3,
+  Description: 'If you are looking for calm and relaxing, go somewhere else. This is were the fun it at!',
+  Image: 'https://images.trvl-media.com/hotels/2000000/1690000/1681600/1681571/1681571_149_z.jpg'
 }];
 
 module.exports = {
