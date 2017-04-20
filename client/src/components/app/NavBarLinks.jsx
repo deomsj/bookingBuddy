@@ -17,8 +17,7 @@ const NavBarLinks = ({isLoggedIn, logInOrOut}) => (
           isLoggedIn ?
             <span>
               <li><NavLink to="/profile">My Profile</NavLink></li>
-              <li><NavLink to="/trip-room/:tripId">TripRoom^</NavLink></li>
-              <li><NavLink to="/postRegistration">PostRegistration^</NavLink></li>
+              <li><NavLink to="/trip-room">TripRoom^</NavLink></li>
             </span>
           :
             <li><NavLink exact to="/landingPage">Home</NavLink></li>
@@ -32,8 +31,7 @@ const NavBarLinks = ({isLoggedIn, logInOrOut}) => (
           isLoggedIn ?
             <span>
               <li><NavLink to="/profile">My Profile</NavLink></li>
-              <li><NavLink to="/trip-room/:tripId">TripRoom^</NavLink></li>
-              <li><NavLink to="/postRegistration">PostRegistration^</NavLink></li>
+              <li><NavLink to="/trip-room">TripRoom^</NavLink></li>
             </span>
           :
             <li><NavLink exact to="/landingPage">Home</NavLink></li>
@@ -45,5 +43,7 @@ const NavBarLinks = ({isLoggedIn, logInOrOut}) => (
     </div>
   </nav>
 );
+
+//<li><NavLink to="/postRegistration">PostRegistration^</NavLink></li>
 
 export default NavBarLinks;

@@ -49,7 +49,7 @@ class TripRecomendationsCards extends React.Component {
     return (
       <div className="row">
         <div className="col s12 m8 l6">
-          <div className="card">
+          <div className="card hoverable">
             <DisplayCurrentRec
               currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]}
               className="card-action"
