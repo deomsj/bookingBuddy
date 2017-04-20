@@ -51,7 +51,7 @@ class Bookmarker extends React.Component {
       <div>
         <form onSubmit={this.bookmarkThisOne} >
           <textarea className="materialize-textarea" onChange={this.changeBookmarkComment} placeholder="Want to stay here? Write a quick note to your buddies about why you like this one, then bookmark it to highlight this option for your friends to see!" defaultValue={this.state.bookmarkComment} /> <br/>
-          <button className="btn-large waves-effect waves-light orange" type="submit" onClick={(e)=> {this.bookmarktoDB(this.state.bookmarkComment ) } }>Add Bookmark!</button>
+          <button className="btn-large orange" type="submit" onClick={(e)=> {this.bookmarktoDB(this.state.bookmarkComment ) } }>Add Bookmark!</button>
         </form>
       </div>
     );
