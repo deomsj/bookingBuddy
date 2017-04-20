@@ -6,5 +6,4 @@ client/src/
 
 .DS_Store
 
-server/config.js
 env.config.js
