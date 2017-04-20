@@ -2,13 +2,11 @@ import React from 'react';
 
 var VoteButton = function ({text, selected, handleClick}) {
   if (selected){
-    return (<button onClick={handleClick} className="waves-effect waves-light green darken-2 btn">{text}</button>);
+    return (<button onClick={handleClick} className="green darken-2 btn">{text}</button>);
   }
 
-  return (<button onClick={handleClick} className="waves-effect waves-light green lighten-4 btn" style={{'padding':'5px 10px'}}>{text}</button>);
+  return (<button onClick={handleClick} className="green lighten-4 btn" style={{'padding':'5px 10px'}}>{text}</button>);
 };
-
-
 
 
 var BuddyVoteSlider = function ({bookmarkId, buddyVoteObj, updateBookmarkVote}) {

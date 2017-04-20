@@ -1,6 +1,6 @@
 import React from 'react';
-import DisplayCurrentRec from './displayCurrentRec';
-import Bookmarker from './bookmarker';
+import DisplayCurrentRec from './displayCurrentRec.jsx';
+import Bookmarker from './bookmarker.jsx';
 
 /////////////////////////
 // Trip Recomendations Cards

@@ -1,5 +1,5 @@
 import React from 'react';
-import BuddyVotesWindow from './BuddyVotesWindow';
+import BuddyVotesWindow from './BuddyVotesWindow.jsx';
 
 var TripBookmarksList = function({bookmarkedTrips, updateBookmarkVote}) {
 
@@ -8,7 +8,7 @@ var TripBookmarksList = function({bookmarkedTrips, updateBookmarkVote}) {
       <div className="col s12 m6">
         <h5>{bookmark.hotelRecomendationObj.HotelName}</h5>
         <div className="col s12 m6">
-          <img src={bookmark.hotelRecomendationObj.Image} style={{'max-height':'300px', 'max-width':'100%'}} alt="picture"/>
+          <img src={bookmark.hotelRecomendationObj.Image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
         </div>
         <div className="col s12 m6">
           <p>{bookmark.bookmarkComment}</p>
@@ -26,14 +26,6 @@ var TripBookmarksList = function({bookmarkedTrips, updateBookmarkVote}) {
     </div>
   );
 };
-
-
-// hotelRecomendationObj
-  // HotelName
-  // StarRating
-  // Description
-  // Image
-// bookmarkComment
 
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import {tripData, hotelRecomendations} from '../data/tripRoomDummyData';
-import {expediaData, hotwireData} from '../../tripRoom/data/tripRoomDynamicData';
+import {tripData, hotelRecomendations} from '../../data/tripRoomDummyData';
+import {expediaData, hotwireData} from '../../../tripRoom/data/tripRoomDynamicData';
 
 //////////////////////////
 // Add New Bookmark Bar //

@@ -1,5 +1,5 @@
 import React from 'react';
-import DropDownFilter from './dropDownFilter.js';
+import DropDownFilter from './dropDownFilter.jsx';
 /////////////////////////
 // Group Preferences Bar
 /////////////////////////
