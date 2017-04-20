@@ -23,7 +23,7 @@ var tripMaster1 = {
   nameL: 'Doe',
   locations: ['New York', 'Atlanta', 'Pheonix'],
   invites: ['f1', 'f2', 'f2'],
-  startDate: '01/26/2017',
+  startDate: '04/26/2017',
   endDate: '10/16/2017',
   duration: '7',
   budget: 1100,
@@ -32,11 +32,11 @@ var tripMaster1 = {
 
 var tripUser1 = {
   //tripUser === invitee
-  email: 'johhnyjoe@gmail.com',
+  email: 'techynerd16@gmail.com',
   nameF: 'Johnny',
   nameL: 'Joe',
   locations: ['Reeding', 'Atlanta', 'Fresno'],
-  startDate: '01/06/2017',
+  startDate: '04/06/2017',
   endDate: '10/26/2017',
   duration: '7',
   budget: 300,
@@ -47,7 +47,7 @@ var tripUser1 = {
 
 var tripUser3 = {
   //tripUser === invitee
-  email: 'lifetoogood@gmail.com',
+  email: 'caroham29@gmail.com',
   nameF: 'Ion',
   nameL: 'Sphere',
   locations: ['Oakland', 'Atlanta', 'New York'],
@@ -60,9 +60,6 @@ var tripUser3 = {
     //SELECT * FROM trips; <--- in postgres this will show your trip id
 };
 
-// var apiCall = function() {
-
-// }
 
 var tripMaster = function(obj) {
   console.log('Creating Trip Master!');
@@ -178,7 +175,7 @@ var tripUser = function(obj) {
   });
 };
 // tripMaster(tripMaster1);
-// tripUser(tripUser3);
+tripUser(tripUser1);
 
 
 
