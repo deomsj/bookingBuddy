@@ -6,17 +6,18 @@ import {
   Link
 } from 'react-router-dom';
 
+
 import {worldCities} from '../../../../../worldcities.js'
-//import nouislider.css from '../../../node-modules/materialize-css/extras/noUiSlider/'
-//import nouislider.min.js from '../../../node-modules/materialize-css/extras/noUiSlider/'
+
 
 const LocationsList = ({locations
 }) => {
   console.log(tripData,"tripData!")
   var locations = locations.map(
     (location, index) => {
-    return (
-      <div>
+
+    return ( 
+      <div key={index}>
         <input type="checkbox" className="filled-in" id="filled-in-box" checked="checked"></input>
         <label htmlFor="filled-in-box">{location}</label>
       </div>
@@ -28,6 +29,7 @@ const LocationsList = ({locations
     </div>
   );
 };
+
 
 class TripPreferencesForm extends Component {
   constructor(props) {
@@ -110,7 +112,18 @@ class TripPreferencesForm extends Component {
     });
   }
 
-
+  changeBeginDate(e) {
+    console.log(e.target.value);
+    this.setState({
+      beginDate: e.target.value,
+    });
+  }
+  changeEndDate(e) {
+    this.setState({
+      endDate: e.target.value,
+    });
+  }
+ 
 
   componentDidMount() {
     $(document).ready((function() {
@@ -161,20 +174,20 @@ class TripPreferencesForm extends Component {
               </div>
               <div className="collapsible-body">
                 <div className="row">
-                  <div className="input-field col s12">
+                  <div className="input-field col s12"> 
                   <p>Tell us how many nights you want to spend on your getaway?</p>
                     <form action="#">
                       <p id="totalNights" className="bling green-text darken-2"><strong>Nights: {this.state.duration} </strong></p>
                     </form>
-                    <form action="#">
+                    <form action="#">  
                     <p className="range-field">
-                    <input type="range" id="budgetRange" min="0" max="50000" />
+                    <input type="range" min="1" max="28" onChange={this.changeDuration} value={this.state.duration} />
                     </p>
                     </form>
                     </div>
                   </div>
                 </div>
-              </li>
+              </li> 
               <li>
                 <div className="collapsible-header">
                 <strong><i className="material-icons green-text darken-2">today</i>When</strong>
@@ -185,74 +198,49 @@ class TripPreferencesForm extends Component {
                       <p>Tell us when you would like to go on your trip?</p>
                     </div>
                   </div>
-                  <div className="row">
+                  <div className="row">    
                     <form action="#">
                     <div className="col s6">
                       <input type="date" className="datepicker" placeholder="Select a start date:" onChange={this.changeBeginDate} value={this.state.beginDate}></input>
                     </div>
                     </form>
                     <form action="#">
-                    <div className="col s6">
+                    <div className="col s6">  
                       <input type="date" className="datepicker" placeholder="Select an end date:" onChange={this.changeEndDate} value={this.state.endDate}></input>
-                    </div>
+                    </div> 
                     </form>
                   </div>
-                </div>
+                </div>  
             </li>
             <li>
               <div className="collapsible-header">
                 <strong><p className="bling green-text darken-2">$</p>Budget</strong>
               </div>
               <div className="collapsible-body">
-                <div>
-                  <p>Tell us how many nights you want to spend on your getaway?</p>
-                    <div className="input-field col s12">
-                      <select>
-                        <option value="Choose your option">Any length is fine with me!</option>
-                        <option value="1">1 Night</option>
-                        <option value="2">2 Nights</option>
-                        <option value="3">3 Nights</option>
-                        <option value="4">4 Nights</option>
-                        <option value="5">5 Nights</option>
-                        <option value="6">6 Nights</option>
-                        <option value="7">7 Nights</option>
-                        <option value="8">8 Nights</option>
-                        <option value="9">9 Nights</option>
-                        <option value="10">10 Nights</option>
-                        <option value="11">11 Nights</option>
-                        <option value="12">12 Nights</option>
-                        <option value="13">13 Nights</option>
-                        <option value="14">14 Nights</option>
-                        <option value="15">15 Nights</option>
-                        <option value="16">16 Nights</option>
-                        <option value="17">17 Nights</option>
-                        <option value="18">18 Nights</option>
-                        <option value="19">19 Nights</option>
-                        <option value="20">20 Nights</option>
-                        <option value="21">21 Nights</option>
-                        <option value="22">22 Nights</option>
-                        <option value="23">23 Nights</option>
-                        <option value="24">24 Nights</option>
-                        <option value="25">25 Nights</option>
-                        <option value="26">26 Nights</option>
-                        <option value="27">27 Nights</option>
-                        <option value="28">28 Nights</option>
-                        <option value="29">29 Nights</option>
-                        <option value="30">30 Nights</option>
-                        <option value="31">31 Nights</option>
-                        <option value="30">2 Months</option>
-                        <option value="31">3 Months</option>
-                      </select>
-                    </div>
-                  </div>
-                  <p>Tell us when you would like to go on your trip?</p>
-                  <div className="col s6">
-                    <input type="date" className="datepicker" placeholder="Select a start date:"></input>
-                  </div>
-                  <div className="col s6">
-                    <input type="date" className="datepicker" placeholder="Select an end date:"></input>
-                  </div>
-                </div>
+                <form action="#">
+                  <p id="totalBudget" className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
+                  </strong>  
+                  </p>
+                </form>
+                <p>What's your nightly budget for <b>hotel</b> accommodations?</p>
+                  <form action="#">
+                    <p className="range-field">
+                    <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
+                    </p>
+                  </form>
+                <p>How much can you spend on <b>flight</b> travel?</p>
+                  <form action="#">
+                    <p className="range-field">
+                    <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
+                    </p>
+                  </form> 
+                  <p>What's your daily budget for <b>activities</b>?</p>
+                  <form action="#">
+                    <p className="range-field">
+                    <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
+                    </p>
+                  </form>  
+              </div>
             </li>
           </ul>
         </div>
