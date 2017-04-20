@@ -175,7 +175,7 @@ var tripUser = function(obj) {
   });
 };
 // tripMaster(tripMaster1);
-tripUser(tripUser1);
+// tripUser(tripUser1);
 
 
 
