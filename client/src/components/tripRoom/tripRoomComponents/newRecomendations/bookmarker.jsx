@@ -34,15 +34,15 @@ class Bookmarker extends React.Component {
 
   bookmarktoDB(item) {
     //using test data but works!
-    $.ajax({
-      type: 'POST',
-      url: '/addTripBookmark',
-      dataType: 'json',
-      data: {'bookmark': item, 'tripname': tripData.tripName, 'email': 'johndoe@gmail.com'},
-      success: function(comments) {
-        console.log(comments, 'Bookmark Added');
-      }.bind(this)
-    });
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/addTripBookmark',
+    //   dataType: 'json',
+    //   data: {'bookmark': item, 'tripname': tripData.tripName, 'email': 'johndoe@gmail.com'},
+    //   success: function(comments) {
+    //     console.log(comments, 'Bookmark Added');
+    //   }.bind(this)
+    // });
 
   }
 
