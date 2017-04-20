@@ -24,9 +24,9 @@ var hasRemainder = function(stars) {
 var DisplayCurrentRec = function({currentRec}) {
 
   var imageContainerStyle = {
-    // width: '450px',
+    width: '550px',
     maxWidth: '100%',
-    height: '400px',
+    height: '300px',
     overflow: 'hidden',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -39,9 +39,13 @@ var DisplayCurrentRec = function({currentRec}) {
         <span className="card-title">{currentRec.HotelName}</span>
       </div>
       <div className="card-content">
-        <p><i className="material-icons orange-text">{countStars(currentRec.StarRating)}</i>{hasRemainder(currentRec.StarRating)}</p>
+        <div>
+          <span className='left-align'>
+            <i className="material-icons orange-text">{countStars(currentRec.StarRating)}</i>{hasRemainder(currentRec.StarRating)}
+          </span>
+          <span className='right'> ${currentRec.Price} / night </span>
+        </div>
         <p>{currentRec.Description}</p>
-        <p>${currentRec.Price} total per person</p>
       </div>
     </div>
   );
