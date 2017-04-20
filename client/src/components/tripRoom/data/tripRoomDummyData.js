@@ -3,6 +3,21 @@
 /////////////////////////
 
 
+var tripsArray = [{
+  tripId: '0001',
+  name: '10 Year Reunion Trip',
+  description: 'Can you believe its been ten years since we graduated??? We all want to get together, catch up, and have some fun together. Take a few minutes to throw your life info in Booking Buddies so that we can all get on the same page get something fun on the calendar together!'
+}, {
+  tripId: '0002',
+  name: 'Weekend Trip to Cabo San Freude',
+  description: 'Wow! We are finished HRR. Seems like just yesturday that we were all having our first tango with the floobits ghost! Lets find a time, place, and gameplan that works for everyone to get together for some grilling, bebidas, and hot tubn on Ryans rooftop!!!'
+}
+];
+
+
+
+
+
 var tripData = {
   tripId: 12345,
   tripName: 'Hiking Trip',
@@ -13,6 +28,8 @@ var tripData = {
   bookmarkedTrips: [],
   url:''
 };
+
+
 
 var hotelRecomendations = [{
   hotelRecomendationId: 12345,
@@ -32,5 +49,6 @@ var hotelRecomendations = [{
 
 module.exports = {
   tripData: tripData,
-  hotelRecomendations: hotelRecomendations
+  hotelRecomendations: hotelRecomendations,
+  tripsArray: tripsArray
 }
