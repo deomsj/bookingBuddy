@@ -1,3 +1,4 @@
+
 var config = process.env || require('../../env.config');
 var hotWireApiKey = config.HOTWIRE_API_KEY;
 var md5 = require('md5');
@@ -15,7 +16,8 @@ var options = {
       currencyCode: "USD"  // optional defaults to USD
 };
 
-var expedia = require("expedia")(options);
+
+//var expedia = require("expedia")(options);
 
 module.exports.expediaAPI = function(req, res, next) {
   console.log("Inside expediaA Api...")
