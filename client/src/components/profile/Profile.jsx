@@ -10,7 +10,6 @@ import $ from 'jquery';
 import {userData} from '../tripRoom/data/tripRoomDynamicData';
 
 
-
 var ProfileUser = ({profile}) => (
   <div>
     <div className="card">
@@ -27,7 +26,6 @@ var ProfileUser = ({profile}) => (
   </div>
 );
 
-
 class ProfileTrip extends Component {
   constructor(props) {
     super(props);
@@ -37,30 +35,20 @@ class ProfileTrip extends Component {
   }
 
   componentWillMount() {
-    //this ajax request will get all trips assiciated with any user according to thier email address
-    //only thing that will change is the email address from the data object below
-    $.ajax({
-      type: 'POST',
-      url: '/userTripNames',
-      dataType: 'json',
-      data: {email:'johndoe@gmail.com'},
-      success: function(data) {
-        this.setState({tripName : data[0].name});
-      }.bind(this)
-    });
+    console.log(this.state.tripName, this.props.trip.name);
   }
 
-  componentDidMount() {
-    $(document).ready(function() {
-      $('.collapsible').collapsible();
-    });
-  }
+  // componentDidMount() {
+  //   $(document).ready(function() {
+  //     $('.collapsible').collapsible();
+  //   });
+  // }
 
   render() {
     return (
       <li>
         <div className="collapsible-header">
-          <strong>{this.state.tripName}</strong>
+          <strong>{this.props.trip.name}</strong>
         </div>
         <div className="collapsible-body">
           <p>{this.props.trip.tripDescription}</p>
@@ -73,38 +61,76 @@ class ProfileTrip extends Component {
   }
 }
 
+var ProfileTripsList = ({userTripsArr}) => {
+  var tripsComponent = userTripsArr.map((trip, index) => (
+    <ProfileTrip trip={trip} key={index} />
+  ));
+  return (
+    <div>{tripsComponent}</div>
+  )
+};
 // Functional, stateless component
 // destructure props object
-var Profile = function ({profile}) {
-  // var tripList = userData.trips.map((trip, index) => (
-  //     <ProfileTrip trip={trip} key={index} />
-  //   ));
+class Profile extends Component {
 
-  return (
-    <div className="Profile section">
-      <div className="container">
-        <div className="row">
-          <div className="col m4">
-            <ProfileUser profile={profile} />
-          </div>
-          <div className="col m8">
-            <div className="ProfileTrips">
-              <h2 className="header orange-text">Current Trips</h2>
-              <div className="section">
-                <ul className="collapsible popout" data-collapsible="accordion">
-                  {/*tripList*/}
-                </ul>
-              </div>
-              <div className="divider"></div>
-              <div className="section">
-                <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-create">CREATE NEW TRIP</Link>
+  constructor(props) {
+    super(props);
+    this.state = {
+      tripsArray: [],
+    };
+  }
+  componentWillMount() {
+  //this ajax request will get all trips assiciated with any user according to thier email address
+    //only thing that will change is the email address from the data object below
+    this.getTripNames(this.props.profile.email);
+  }
+
+  getTripNames(email){
+    $.ajax({
+      type: 'POST',
+      url: '/userTripNames',
+      dataType: 'json',
+      data: {email:'johndoe@gmail.com'},
+      success: function(data) {
+        this.setState({tripsArray:data});
+        console.log(this.state.tripsArray, "React State")
+      }.bind(this)
+    });
+  }
+
+  componentDidMount() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
+  }
+
+  render() {
+    return (
+      <div className="Profile section">
+        <div className="container">
+          <div className="row">
+            <div className="col m4">
+              <ProfileUser profile={this.props.profile} />
+            </div>
+            <div className="col m8">
+              <div className="ProfileTrips">
+                <h2 className="header orange-text">Current Trips</h2>
+                <div className="section">
+                  <ul className="collapsible popout" data-collapsible="accordion">
+                    <ProfileTripsList userTripsArr={this.state.tripsArray} />
+                  </ul>
+                </div>
+                <div className="divider"></div>
+                <div className="section">
+                  <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-create">CREATE NEW TRIP</Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Profile;

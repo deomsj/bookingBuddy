@@ -4,23 +4,21 @@ var db = require('./db/db');
 var APIsController = require('./controllers/APIsController');
 var tripsController = require('./controllers/tripsController');
 var usersController = require('./controllers/usersController');
-var emailController = require('./controllers/usersController');
-var bookmarkController = require('./controllers/tripsController');
-var viewBookmarkController = require('./controllers/tripsController');
-var getUserTripNames = require('./controllers/usersController');
-var userLocations = require('./controllers/usersController');
 
 router.post('/expedia', APIsController.expediaAPI);
 router.post('/hotwire', APIsController.hotwirePostRequest);
+
 router.post('/getTotal', tripsController.getTotalBudgetForTrip);
 router.post('/commonTripLocations', tripsController.commonTripLocations);
 router.post('/commonTripDates', tripsController.commonTripDates);
+router.post('/getTripData', tripsController.getTripData);
+router.post('/addTripBookmark', tripsController.addTripBookmark);
+router.post('/viewTripBookmark', tripsController.viewTripBookmark);
+
+router.post('/userTripNames', usersController.userTripNames);
+router.post('/userLocations', usersController.getUserLocations);
 router.post('/registerUser', usersController.registerUser);
-router.post('/email', emailController.email);
-router.post('/addTripBookmark', bookmarkController.addTripBookmark);
-router.post('/viewTripBookmark', viewBookmarkController.viewTripBookmark);
-router.post('/userTripNames', getUserTripNames.userTripNames);
-router.post('/userLocations', userLocations.getUserLocations);
+router.post('/email', usersController.email);
 
 
 var getUserDates = function(key) {

@@ -15,6 +15,9 @@ class TripCreationForm extends Component {
     };
   }
 
+  viewProfile() {
+    console.log(tripData.profile);
+  }
   changeTripName(e) {
     this.setState({
       tripName: e.target.value,
