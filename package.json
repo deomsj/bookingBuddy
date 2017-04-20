@@ -26,6 +26,7 @@
     "nodemailer": "^4.0.0",
     "pg": "^6.1.5",
     "react": "^15.5.4",
+    "react-datepicker": "^0.46.0",
     "react-dom": "^15.4.0",
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
