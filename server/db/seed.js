@@ -58,3 +58,4 @@ db.query('CREATE TABLE \
                   user_trip_id INTEGER REFERENCES userTrips(id))');
 
 });
+
