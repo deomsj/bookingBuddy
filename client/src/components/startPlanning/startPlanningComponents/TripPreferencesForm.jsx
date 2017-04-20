@@ -1,4 +1,4 @@
-var React, { Component } = require('react');
+import React, { Component } from 'react';
 import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
 import {
   BrowserRouter as Router,
@@ -68,10 +68,10 @@ class TripPreferencesForm extends Component {
     }));
   }
 
-  preserveLocation() {
-    tripData.locations = this.state.locations;
-    console.log(tripData, "Adding Locations!");
-  }
+  // preserveLocation() {
+  //   tripData.locations = this.state.locations;
+  //   console.log(tripData, "Adding Locations!");
+  // }
 
 
   changeLocation(e) {
@@ -83,7 +83,7 @@ class TripPreferencesForm extends Component {
   changeDuration(e) {
     var updatedBudget = parseInt(e.target.value) * (this.state.hotelBudget + this.state.activitiesBudget) + this.state.flightBudget;
     this.setState({
-      totalBudget: updatedBudget ,
+      totalBudget: updatedBudget,
       duration: parseInt(e.target.value),
     });
   }
@@ -91,7 +91,7 @@ class TripPreferencesForm extends Component {
   changeHotelBudget(e) {
     var updatedBudget = this.state.duration * (parseInt(e.target.value) + this.state.activitiesBudget) + this.state.flightBudget;
     this.setState({
-      totalBudget: updatedBudget ,
+      totalBudget: updatedBudget,
       hotelBudget: parseInt(e.target.value),
     });
   }
@@ -99,7 +99,7 @@ class TripPreferencesForm extends Component {
   changeActivitiesBudget(e) {
     var updatedBudget = this.state.duration * (this.state.hotelBudget + parseInt(e.target.value)) + this.state.flightBudget;
     this.setState({
-      totalBudget: updatedBudget ,
+      totalBudget: updatedBudget,
       activitiesBudget: parseInt(e.target.value),
     });
   }
@@ -107,7 +107,7 @@ class TripPreferencesForm extends Component {
   changeFlightBudget(e) {
     var updatedBudget = this.state.duration * (this.state.hotelBudget + this.state.activitiesBudget) + parseInt(e.target.value);
     this.setState({
-      totalBudget: updatedBudget ,
+      totalBudget: updatedBudget,
       flightBudget: parseInt(e.target.value),
     });
   }
