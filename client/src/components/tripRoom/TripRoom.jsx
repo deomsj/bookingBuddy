@@ -100,7 +100,6 @@ class TripRoom extends React.Component {
   }
 
   componentDidMount() {
-
     // fetchInformation()
     //   .then((data) => {
     //     this.setState({
@@ -134,4 +133,6 @@ class TripRoom extends React.Component {
   //   );
   // }
 }
+
 export default TripRoom;
+
