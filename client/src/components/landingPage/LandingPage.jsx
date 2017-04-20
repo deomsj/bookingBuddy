@@ -18,8 +18,8 @@ class LandingPage extends Component {
     return (
       <div>
         <div className="no-pad-bot" id="index-banner">
-          <div className="parallax-container">
-            <br /><br />
+          {/* INTRO */}
+          <div className="parallax-container homepage-intro">
             <h1 className="header center orange-text">Planning a trip with friends? Let us Help!</h1>
             <div className="row center">
               <h5 className="header col s12 light">With a quick questionnaire, we make it easy to find trips that you and all of your friends can and want to go on!</h5>
@@ -33,11 +33,10 @@ class LandingPage extends Component {
 
               <a href="http://materializecss.com/getting-started.html" id="download-button" className="btn-large waves-effect waves-light orange">Travel budgets</a>
             </div>
-            <br /><br />
             <div className="parallax"><img src="https://images.trvl-media.com/media/content/expus/graphics/launch/activity1320x742.jpg" alt="photo" /></div>
           </div>
-
-          <div className="section container white">
+          {/* DATA + CHAT */}
+          <div className="section container white homepage-data">
             <div className="row">
               <br />
               <h5 className="header col s12 light">We'll organize all this information and share it with you and your buddies.</h5>
@@ -101,17 +100,14 @@ class LandingPage extends Component {
               </div>
             </div>
           </div>
-
-          <br />
-          <div className="parallax-container">
+          {/* QUOTE */}
+          <div className="parallax-container homepage-quote">
             <div className="parallax"><img src="http://aweinclusive.com/wp-content/uploads/2013/03/Beachchairs.jpg" alt="photo" /></div>
             <h4 className="header col s12">"The social way to plan group travel"</h4>
             <h5 className="header col s12">- Cara</h5>
           </div>
-          <div className="container">
-
-            <br /><br />
-
+          {/* SLIDER */}
+          <div className="container homepage-slider">
             <h5 className="header col s12 light">Scroll through and pin favorites from the vacations we find for you</h5>
             <div className="carousel">
               <a className="carousel-item" href="#one!"><img src="http://lorempixel.com/250/250/nature/1" alt="pic" /></a>
@@ -128,16 +124,16 @@ class LandingPage extends Component {
               <img src="http://lorempixel.com/250/250/nature/2" alt="pic" />
               <img src="http://lorempixel.com/250/250/nature/3" alt="pic" />
             </div>
-            <br /><br />
           </div>
-          <div className="parallax-container">
+          {/* GET STARTED */}
+          <div className="parallax-container homepage-cta">
             <div className="parallax"><img src="http://www.parisaddress.com/var/source/district/new/tour_eiffel-paris.jpg" alt="photo" /></div>
-              <br /><br />
               <h4 className="header col s12 light white-text">What are you waiting for?</h4>
               <div className="row center">
                 <Link id="download-button" className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
               </div>
           </div>
+          {/* FOOTER */}
           <footer className="page-footer orange">
             <div className="container">
               <div className="row">
