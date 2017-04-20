@@ -24,7 +24,7 @@ var hasRemainder = function(stars) {
 var DisplayCurrentRec = function({currentRec}) {
 
   var imageContainerStyle = {
-    width: '450px',
+    // width: '450px',
     maxWidth: '100%',
     height: '400px',
     overflow: 'hidden',
