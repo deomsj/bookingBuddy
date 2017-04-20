@@ -130,15 +130,11 @@ class LandingPage extends Component {
           </div>
           <div className="parallax-container">
             <div className="parallax"><img src="http://www.parisaddress.com/var/source/district/new/tour_eiffel-paris.jpg" alt="photo" /></div>
-          </div>
-          <div className="container">
-            <br /><br />
-            <h4 className="header col s12 light">What are you waiting for?</h4>
-            <br />
-            <div className="row center">
-              <Link id="download-button" className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
-            </div>
-            <br /><br />
+              <br /><br />
+              <h4 className="header col s12 light white-text">What are you waiting for?</h4>
+              <div className="row center">
+                <Link id="download-button" className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
+              </div>
           </div>
           <footer className="page-footer orange">
             <div className="container">
