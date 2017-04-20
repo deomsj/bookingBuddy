@@ -9,8 +9,6 @@ var VoteButton = function ({text, selected, handleClick}) {
 };
 
 
-
-
 var BuddyVoteSlider = function ({bookmarkId, buddyVoteObj, updateBookmarkVote}) {
 
   var vote = buddyVoteObj.buddyVote;

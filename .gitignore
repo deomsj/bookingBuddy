@@ -1,9 +1,9 @@
 node_modules/
 bower_components/
+client/compiled
 
 
 *.log
-
 .DS_Store
 
 env.config.js
