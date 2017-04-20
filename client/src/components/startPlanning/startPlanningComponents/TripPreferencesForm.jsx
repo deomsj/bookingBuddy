@@ -218,8 +218,8 @@ class TripPreferencesForm extends Component {
               </div>
               <div className="collapsible-body">
                 <form action="#">
-                  <p className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
-                  </strong>  
+                  <p id="totalBudget" className="green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
+                  </strong>
                   </p>
                 </form>
                 <span className="col s10">What's your nightly budget for <b>hotel</b> accommodations?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
@@ -233,7 +233,7 @@ class TripPreferencesForm extends Component {
                     <p className="range-field">
                     <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
                     </p>
-                  </form> 
+                  </form>
                   <span className="col s10">What's your daily budget for <b>activities</b>?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.activitiesBudget}</strong></span>
                   <form action="#">
                     <p className="range-field">

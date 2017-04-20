@@ -105,6 +105,8 @@ class LandingPage extends Component {
           <br />
           <div className="parallax-container">
             <div className="parallax"><img src="http://aweinclusive.com/wp-content/uploads/2013/03/Beachchairs.jpg" alt="photo" /></div>
+            <h4 className="header col s12">"The social way to plan group travel"</h4>
+            <h5 className="header col s12">- Cara</h5>
           </div>
           <div className="container">
 
@@ -130,42 +132,18 @@ class LandingPage extends Component {
           </div>
           <div className="parallax-container">
             <div className="parallax"><img src="http://www.parisaddress.com/var/source/district/new/tour_eiffel-paris.jpg" alt="photo" /></div>
-          </div>
-          <div className="container">
-            <br /><br />
-            <h4 className="header col s12 light">What are you waiting for?</h4>
-            <br />
-            <div className="row center">
-              <Link id="download-button" className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
-            </div>
-            <br /><br />
+              <br /><br />
+              <h4 className="header col s12 light white-text">What are you waiting for?</h4>
+              <div className="row center">
+                <Link id="download-button" className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
+              </div>
           </div>
           <footer className="page-footer orange">
             <div className="container">
               <div className="row">
                 <div className="col l6 s12">
                   <h5 className="white-text">Company Bio</h5>
-                  <p className="grey-text text-lighten-4">We are a team of Hack Reactor students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-
-                </div>
-                <div className="col l3 s12">
-                  <h5 className="white-text">Settings</h5>
-                  <ul>
-                    <li><a className="white-text" href="#!">Link 1</a></li>
-                    <li><a className="white-text" href="#!">Link 2</a></li>
-                    <li><a className="white-text" href="#!">Link 3</a></li>
-                    <li><a className="white-text" href="#!">Link 4</a></li>
-                  </ul>
-                </div>
-                <div className="col l3 s12">
-                  <h5 className="white-text">Connect</h5>
-                  <ul>
-                    <li><a className="white-text" href="#!">Link 1</a></li>
-                    <li><a className="white-text" href="#!">Link 2</a></li>
-                    <li><a className="white-text" href="#!">Link 3</a></li>
-                    <li><a className="white-text" href="#!">Link 4</a></li>
-                  </ul>
+                  <p className="grey-text text-lighten-4">Booking Buddy, Inc. is the brainchild of a group of buddies who came together at Hack Reactor to build awesome websites.  The team consists of Maximillian Berger (Front-End and Deployment Wizard) Jesse DeOms (Scrum Master), Lou Kaileh(Product Owner), Preston Moore (Database Dynamo), Nate Nault (Routing and Authentication Genius)</p>
                 </div>
               </div>
             </div>
