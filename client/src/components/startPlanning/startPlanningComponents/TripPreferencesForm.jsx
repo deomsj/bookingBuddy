@@ -218,7 +218,7 @@ class TripPreferencesForm extends Component {
               </div>
               <div className="collapsible-body">
                 <form action="#">
-                  <p id="totalBudget" className="green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
+                  <p className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
                   </strong>
                   </p>
                 </form>
