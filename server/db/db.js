@@ -19,27 +19,26 @@ var tripMaster1 = {
   //tripMaster === Originator of trip
     //John Doe creates trip
   email: 'johndoe@gmail.com',
-  nameF: 'John',
-  nameL: 'Doe',
+  name: 'Doe',
   locations: ['New York', 'Atlanta', 'Pheonix'],
   invites: ['f1', 'f2', 'f2'],
-  startDate: '04/26/2017',
+  beginDate: '04/26/2017',
   endDate: '10/16/2017',
   duration: '7',
-  budget: 1100,
-  tripname: 'abc123'
+  hotelBudget: 1100,
+  tripName : 'abc123',
+  tripSummary : "Test trip description"
 };
 
 var tripUser1 = {
   //tripUser === invitee
   email: 'techynerd16@gmail.com',
-  nameF: 'Johnny',
-  nameL: 'Joe',
+  name: 'Johnny',
   locations: ['Reeding', 'Atlanta', 'Fresno'],
-  startDate: '04/06/2017',
+  beginDate: '04/06/2017',
   endDate: '10/26/2017',
   duration: '7',
-  budget: 300,
+  hotelBudget: 300,
   tripId: 1
   //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
     //SELECT * FROM trips; <--- in postgres this will show your trip id
@@ -62,20 +61,21 @@ var tripUser3 = {
 
 
 var tripMaster = function(obj) {
-  console.log('Creating Trip Master!');
+  console.log('Creating Trip Master!', obj);
   db.query('INSERT INTO \
-                  trips(name) \
-                  VALUES($1) RETURNING id',
-                  [obj.tripname], function(err, tripResults) {
+                  trips(name, description) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.tripName, obj.description], function(err, tripResults) {
                     if (err) {
-                      console.log(tripResults);
+                      // console.log(tripResults);
                       // res.send(err)
                     }
 
   db.query('INSERT INTO \
                   users(namef, namel, email) \
                   VALUES($1, $2, $3) RETURNING id',
-                  [obj.nameF, obj.nameL, obj.email], function(err, userResults) {
+                  [obj.name, obj.name, obj.email], function(err, userResults) {
+                    // console.log(userResults, "userResults")
                     if (err) {
                       // res.send(err)
                     }
@@ -87,11 +87,11 @@ var tripMaster = function(obj) {
                     if (err) {
                       // res.send(err)
                     }
-                    console.log(userTripsResults.rows[0]);
+                    // console.log(userTripsResults.rows[0], "HELLO!");
   db.query('INSERT INTO \
                   dates(beging, ending, duration, trip_id, trip_number) \
                   VALUES($1, $2, $3, $4, $5) RETURNING id',
-                  [obj.startDate, obj.endDate, obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
+                  [obj.beginDate.slice(5)+'-'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'-'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
                     if (err) {
                       // res.send(err)
                     }
@@ -99,7 +99,7 @@ var tripMaster = function(obj) {
   db.query('INSERT INTO \
                   budget(total, trip_id) \
                   VALUES($1, $2) RETURNING id',
-                  [obj.budget, userTripsResults.rows[0].id], function(err, budgetResults) {
+                  [obj.hotelBudget, userTripsResults.rows[0].id], function(err, budgetResults) {
                     if (err) {
                       // res.send(err)
                     }
@@ -119,6 +119,57 @@ var tripMaster = function(obj) {
           });
         });
       });
+};
+
+var moreTrips = function(obj) {
+  console.log('Creating Trip Master!', obj);
+  db.query('INSERT INTO \
+                  trips(name, description) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.tripName, obj.description], function(err, tripResults) {
+                    if (err) {
+                      // console.log(tripResults);
+                      // res.send(err)
+                    }
+
+  db.query('INSERT INTO \
+                  userTrips(user_id, trip_id) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.id, tripResults.rows[0].id], function(err, userTripsResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+                    // console.log(userTripsResults.rows[0], "HELLO!");
+  db.query('INSERT INTO \
+                  dates(beging, ending, duration, trip_id, trip_number) \
+                  VALUES($1, $2, $3, $4, $5) RETURNING id',
+                  [obj.beginDate.slice(5)+'-'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'-'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+
+  db.query('INSERT INTO \
+                  budget(total, trip_id) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.hotelBudget, userTripsResults.rows[0].id], function(err, budgetResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+
+  obj.locations.forEach(function(location, ind, coll) {
+  db.query('INSERT INTO \
+                  locations(name, user_trip_id) \
+                  VALUES($1, $2) RETURNING id',
+                  [location, userTripsResults.rows[0].id], function(err, userResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+                  });
+                });
+              });
+            });
+          });
+        });
 };
 
 var tripUser = function(obj) {
@@ -181,4 +232,8 @@ var tripUser = function(obj) {
 
 
 
-module.exports = db;
+module.exports = {
+  db : db,
+  tripMaster : tripMaster,
+  moreTrips : moreTrips  
+}

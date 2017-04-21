@@ -1,9 +1,41 @@
-var db = require('../db/db');
+var gets = require('../db/db');
+var db = gets.db;
+var create = gets.tripMaster;
+var additionalTrips = gets.moreTrips;
 
 module.exports.createTrip = function(req, res, next) {
-  console.log(req.body, "Getting new trip data...");
-  res.send({testing : "testing"});
-
+  console.log(req.body, "Creating new trip data...");
+  var make = req.body;
+  db.query('SELECT id FROM users WHERE email = ($1)', [make.email], function(err, data) { 
+    console.log(data, "data");
+    if(data.rows.length === 0) {
+      create({ email : make.email, 
+        duration : make.duration, 
+        beginDate : make.beginDate, 
+        endDate : make.endDate,
+        name : make.name,
+        tripName : make.tripName,
+        hotelBudget : parseInt(make.hotelBudget),
+        locations : make.locations,
+        description : make.tripSummary
+      });
+    } else {
+      console.log("HERE!!!")
+      make.id = data.rows[0].id;
+      additionalTrips({ email : make.email, 
+        duration : make.duration, 
+        beginDate : make.beginDate, 
+        endDate : make.endDate,
+        name : make.name,
+        tripName : make.tripName,
+        hotelBudget : parseInt(make.hotelBudget),
+        locations : make.locations,
+        description : make.tripSummary,
+        id : make.id
+      });
+    }
+    res.send({testing : "testing"});
+});
 }
 
 module.exports.getTotalBudgetForTrip = function(req, res, next) {
