@@ -73,9 +73,6 @@ class TripMemberInvitesForm extends Component {
           <button className="orange btn" >Invite Friend(s)</button>
         </form>
       </div>
-      <div>
-       <Link className="orange btn" onClick={this.addTripName()} to="/start-planning/trip-preferences"> Continue </Link>
-      </div>
     </div>
     );
   }

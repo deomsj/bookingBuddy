@@ -1,5 +1,11 @@
 var db = require('../db/db');
 
+module.exports.createTrip = function(req, res, next) {
+  console.log(req.body, "Getting new trip data...");
+  res.send({testing : "testing"});
+
+}
+
 module.exports.getTotalBudgetForTrip = function(req, res, next) {
   console.log(req.body, "Getting total trip budget...");
   //key represents the trip id
@@ -20,6 +26,7 @@ module.exports.getTotalBudgetForTrip = function(req, res, next) {
     });
   });
 };
+
 
 module.exports.getTripData = function(req, res, next) {
   console.log(req.body, "tripData");

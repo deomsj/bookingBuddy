@@ -27,15 +27,16 @@ class Profile extends Component {
   }
 
   getTripNames(email){
+    console.log(email);
     $.ajax({
       type: 'POST',
       url: '/userTripNames',
       dataType: 'json',
-      data: {email:'johndoe@gmail.com'},
+      data: { email : email },
       success: function(data) {
-        // this.setState({tripsArray:data});
-        console.log('lets use our dummy data until we get real data that looks just like this:');
-        console.log(tripsArray);
+        this.setState({tripsArray:data});
+       // console.log('lets use our dummy data until we get real data that looks just like this:');
+        //console.log(tripsArray);
         console.log('Current real data' , data);
       }.bind(this)
     });
@@ -55,7 +56,7 @@ class Profile extends Component {
                 <ProfileTripsList userTripsArr={this.state.tripsArray} />
                 <div className="divider"></div>
                 <div className="section center-align">
-                  <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-create">CREATE NEW TRIP</Link>
+                  <Link className="orange btn" to="/start-planning/trip-create">CREATE NEW TRIP</Link>
                 </div>
               </div>
             </div>
