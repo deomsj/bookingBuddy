@@ -9,28 +9,32 @@ module.exports.createTrip = function(req, res, next) {
   db.query('SELECT id FROM users WHERE email = ($1)', [make.email], function(err, data) { 
     console.log(data, "data");
     if(data.rows.length === 0) {
-      create({ email : make.email, 
-        duration : make.duration, 
-        beginDate : make.beginDate, 
-        endDate : make.endDate,
-        name : make.name,
-        tripName : make.tripName,
+      create({ email : make.email,  
+        activitiesBudget : parseInt(make.activitiesBudget),
+        flightBudget : parseInt(make.flightBudget),
         hotelBudget : parseInt(make.hotelBudget),
+        description : make.tripSummary,
         locations : make.locations,
-        description : make.tripSummary
+        beginDate : make.beginDate,
+        duration : make.duration, 
+        tripName : make.tripName,
+        endDate : make.endDate,
+        name : make.name
       });
     } else {
       console.log("HERE!!!")
       make.id = data.rows[0].id;
       additionalTrips({ email : make.email, 
+        activitiesBudget : parseInt(make.activitiesBudget),
+        flightBudget : parseInt(make.flightBudget),
+        hotelBudget : parseInt(make.hotelBudget),
+        description : make.tripSummary,
+        locations : make.locations,
+        beginDate : make.beginDate,
         duration : make.duration, 
-        beginDate : make.beginDate, 
+        tripName : make.tripName,
         endDate : make.endDate,
         name : make.name,
-        tripName : make.tripName,
-        hotelBudget : parseInt(make.hotelBudget),
-        locations : make.locations,
-        description : make.tripSummary,
         id : make.id
       });
     }
@@ -40,20 +44,27 @@ module.exports.createTrip = function(req, res, next) {
 
 module.exports.getTripPreferences = function(req, res, next) {
   var obj = {};
+  db.query('select distinct name from locations INNER JOIN userTrips ON(locations.user_trip_id = userTrips.id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
+      obj.tripLocations = data.rows;
+  });
+
   db.query('select namef FROM users INNER JOIN userTrips ON (users.id = userTrips.user_id AND userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
     data.rows.forEach(function(item, index, coll) {
       var name = item.namef;
       obj[name] = {};
-      db.query('select * from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, location) {
+
+      db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, location) {
          obj[name].locations = location.rows;
     
         db.query('select * from dates where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, dates) {
            obj[name].beginDate = dates.rows[0].beging;
            obj[name].endDate = dates.rows[0].ending;
-           obj[name].duration = dates.rows[0].duration;
+           obj[name].duration = parseInt(dates.rows[0].duration);
    
           db.query('select * from budget where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, budget) {
-            obj[name].hotelBudget = budget.rows[0];
+            obj[name].hotelBudget = parseInt(budget.rows[0].total);
+            obj[name].activitiesBudget = parseInt(budget.rows[0].activitites);
+            obj[name].flightBudget = parseInt(budget.rows[0].flight);
             if(index === coll.length-1){
               res.send(obj);
             }

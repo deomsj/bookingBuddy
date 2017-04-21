@@ -33,6 +33,8 @@ db.query('CREATE TABLE \
                   budget( \
                   id SERIAL PRIMARY KEY, \
                   total NUMERIC(6,2) not null, \
+                  flight NUMERIC(6,2), \
+                  activitites NUMERIC(6,2), \
                   trip_id INTEGER REFERENCES userTrips(id))');
 
 db.query('CREATE TABLE \
