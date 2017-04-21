@@ -6,13 +6,21 @@ import {
 } from 'react-router-dom';
 
 var socket = io();
+var colors = [
+  'red', 'pink', 'purple', 'deep-purple', 'indigo',
+  'blue', 'cyan', 'teal', 'green',
+  'amber', 'orange', 'deep-orange'
+];
+var randomColor = colors[Math.floor(Math.random() * (colors.length - 1))] + '-text';
 
 var ChatMessages = function({name, text}) {
   return (
     <div>
-      <p className="orange-text">{name}</p>
-      <div className="chip orange-text">
-        {text}
+      <p className={randomColor}>{name}</p>
+      <div className="chip">
+        <div className={randomColor}>
+          {text}
+        </div>
       </div>
     </div>
   );
