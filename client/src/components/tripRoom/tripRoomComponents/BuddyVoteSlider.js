@@ -12,12 +12,21 @@ var VoteButton = function ({text, selected, handleClick}) {
 
 
 var BuddyVoteSlider = function ({bookmarkId, buddyVoteObj, updateBookmarkVote}) {
-
   var vote = buddyVoteObj.buddyVote;
+  var socket = io();
 
   var updateVote = function(num) {
+    socket.emit('new vote', function() {
+      bookmarkId: bookmarkId,
+      buddyName: buddyVoteObj.buddyName,
+      num: num
+    });
     updateBookmarkVote(bookmarkId, buddyVoteObj.buddyName, num);
   };
+
+  socket.on('new vote', function(data) {
+    updateBookmarkVote(data.bookmarkId, data.buddyName, data.num);
+  });
 
   var voteYes = function() {
     updateVote(1);
