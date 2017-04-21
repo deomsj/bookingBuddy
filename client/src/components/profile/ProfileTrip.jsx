@@ -1,10 +1,14 @@
 import React, { Component} from 'react';
 import { Link } from 'react-router-dom';
 
-var ProfileTrip = function({trip}) {
+var ProfileTrip = function({trip, selectTrip}) {
+  var handleClick = function(){
+    selectTrip(trip.trip_id);
+  }
+
   return (
     <li>
-      <h5 className="collapsible-header">
+      <h5 onClick={handleClick} className="collapsible-header">
         {trip.name}
       </h5>
       <div className="collapsible-body center-align">

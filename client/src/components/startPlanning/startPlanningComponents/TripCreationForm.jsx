@@ -59,7 +59,7 @@ class TripCreationForm extends Component {
     };
   }
 
-addLocation (e) {
+  addLocation (e) {
 
     e.preventDefault();
 

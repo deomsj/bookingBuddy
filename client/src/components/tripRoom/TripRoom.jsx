@@ -17,19 +17,27 @@ import $ from 'jquery';
 class TripRoom extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      tripData: {}
+    };
   }
 
   componentDidMount() {
-    // fetchInformation()
-    //   .then((data) => {
-    //     this.setState({
-    //       budgetSum: data.sum,
-    //       commonLocation: data.commonTrips,
-    //       commonDateB: data.beginning,
-    //       commonDateE: data.ending
-    //     });
-    //   });
+    console.log('getting current trip data for trip # ' + this.props.tripId);
+
+    // this.fetchInformation(this.props.tripId);
+  }
+
+  fetchTripInformation(tripId){
+    $.ajax({
+      type: 'POST',
+      url: '/geTripData',
+      dataType: 'json',
+      data: { tripId : tripId },
+      success: function(data) {
+        this.setState({tripDate: data});
+      }.bind(this)
+    });
   }
 
   render() {

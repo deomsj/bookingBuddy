@@ -29,9 +29,11 @@ class App extends Component {
   constructor (props) {
     super(props);
     this.logInOrOut = this.logInOrOut.bind(this);
+    this.selectTrip = this.selectTrip.bind(this);
     this.state = {
       isLoggedIn: false,
-      profile: {}
+      profile: {},
+      trip_id:''
     };
 
     this.auth = new AuthService(AUTH0_CLIENT_ID, AUTH0_DOMAIN);
@@ -56,6 +58,12 @@ class App extends Component {
     }
   }
 
+  selectTrip(tripId) {
+    this.setState({
+      trip_id: tripId
+    });
+  }
+
   render() { return (
     <div className="App">
       <Router>
@@ -66,11 +74,13 @@ class App extends Component {
               !this.state.isLoggedIn ? <LandingPage /> : <Redirect to='/profile' />
           } />
           <Route path="/profile"
-            render={() => <Profile profile={this.state.profile}/> }
+            render={() => <Profile profile={this.state.profile} selectTrip={this.selectTrip} /> }
           />
           <Route exact path="/landingPage" component={LandingPage} />
-          <Route path="/start-planning" component={StartPlanning} />
-          <Route path="/trip-room" component={TripRoom} />
+          <Route path="/start-planning"
+            render={() => <StartPlanning userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
+          <Route path="/trip-room"
+            render={() => <TripRoom userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
           <Route path="/about-us" component={AboutUs} />
         </div>
       </Router>
