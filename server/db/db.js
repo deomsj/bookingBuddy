@@ -32,7 +32,7 @@ var tripMaster1 = {
 
 var tripUser1 = {
   //tripUser === invitee
-  email: 'techynerd16@gmail.com',
+  email: 'tata16@gmail.com',
   name: 'Johnny',
   locations: ['Reeding', 'Atlanta', 'Fresno'],
   beginDate: '04/06/2017',
@@ -97,9 +97,9 @@ var tripMaster = function(obj) {
                     }
 
   db.query('INSERT INTO \
-                  budget(total, trip_id) \
-                  VALUES($1, $2) RETURNING id',
-                  [obj.hotelBudget, userTripsResults.rows[0].id], function(err, budgetResults) {
+                  budget(total, trip_id, flight, activitites) \
+                  VALUES($1, $2, $3, $4) RETURNING id',
+                  [obj.hotelBudget, userTripsResults.rows[0].id, obj.flightBudget, obj.activitiesBudget], function(err, budgetResults) {
                     if (err) {
                       // res.send(err)
                     }
