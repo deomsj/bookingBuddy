@@ -1,5 +1,4 @@
-var express = require('express');
-var app = express();
+var express = require('express'); var app = express();
 var path = require('path');
 var routes = require('./routes');
 var bodyParser = require('body-parser');
@@ -8,6 +7,11 @@ var port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, '../client')));
+
+app.get('/*', function(req,res) {
+  res.redirect('/');
+});
+
 app.use(routes);
 
 app.listen(port, function() {
