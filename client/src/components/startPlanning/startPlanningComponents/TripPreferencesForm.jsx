@@ -12,7 +12,6 @@ import {worldCities} from '../../../../../worldcities.js'
 
 const LocationsList = ({locations
 }) => {
-  console.log(tripData,"tripData!")
   var locations = locations.map(
     (location, index) => {
 
@@ -63,19 +62,22 @@ class TripPreferencesForm extends Component {
     // if this is the user's first time visiting the form then they will not have any prior preferences stored
       //in this case the server will send back ... ? undefined? 404? null? 'forget about it' ?
     console.log('getting current tripPreferences for user ' + this.props.userEmail + ' for trip # ' + this.props.tripId);
-    //this.getUserTripPreferences(this.props.userEmail, this.props.tripId);
+    this.getUserTripPreferences(this.props.userEmail, this.props.tripId);
   }
 
   getUserTripPreferences(email, tripId){
+    //getPrefereces specific to a user and trip
+      //data returned should follow formate of state
     $.ajax({
       type: 'POST',
-      url: '/getUserTripPreferences',
+      url: '/getTripPreferences',
       dataType: 'json',
       data: { email : email,
               tripId : tripId
             },
       success: function(data) {
-        this.setState(data);
+        console.log(data, "TP");
+        // this.setState(data);
       }.bind(this)
     });
   }

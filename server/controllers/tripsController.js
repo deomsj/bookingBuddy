@@ -38,6 +38,32 @@ module.exports.createTrip = function(req, res, next) {
 });
 }
 
+module.exports.getTripPreferences = function(req, res, next) {
+  var obj = {};
+  db.query('select namef FROM users INNER JOIN userTrips ON (users.id = userTrips.user_id AND userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
+    data.rows.forEach(function(item, index, coll) {
+      var name = item.namef;
+      obj[name] = {};
+      db.query('select * from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, location) {
+         obj[name].locations = location.rows;
+    
+        db.query('select * from dates where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, dates) {
+           obj[name].beginDate = dates.rows[0].beging;
+           obj[name].endDate = dates.rows[0].ending;
+           obj[name].duration = dates.rows[0].duration;
+   
+          db.query('select * from budget where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, budget) {
+            obj[name].hotelBudget = budget.rows[0];
+            if(index === coll.length-1){
+              res.send(obj);
+            }
+          });
+        });
+      });
+    });
+  });
+};
+
 module.exports.getTotalBudgetForTrip = function(req, res, next) {
   console.log(req.body, "Getting total trip budget...");
   //key represents the trip id
