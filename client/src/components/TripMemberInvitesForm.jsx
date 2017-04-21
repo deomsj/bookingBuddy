@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
+import {tripData} from './tripRoom/tripRoomDynamicData';
 import {
   BrowserRouter as Router,
   Route,
@@ -70,8 +70,11 @@ class TripMemberInvitesForm extends Component {
               <input type="email" placeholder="email" onChange={this.changeBuddyEmail} value={this.state.buddyEmail} /> <br />
             </div>
           </div>
-          <button className="orange btn" >Invite Friend(s)</button>
-        </form>
+          <button className="waves-effect waves-light orange btn" >Invite Friend(s)</button>
+        </form> 
+      </div>
+      <div>
+       <Link className="waves-effect waves-light orange btn" to="/start-planning/trip-preferences"><button onClick={this.addTripName()}> Continue </button></Link>
       </div>
     </div>
     );

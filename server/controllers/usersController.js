@@ -46,7 +46,7 @@ module.exports.email = function(obj) {
 
 module.exports.userTripNames = function(req, res) {
   console.log(req.body);
-  db.query('SELECT name FROM trips WHERE id =(SELECT trip_id FROM userTrips WHERE user_id = (SELECT id FROM users WHERE email = ($1)))', [req.body.email], 
+  db.query('SELECT * FROM trips WHERE id =(SELECT trip_id FROM userTrips WHERE user_id = (SELECT id FROM users WHERE email = ($1)))', [req.body.email], 
     function(err, data) {
       res.send(data.rows);
   });
