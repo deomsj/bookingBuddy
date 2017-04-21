@@ -25,17 +25,19 @@ class TripRoom extends React.Component {
   componentDidMount() {
     console.log('getting current trip data for trip # ' + this.props.tripId);
 
-    // this.fetchInformation(this.props.tripId);
+    this.fetchInformation(this.props.tripId);
   }
 
   fetchTripInformation(tripId){
+    //get all trip data
+    console.log("GETTING TRIP DATA!")
     $.ajax({
       type: 'POST',
       url: '/geTripData',
       dataType: 'json',
       data: { tripId : tripId },
       success: function(data) {
-        this.setState({tripDate: data});
+        // this.setState({tripDate: data});
       }.bind(this)
     });
   }

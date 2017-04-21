@@ -178,7 +178,7 @@ var tripUser = function(obj) {
   db.query('INSERT INTO \
                   users(namef, namel, email) \
                   VALUES($1, $2, $3) RETURNING id',
-                  [obj.nameF, obj.nameL, obj.email], function(err, userResults) {
+                  [obj.name, obj.name, obj.email], function(err, userResults) {
                     if (err) {
                       // res.send(err)
                     }
@@ -196,7 +196,7 @@ var tripUser = function(obj) {
   db.query('INSERT INTO \
                   dates(beging, ending, duration, trip_id, trip_number) \
                   VALUES($1, $2, $3, $4, $5) RETURNING id',
-                  [obj.startDate, obj.endDate, obj.duration, userTripsResults.rows[0].id, obj.tripId ], function(err, dateResults) {
+                  [obj.beginDate, obj.endDate, obj.duration, userTripsResults.rows[0].id, obj.tripId ], function(err, dateResults) {
                     if (err) {
                       // res.send(err)
                     }
@@ -204,7 +204,7 @@ var tripUser = function(obj) {
   db.query('INSERT INTO \
                   budget(total, trip_id) \
                   VALUES($1, $2) RETURNING id',
-                  [obj.budget, userTripsResults.rows[0].id], function(err, budgetResults) {
+                  [obj.hotelBudget, userTripsResults.rows[0].id], function(err, budgetResults) {
                     if (err) {
                       // res.send(err)
                     }

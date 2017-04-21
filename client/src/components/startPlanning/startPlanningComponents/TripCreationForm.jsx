@@ -174,8 +174,6 @@ class TripCreationForm extends Component {
       dataType: 'json',
       data: obj,
       success: function(data) {
-       // console.log('lets use our dummy data until we get real data that looks just like this:');
-        //console.log(tripsArray);
         console.log('New trip created' , data);
       }.bind(this)
     });

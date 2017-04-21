@@ -20,6 +20,7 @@ router.post('/userLocations', usersController.getUserLocations);
 router.post('/registerUser', usersController.registerUser);
 router.post('/email', usersController.email);
 router.post('/createTrip', tripsController.createTrip);
+router.post('/getTripPreferences', tripsController.getTripPreferences);
 
 
 var getUserDates = function(key) {
