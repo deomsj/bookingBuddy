@@ -121,6 +121,57 @@ var tripMaster = function(obj) {
       });
 };
 
+var moreTrips = function(obj) {
+  console.log('Creating Trip Master!', obj);
+  db.query('INSERT INTO \
+                  trips(name, description) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.tripName, obj.description], function(err, tripResults) {
+                    if (err) {
+                      // console.log(tripResults);
+                      // res.send(err)
+                    }
+
+  db.query('INSERT INTO \
+                  userTrips(user_id, trip_id) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.id, tripResults.rows[0].id], function(err, userTripsResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+                    // console.log(userTripsResults.rows[0], "HELLO!");
+  db.query('INSERT INTO \
+                  dates(beging, ending, duration, trip_id, trip_number) \
+                  VALUES($1, $2, $3, $4, $5) RETURNING id',
+                  [obj.beginDate.slice(5)+'-'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'-'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+
+  db.query('INSERT INTO \
+                  budget(total, trip_id) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.hotelBudget, userTripsResults.rows[0].id], function(err, budgetResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+
+  obj.locations.forEach(function(location, ind, coll) {
+  db.query('INSERT INTO \
+                  locations(name, user_trip_id) \
+                  VALUES($1, $2) RETURNING id',
+                  [location, userTripsResults.rows[0].id], function(err, userResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+                  });
+                });
+              });
+            });
+          });
+        });
+};
+
 var tripUser = function(obj) {
   console.log('Creating Trip User!');
 
@@ -183,5 +234,6 @@ var tripUser = function(obj) {
 
 module.exports = {
   db : db,
-  tripMaster : tripMaster  
+  tripMaster : tripMaster,
+  moreTrips : moreTrips  
 }
