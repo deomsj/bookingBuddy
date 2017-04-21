@@ -25,7 +25,7 @@ class TripRoomComponents extends Component {
       selectedLocation: selection
     });
   }
-
+//ajax call to expedia
   addBookmark(newBookmark) {
     newBookmark['buddyVotes'] = this.props.tripData.buddyList.map((buddyName) => ({
       buddyName: buddyName,
