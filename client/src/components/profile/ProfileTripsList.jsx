@@ -18,7 +18,7 @@ class ProfileTripsList extends Component {
       <div className="section">
         <ul className="collapsible popout" data-collapsible="accordion">
           {this.props.userTripsArr.map((trip, index) => (
-            <ProfileTrip trip={trip} key={index} />
+            <ProfileTrip trip={trip} key={index} selectTrip={this.props.selectTrip}/>
           ))}
         </ul>
       </div>

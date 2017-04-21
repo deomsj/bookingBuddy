@@ -43,6 +43,7 @@ class Profile extends Component {
   }
 
   render() {
+    console.log('props passed to profile component: ', this.props.profile);
     return (
       <div className="Profile section">
         <div className="container">
@@ -53,7 +54,7 @@ class Profile extends Component {
             <div className="col m8">
               <div className="ProfileTrips">
                 <h2 className="header orange-text">Current Trips</h2>
-                <ProfileTripsList userTripsArr={this.state.tripsArray} />
+                <ProfileTripsList userTripsArr={this.state.tripsArray} selectTrip={this.props.selectTrip} />
                 <div className="divider"></div>
                 <div className="section center-align">
                   <Link className="orange btn" to="/start-planning/trip-create">CREATE NEW TRIP</Link>
