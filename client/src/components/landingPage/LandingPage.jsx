@@ -5,6 +5,8 @@ import {
   Link
 } from 'react-router-dom';
 
+var socket = io();
+
 var ChatMessages = function({name, text}) {
   return (
     <div>
@@ -22,17 +24,33 @@ class LandingPage extends Component {
     this.state = {
       messages: []
     };
+
+    socket.on('new message', function(data) {
+      this.setState({
+      messages: this.state.messages.concat(
+        {
+          name: data.name,
+          text: data.text
+        })
+      });
+    }.bind(this));
   }
 
   sendMessage() {
+    var text = $('#chatTextField').val();
     this.setState({
       messages: this.state.messages.concat(
         {
-          name: 'Me',
-          text: $('#chatTextField').val()
+          name: 'You',
+          text: text
         })
     });
     $('#chatTextField').val('');
+
+    socket.emit('new message', {
+      name: 'Someone',
+      text: text
+    });
   }
 
   updateMessage(event) {

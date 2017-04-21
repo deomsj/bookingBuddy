@@ -25,11 +25,16 @@ var io = socket(server);
 io.on('connection', function (socket) {
   console.log('user connected');
 
+  socket.on('new message', function(data) {
+    socket.broadcast.emit('new message', {
+      name: data.name,
+      text: data.text
+    });
+  });
+
+  // Used in buddyVoteSlider
   socket.on('new vote', function (data) {
-    console.log(data);
-    // we tell the client to execute 'new vote'
     socket.broadcast.emit('new vote', {
-      // whatever we need to post a vote
       bookmarkId: data.bookmarkId,
       buddyName: data.buddyName,
       num: data.num
