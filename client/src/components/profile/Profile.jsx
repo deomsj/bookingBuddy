@@ -20,6 +20,7 @@ class Profile extends Component {
       tripsArray: tripsArray,
     };
   }
+
   componentWillMount() {
   //this ajax request will get all trips assiciated with any user according to thier email address
     //only thing that will change is the email address from the data object below
@@ -27,7 +28,6 @@ class Profile extends Component {
   }
 
   getTripNames(email){
-    console.log(email);
     $.ajax({
       type: 'POST',
       url: '/userTripNames',
@@ -35,15 +35,11 @@ class Profile extends Component {
       data: { email : email },
       success: function(data) {
         this.setState({tripsArray:data});
-       // console.log('lets use our dummy data until we get real data that looks just like this:');
-        //console.log(tripsArray);
-        console.log('Current real data' , data);
       }.bind(this)
     });
   }
 
   render() {
-    console.log('props passed to profile component: ', this.props.profile);
     return (
       <div className="Profile section">
         <div className="container">

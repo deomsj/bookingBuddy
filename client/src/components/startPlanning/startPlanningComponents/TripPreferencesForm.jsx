@@ -58,6 +58,28 @@ class TripPreferencesForm extends Component {
     };
   }
 
+  componentWillMount() {
+    //this ajax request will get get the user's current preferences for this trip, if they exist
+    // if this is the user's first time visiting the form then they will not have any prior preferences stored
+      //in this case the server will send back ... ? undefined? 404? null? 'forget about it' ?
+    console.log('getting current tripPreferences for user ' + this.props.userEmail + ' for trip # ' + this.props.tripId);
+    //this.getUserTripPreferences(this.props.userEmail, this.props.tripId);
+  }
+
+  getUserTripPreferences(email, tripId){
+    $.ajax({
+      type: 'POST',
+      url: '/getUserTripPreferences',
+      dataType: 'json',
+      data: { email : email,
+              tripId : tripId
+            },
+      success: function(data) {
+        this.setState(data);
+      }.bind(this)
+    });
+  }
+
   addLocation (e) {
 
     e.preventDefault();

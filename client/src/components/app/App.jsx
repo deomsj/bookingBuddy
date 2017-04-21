@@ -77,8 +77,10 @@ class App extends Component {
             render={() => <Profile profile={this.state.profile} selectTrip={this.selectTrip} /> }
           />
           <Route exact path="/landingPage" component={LandingPage} />
-          <Route path="/start-planning" component={StartPlanning} />
-          <Route path="/trip-room" component={TripRoom} />
+          <Route path="/start-planning"
+            render={() => <StartPlanning userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
+          <Route path="/trip-room"
+            render={() => <TripRoom userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
           <Route path="/about-us" component={AboutUs} />
         </div>
       </Router>

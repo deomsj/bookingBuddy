@@ -16,30 +16,25 @@ const PlanningLinks = () => (
   </div>
 );
 
-const PlanningRoutes = () => (
+const PlanningRoutes = ({userEmail, tripId}) => (
   <Router>
     <div>
       <PlanningLinks />
       <Route
         path="/start-planning/trip-create"
-        component={TripCreationForm} />
+        render={() => <TripCreationForm userEmail={userEmail} /> } />
       <Route
         path="/start-planning/trip-preferences"
-        component={TripPreferencesForm} />
+        render={() => <TripPreferencesForm userEmail={userEmail} tripId={tripId} /> } />
     </div>
   </Router>
 );
 
-class StartPlanning extends Component {
-
-  render() {
-    return (
-      <div className="container">
-        <h2>Start Planning</h2>
-        <PlanningRoutes />
-      </div>
-    );
-  }
-}
+const StartPlanning = ({userEmail, tripId}) => (
+  <div className="container">
+    <h2>Start Planning</h2>
+    <PlanningRoutes userEmail={userEmail} tripId={tripId} />
+  </div>
+);
 
 export default StartPlanning;
