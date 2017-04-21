@@ -1,7 +1,20 @@
-var db = require('../db/db');
+var gets = require('../db/db');
+var db = gets.db;
+var create = gets.tripMaster;
 
 module.exports.createTrip = function(req, res, next) {
-  console.log(req.body, "Getting new trip data...");
+  console.log(req.body, "Creating new trip data...");
+  var make = req.body;
+  create({ email : make.email, 
+    duration : make.duration, 
+    beginDate : make.beginDate, 
+    endDate : make.endDate,
+    name : make.name,
+    tripName : make.tripName,
+    hotelBudget : parseInt(make.hotelBudget),
+    locations : make.locations,
+    description : make.tripSummary
+    });
   res.send({testing : "testing"});
 
 }

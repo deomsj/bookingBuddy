@@ -1,4 +1,5 @@
-var db = require('../db/db');
+var gets = require('../db/db');
+var db = gets.db;
 var nodemailer = require('nodemailer');
 var validator = require('validator');
 

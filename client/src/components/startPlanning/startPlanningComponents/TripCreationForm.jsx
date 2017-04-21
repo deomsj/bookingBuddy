@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TripMemberInvitesForm from './TripMemberInvitesForm.jsx';
-import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
+import {tripData, userData} from '../../tripRoom/data/tripRoomDynamicData';
 import {worldCities} from '../../../../../worldcities.js'
 import {
   BrowserRouter as Router,
@@ -10,7 +10,7 @@ import {
 
 const LocationsList = ({locations
 }) => {
-  console.log(tripData,"tripData!")
+
   var locations = locations.map(
     (location, index) => {
 
@@ -164,12 +164,15 @@ addLocation (e) {
 
   submitNewTrip() {
     //an ajax request
-    console.log(this.state, "Creating...")
+    var obj = this.state;
+    obj.name = tripData.profile.name;
+    obj.email = tripData.profile.email;
+    console.log(tripData.profile.name, "Profile...")
     $.ajax({
       type: 'POST',
       url: '/createTrip',
       dataType: 'json',
-      data: this.state,
+      data: obj,
       success: function(data) {
        // console.log('lets use our dummy data until we get real data that looks just like this:');
         //console.log(tripsArray);

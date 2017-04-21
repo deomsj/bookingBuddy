@@ -13,15 +13,15 @@ db.connect(function (err) {
   db.query('CREATE TABLE \
                   users( \
                   id SERIAL PRIMARY KEY, \
-                  nameF VARCHAR(15) not null, \
-                  nameL VARCHAR(15) not null, \
+                  nameF VARCHAR(30) not null, \
+                  nameL VARCHAR(30) not null, \
                   email VARCHAR(25) not null)');
 
   db.query('CREATE TABLE \
                   trips( \
                   id SERIAL PRIMARY KEY, \
                   description VARCHAR(300), \
-                  name VARCHAR(15) not null)');
+                  name VARCHAR(25) not null)');
 
   db.query('CREATE TABLE \
                   userTrips( \
