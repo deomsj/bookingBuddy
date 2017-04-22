@@ -32,9 +32,9 @@ var tripMaster1 = {
 
 var tripUser1 = {
   //tripUser === invitee
-  email: 'tata16@gmail.com',
-  name: 'Johnny',
-  locations: ['Reeding', 'Atlanta', 'Fresno'],
+  email: 'toll6@gmail.com',
+  name: 'Jo',
+  locations: ['Atlanta', 'Fresno'],
   beginDate: '04/06/2017',
   endDate: '10/26/2017',
   duration: '7',
@@ -91,7 +91,7 @@ var tripMaster = function(obj) {
   db.query('INSERT INTO \
                   dates(beging, ending, duration, trip_id, trip_number) \
                   VALUES($1, $2, $3, $4, $5) RETURNING id',
-                  [obj.beginDate.slice(5)+'-'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'-'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
+                  [obj.beginDate.slice(5)+'/'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'/'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
                     if (err) {
                       // res.send(err)
                     }
@@ -143,7 +143,7 @@ var moreTrips = function(obj) {
   db.query('INSERT INTO \
                   dates(beging, ending, duration, trip_id, trip_number) \
                   VALUES($1, $2, $3, $4, $5) RETURNING id',
-                  [obj.beginDate.slice(5)+'-'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'-'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
+                  [obj.beginDate.slice(5)+'/'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'/'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
                     if (err) {
                       // res.send(err)
                     }
