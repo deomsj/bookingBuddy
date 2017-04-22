@@ -7,10 +7,10 @@ var apiKey = config.EXPEDIA_API_KEY;
 var secret = config.EXPEDIA_SECRET;
 
 var options = {
-      cid: cid,
-      apiKey: apiKey,
-      secret: secret,
-      sig: md5(apiKey + secret + Math.floor(new Date() / 1000)),
+      cid: '379639',
+      apiKey: '65cc419lbqf590p1njeuv4p0q0',
+      secret: 'bvp038hq772sm',
+      sig: md5('65cc419lbqf590p1njeuv4p0q0' + 'bvp038hq772sm' + Math.floor(new Date() / 1000)),
       // sig: "d44f9fb2c7c70f13bd8ea1bc4019a859",
       locale: "en_US",  // optional defaults to en_US
       currencyCode: "USD"  // optional defaults to USD
@@ -20,7 +20,7 @@ var options = {
 var expedia = require("expedia")(options);
 
 module.exports.expediaAPI = function(req, res, next) {
-  console.log("Inside expediaA Api...", req.body)
+  console.log("Inside expediaA Api...");
   var options = {
     "customerSessionId" : "thisisauniqueID",
     "customerIpAddress" : "127.0.0.1",
@@ -28,8 +28,8 @@ module.exports.expediaAPI = function(req, res, next) {
     "HotelListRequest": {
       "city": req.body.location,
       "countryCode": "US",
-      "arrivalDate": "4/23/2017",
-      "departureDate": "4/29/2017",
+      "arrivalDate": req.body.beginningDate,
+      "departureDate": req.body.endingDate,
       "RoomGroup": {
         "Room": { "numberOfAdults": "2" }
       },
@@ -39,8 +39,8 @@ module.exports.expediaAPI = function(req, res, next) {
 
   expedia.hotels.list(options, function(err, data){
       if(err){console.log("ERROR",err) };
-      console.log("Getting Expedia Hotel Data...", data);
-      res.send(data.HotelListResponse.HotelList);
+      console.log("Getting Expedia Hotel Data...");
+      res.send(data.HotelListResponse.HotelList.HotelSummary);
   });
 };
 
