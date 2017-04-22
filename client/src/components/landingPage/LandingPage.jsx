@@ -5,7 +5,70 @@ import {
   Link
 } from 'react-router-dom';
 
+var socket = io();
+var colors = [
+  'red', 'pink', 'purple', 'deep-purple', 'indigo',
+  'blue', 'cyan', 'teal', 'green',
+  'amber', 'orange', 'deep-orange'
+];
+var randomColor = colors[Math.floor(Math.random() * (colors.length - 1))] + '-text';
+
+var ChatMessages = function({name, text, color}) {
+  return (
+    <div>
+      <p className={color}>{name}</p>
+      <div className="chip">
+        <div className={color}>
+          {text}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 class LandingPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: []
+    };
+
+    socket.on('new message', function(data) {
+      this.setState({
+      messages: this.state.messages.concat(
+        {
+          name: data.name,
+          text: data.text,
+          color: data.color
+        })
+      });
+    }.bind(this));
+  }
+
+  sendMessage() {
+    var text = $('#chatTextField').val();
+    this.setState({
+      messages: this.state.messages.concat(
+        {
+          name: 'You',
+          text: text,
+          color: randomColor
+        })
+    });
+    $('#chatTextField').val('');
+
+    socket.emit('new message', {
+      name: 'Someone',
+      text: text,
+      color: randomColor
+    });
+  }
+
+  updateMessage(event) {
+    if (event.key === 'Enter') {
+      this.sendMessage();
+    }
+  }
 
   componentDidMount() {
     $(document).ready(function() {
@@ -84,21 +147,57 @@ class LandingPage extends Component {
             <h5 className="header col s12 light">Chat with your friends about the results and brainstorm ideas.</h5>
             <br />
 
+
+
+
+
+
+
+
+
             <div className="col s12 m6">
-              <div className="card grey lighten-4">
+              <div className="chat card grey lighten-4">
                 <div className="card-content">
-                  <span className="card-title left-align blue-text">Preston</span>
-                  <p className="left-align blue-text">Hey guys looks like we all are free to travel in a few weeks...</p>
-                  <span className="card-title left-align green-text">Nate</span>
-                  <p className="left-align green-text"> Yeah that looks like the best time! Where do you guys want to go. Looks like we had a lot of overlap </p>
-                  <span className="card-title right-align red-text">Me</span>
-                  <p className="right-align red-text">Personally, the carribean would be my top choice!</p>
+                  <div>
+                    <p className="blue-text">Preston</p>
+                    <div className="chip blue-text">
+                      Hey guys looks like we all are free to travel in a few weeks...
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="green-text">Nate</p>
+                    <div className="chip green-text">
+                      Yeah that looks like the best time! Where do you guys want to go? Looks like we had a lot of overlap
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="red-text">Max</p>
+                    <div className="chip red-text">
+                      Personally, the carribean would be my top choice!
+                    </div>
+                  </div>
+
+                  {this.state.messages.map((message, index) =>
+                    <ChatMessages name={message.name} text={message.text} color={message.color} key={index} />
+                    )}
+
                 </div>
                 <div className="card-action">
-                  <input placeholder="type a message..." type="text" />
+                  <input id="chatTextField" placeholder="type a message..." type="text" onKeyUp={this.updateMessage.bind(this)} />
+                  <a className="btn-floating halfway-fab waves-effect waves-light orange" onClick={this.sendMessage.bind(this)} ><i className="material-icons">add</i></a>
                 </div>
               </div>
             </div>
+
+
+
+
+
+
+
+
           </div>
           {/* QUOTE */}
           <div className="parallax-container homepage-quote">

@@ -47,9 +47,9 @@ module.exports.email = function(obj) {
 
 module.exports.userTripNames = function(req, res) {
   console.log(req.body);
-  db.query('select * from trips INNER JOIN userTrips ON (trips.id = userTrips.trip_id AND userTrips.user_id = (SELECT id FROM users where email = ($1)))', [req.body.email], 
+  db.query('select * from trips INNER JOIN userTrips ON (trips.id = userTrips.trip_id AND userTrips.user_id = (SELECT id FROM users where email = ($1)))', [req.body.email],
     function(err, data) {
-      res.send(data.rows);
+      data && res.send(data.rows);
   });
 };
 
