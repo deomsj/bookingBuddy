@@ -19,10 +19,18 @@ h5, h4 {
 .btn {
   margin: 2px;
 }
+
+/* # Trip Preferences Page
+________________________________________*/
+
 .bling {
   display: inline;
   text-decoration: bold;
   font-size: 22px;
+  padding: 0 23px 0 8px;
+}
+
+.checkbox {
   padding: 0 23px 0 8px;
 }
 

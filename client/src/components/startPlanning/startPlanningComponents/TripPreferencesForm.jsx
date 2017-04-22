@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
+import {friendsData} from '../../tripRoom/data/friendsDummyData';
 import {
   BrowserRouter as Router,
   Route,
@@ -10,16 +11,88 @@ import {
 import {worldCities} from '../../../../../worldcities.js'
 
 
+const FriendsLocationsList = ({friendsData}) => {
+  console.log(friendsData,"friendsData!")
+  var uniqueLocations = [];
+  var friendsLocations;
+  for (var key in friendsData) {
+    friendsLocations = friendsData[key].locations.map(
+      (location, index) => {
+      if (!uniqueLocations.includes(location)) {
+        uniqueLocations.push(location);
+      }
+    });
+  }
+  var locations = uniqueLocations.map(
+    (location, index) =>{        
+      return (
+        <span className="checkbox" key={index}>
+          <input type="checkbox" className="filled-in" id="filled-in-box" ></input>
+          <label htmlFor="filled-in-box">{location}</label>
+        </span>
+      );
+    });  
+  return (
+    <div>
+       <span>{locations}</span>
+    </div>
+  );
+};
+
+const FriendNights = ({friendsData}) => {
+  //var friendsNights = function() {
+  console.log(friendsData);
+  var keys = Object.keys(friendsData);
+  var lowest = friendsData[keys[0]].duration;
+  for (var i = 0; i < keys.length; i++) {
+    if(lowest > friendsData[keys[i]].duration) {
+        lowest = friendsData[keys[i]].duration;
+    }
+  }
+  var highest = friendsData[keys[0]].duration;
+  for (var i = 0; i < keys.length; i++) {
+    if(highest < friendsData[keys[i]].duration) {
+        highest = friendsData[keys[i]].duration;
+    }
+  }
+  return (
+   <div>
+       <p className="icon-block orange-text darken-2">Your friends chose between {lowest} and {highest} nights for their trip</p>
+  </div> 
+  )};
+  
+
+const FriendBudget = ({friendsData}) => {
+  var keys = Object.keys(friendsData);
+  var lowest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
+  for (var i = 0; i < keys.length; i++) {
+    var currentL = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
+    if(lowest > currentL) {
+      lowest = currentL;
+    }
+  }
+  var highest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
+  for (var i = 0; i < keys.length; i++) {
+    var currentH = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
+    if(highest < currentH) {
+      highest = currentH;
+    }
+  }
+  return (
+       <span className="orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</span> 
+)};  
+  
+
 const LocationsList = ({locations
 }) => {
   var locations = locations.map(
     (location, index) => {
 
     return (
-      <div key={index}>
+      <span className="checkbox" key={index}>
         <input type="checkbox" className="filled-in" id="filled-in-box" checked="checked"></input>
         <label htmlFor="filled-in-box">{location}</label>
-      </div>
+      </span>
     );
   });
   return (
@@ -50,7 +123,9 @@ class TripPreferencesForm extends Component {
       beginDate: '',
       endDate: '',
       location: '',
-      totalBudget: 0
+      totalBudget: 0,
+      friendsLocations: [],
+      friendsData: friendsData
       //membersInvited: [],
       //tripName: '',
       //tripSummary: ''
@@ -92,10 +167,22 @@ class TripPreferencesForm extends Component {
     }));
   }
 
-  preserveLocation() {
-    tripData.locations = this.state.locations;
-    console.log(tripData, "Adding Locations!");
+  addFriendsLocation (location) {
+
+    this.setState((prevState) => ({
+      locations: prevState.locations.concat(location),
+    }));
   }
+
+  // preserveLocation() {
+  //   tripData.locations = this.state.locations;
+  //   console.log(tripData, "Adding Locations!");
+  // }
+
+  // preserveFriendsLocation() {
+  //   friendsData.locations = this.state.friendslocations;
+  //   console.log(friendsData, "Adding Locations!");
+  // }
 
 
   changeLocation(e) {
@@ -189,6 +276,10 @@ class TripPreferencesForm extends Component {
                   <div>
                     <LocationsList locations={this.state.locations} />
                   </div>
+                  <div>
+                    <p className="icon-block orange-text darken-2">Below are the locations your friends have already selected:</p>
+                    <FriendsLocationsList friendsData={this.state.friendsData} />
+                  </div>
                 </div>
               </div>
             </li>
@@ -208,6 +299,7 @@ class TripPreferencesForm extends Component {
                     <input type="range" min="1" max="28" onChange={this.changeDuration} value={this.state.duration} />
                     </p>
                     </form>
+                    <FriendNights friendsData={this.state.friendsData}/>
                     </div>
                   </div>
                 </div>
@@ -242,8 +334,7 @@ class TripPreferencesForm extends Component {
               </div>
               <div className="collapsible-body">
                 <form action="#">
-                  <p className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
-                  </strong>
+                  <p className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}</strong> <small><FriendBudget friendsData={this.state.friendsData} /></small>
                   </p>
                 </form>
                 <span className="col s10">What's your nightly budget for <b>hotel</b> accommodations?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
