@@ -20,7 +20,7 @@ var options = {
 var expedia = require("expedia")(options);
 
 module.exports.expediaAPI = function(req, res, next) {
-  console.log("Inside expediaA Api...");
+  console.log("Inside expediaA Api...", req.body);
   var options = {
     "customerSessionId" : "thisisauniqueID",
     "customerIpAddress" : "127.0.0.1",
@@ -39,8 +39,8 @@ module.exports.expediaAPI = function(req, res, next) {
 
   expedia.hotels.list(options, function(err, data){
       if(err){console.log("ERROR",err) };
-      console.log("Getting Expedia Hotel Data...");
-      res.send(data.HotelListResponse.HotelList.HotelSummary);
+      console.log("Getting Expedia Hotel Data...", data);
+      res.send(data.HotelListResponse.HotelList);
   });
 };
 

@@ -168,8 +168,9 @@ class TripCreationForm extends Component {
     obj.name = tripData.profile.name;
     obj.email = tripData.profile.email;
     obj.buddies = tripData.buddyData;
-    console.log(tripData.profile.name, "Profile...")
-    console.log(tripData.buddyData, "BUDDIES!!!")
+    obj.tripName = tripData.tripName;
+    // console.log(tripData.profile.name, "Profile...")
+    // console.log(tripData.buddyData, "BUDDIES!!!")
     $.ajax({
       type: 'POST',
       url: '/createTrip',

@@ -19,7 +19,12 @@ module.exports.registerUser = function(req, res, next) {
 };
 
 module.exports.email = function(obj) {
-  console.log("IN EMAIL!", obj.body.buddies)
+  console.log("IN EMAIL!", obj.body)
+  obj.body.buddies.forEach(function(item, ind, coll) {
+    console.log(item.name, "NAME", item.email, "EMAIL", obj.body.tripName, "TRIPNAME");
+
+
+  })
   //obj will contain email recipients name and email
   // let transporter = nodemailer.createTransport({
   //   service: 'gmail',

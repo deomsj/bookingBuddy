@@ -50,15 +50,39 @@ db.query('CREATE TABLE \
                   locations( \
                   id SERIAL PRIMARY KEY, \
                   name VARCHAR(25) not null, \
+                  trip_id INTEGER REFERENCES trips(id), \
                   user_trip_id INTEGER REFERENCES userTrips(id))');
 
   db.query('CREATE TABLE \
                   bookmarks( \
                   id SERIAL PRIMARY KEY, \
+                  client_id VARCHAR(26), \
+                  name VARCHAR(30), \
                   email VARCHAR(30), \
                   bookmark VARCHAR(300), \
-                  trip_id INTEGER, \
+                  trip_id INTEGER REFERENCES trips(id), \
                   user_trip_id INTEGER REFERENCES userTrips(id))');
+
+  db.query('CREATE TABLE \
+                  comments( \
+                  id SERIAL PRIMARY KEY, \
+                  client_id VARCHAR(26), \
+                  name VARCHAR(30), \
+                  email VARCHAR(30), \
+                  comment VARCHAR(300), \
+                  trip_id INTEGER REFERENCES trips(id), \
+                  bookmark_id INTEGER REFERENCES bookmarks(id))');
+
+  db.query('CREATE TABLE \
+                  votes( \
+                  id SERIAL PRIMARY KEY, \
+                  client_id VARCHAR(26), \
+                  name VARCHAR(30), \
+                  email VARCHAR(30), \
+                  vote VARCHAR(10), \
+                  trip_id INTEGER REFERENCES trips(id), \
+                  bookmark_id INTEGER REFERENCES bookmarks(id))');
+
 
 });
 
