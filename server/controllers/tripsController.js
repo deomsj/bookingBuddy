@@ -6,6 +6,8 @@ var additionalTrips = gets.moreTrips;
 module.exports.createTrip = function(req, res, next) {
   console.log(req.body, "Creating new trip data...");
   var make = req.body;
+  make.beginDate = make.beginDate.replace(/[-]/g, '/');
+  make.endDate = make.endDate.replace(/[-]/g, '/');
   db.query('SELECT id FROM users WHERE email = ($1)', [make.email], function(err, data) { 
     console.log(data, "data");
     if(data.rows.length === 0) {
@@ -15,10 +17,11 @@ module.exports.createTrip = function(req, res, next) {
         hotelBudget : parseInt(make.hotelBudget),
         description : make.tripSummary,
         locations : make.locations,
-        beginDate : make.beginDate,
+        buddies : make.buddies,
+        beginDate : make.beginDate.replace(/[-]/g, '/'),
         duration : make.duration, 
         tripName : make.tripName,
-        endDate : make.endDate,
+        endDate : make.endDate.replace(/[-]/g, '/'),
         name : make.name
       });
     } else {
@@ -30,15 +33,16 @@ module.exports.createTrip = function(req, res, next) {
         hotelBudget : parseInt(make.hotelBudget),
         description : make.tripSummary,
         locations : make.locations,
-        beginDate : make.beginDate,
+        buddies : make.buddies,
+        beginDate : make.beginDate.replace(/[-]/g, '/'),
         duration : make.duration, 
         tripName : make.tripName,
-        endDate : make.endDate,
+        endDate : make.endDate.replace(/[-]/g, '/'),
         name : make.name,
         id : make.id
       });
     }
-    res.send({testing : "testing"});
+    res.send({tripId : make.id});
 });
 }
 
@@ -96,11 +100,12 @@ module.exports.getTotalBudgetForTrip = function(req, res, next) {
   });
 };
 
-
 module.exports.getTripData = function(req, res, next) {
   console.log(req.body, "tripData");
-  var data = {};
+  var dat = {};
   var sum = 0;
+  var commonTrips = [];
+  var len;
 
   db.query('SELECT * FROM bookmarks WHERE trip_id = (SELECT id FROM trips WHERE name = ($1))', [req.body.tripId],
     function(err, data) {
@@ -108,25 +113,20 @@ module.exports.getTripData = function(req, res, next) {
       console.log(data.rows, "GETTRIPDATABOOKMARKS!");
   });
 
-  db.query('SELECT * FROM userTrips WHERE trip_id = ($1)', [req.body.tripId], function(err, data) {
+  db.query('SELECT total FROM budget INNER JOIN userTrips ON(budget.trip_id = userTrips.user_id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
     data.rows.forEach(function(item, ind, coll) {
-      db.query('SELECT total FROM budget WHERE trip_id = ($1)', [item.id], function(err, data) {
-        if (err) {
-          console.log(err, 'err');
-        }
-        sum += parseInt(data.rows[0].total);
-        if (ind === coll.length - 1) {
-          data.sum = sum;
-        }
-      });
+      sum += parseInt(item.total);
+      dat.hotelTripSum = sum;
     });
   }); 
 
   var commonDateObj = {beginning: '', ending: '', duration: ''};
-  db.query('SELECT beging FROM dates WHERE trip_number = ($1)', [req.body.tripiId], function(err, data) {
+
+  db.query('SELECT beging FROM dates WHERE trip_number = ($1)', [req.body.tripId], function(err, data) {
     var begHighMon = [];
     var begHighDay = [];
     var begHighYear = [];
+
     for (var i = 0; i < data.rows.length; i++) {
       begHighMon.push(parseInt(data.rows[i].beging.slice(0, 2)));
       begHighDay.push(parseInt(data.rows[i].beging.slice(3, 5)));
@@ -148,58 +148,40 @@ module.exports.getTripData = function(req, res, next) {
       commonDateObj.ending += Math.min(...endHighMon) + '/';
       commonDateObj.ending += Math.min(...endHighDay) + '/';
       commonDateObj.ending += Math.min(...endHighYear);
-      console.log(commonDateObj, "Common Dates...");
       db.query('SELECT duration FROM dates WHERE trip_number = ($1)', [req.body.tripId], function(err, data) {
         commonDateObj.duration = data.rows[0].duration;
-        data.commonDates = commonDateObj;
+        dat.commonDates = commonDateObj;
       });
     });
   });
-
-  var commonTrips = [];
-  var common = {};
-  var max;
-  var tripName;
+  
   db.query('SELECT name FROM trips WHERE id = ($1)', [req.body.tripId], function(err, data) {
-    tripName = data.rows[0].name;
+    dat.tripName = data.rows[0].name;
   });
-  db.query('SELECT name FROM locations', function(err, data) {
-    max = data.rows.length - 1;
+  db.query('select * from userTrips where trip_id = ($1)',[req.body.tripId], function(err, data) {
+    len = data.rows.length;
   });
-
-  db.query('SELECT * FROM userTrips WHERE trip_id = ($1)', [req.body.tripId], function(err, data) {
-    var len = data.rows.length;
+  db.query('SELECT name FROM locations INNER JOIN userTrips ON(locations.user_trip_id = userTrips.user_id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
+    var counter = {};
     data.rows.forEach(function(item, ind, coll) {
-      db.query('SELECT * FROM locations WHERE user_trip_id = ($1)', [item.tripId], function(err, data) {
-        if (err) {
-          console.log(err, 'err');
-        }
-        data.rows.forEach(function(item, index, collection) {
-          max--;
-          if (common[item.name] === undefined) {
-            common[item.name] = 1;
-          } else {
-            common[item.name]++;
-          }
-          if (max === 0) {
-            for (var key in common) {
-              if (common[key] === len) {
-                commonTrips.push(key);
-              }
-            }
-            console.log(commonTrips, "Common trip(s)...");
-            data.commonTrips = {commonTrips: commonTrips, tripName:tripName};
-            setTimeout(function() {
-              res.send(data);
-            },1000)
-          }
-        });
-      });
+      if(counter[item.name] === undefined) {
+        counter[item.name] = 1;
+      } else {
+        counter[item.name]++;
+      }
     });
+    for(var key in counter) {
+      if(counter[key] > 1) {
+        commonTrips.push(key);
+      }
+    }
+    dat.commonTrips = commonTrips;
+    setTimeout(function() {
+     res.send(dat);
+    }, 500);
   });
 
-
-}
+};
 
 module.exports.commonTripLocations = function(req, res, next) {
   //key represents the trip id

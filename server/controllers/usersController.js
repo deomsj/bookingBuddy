@@ -19,30 +19,30 @@ module.exports.registerUser = function(req, res, next) {
 };
 
 module.exports.email = function(obj) {
-  console.log("IN EMAIL!", obj.body)
+  console.log("IN EMAIL!", obj.body.buddies)
   //obj will contain email recipients name and email
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'bookingbuddy17@gmail.com',
-      pass: 'Verizon7'
-    }
-  });
+  // let transporter = nodemailer.createTransport({
+  //   service: 'gmail',
+  //   auth: {
+  //     user: 'bookingbuddy17@gmail.com',
+  //     pass: 'Verizon7'
+  //   }
+  // });
 
-  let mailOptions = {
-    from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
-    to: obj.body.email, // list of receivers
-    subject: 'Hey! You\'ve been invited to go on vacation!', // Subject line
-    text: 'Whatever we want to tell the db ' + obj.body.id, // plain text body
-    html: '<b>Its vacation time! Go to the following link to plan your group vacation.</b>' + ' http://localhost:3000/profile/'+ obj.body.id + '<br><b> Enjoy enjoy!</b>' // html body
-  };
+  // let mailOptions = {
+  //   from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
+  //   to: obj.body.email, // list of receivers
+  //   subject: 'Hey! You\'ve been invited to go on vacation!', // Subject line
+  //   text: 'Whatever we want to tell the db ' + obj.body.id, // plain text body
+  //   html: '<b>Its vacation time! Go to the following link to plan your group vacation.</b>' + ' http://localhost:3000/profile/'+ obj.body.id + '<br><b> Enjoy enjoy!</b>' // html body
+  // };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-  });
+  // transporter.sendMail(mailOptions, (error, info) => {
+  //   if (error) {
+  //     return console.log(error);
+  //   }
+  //   console.log('Message %s sent: %s', info.messageId, info.response);
+  // });
 };
 
 module.exports.userTripNames = function(req, res) {
