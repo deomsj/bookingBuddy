@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import BookmarkMessagesList from './BookmarkMessagesList.jsx';
 
+// TripRoom > TripRoomComponents > tripBookmarksList > Your Are Here (BookmarkMessages)
+
 class BookmarkMessages extends Component {
   constructor(props) {
     super(props);

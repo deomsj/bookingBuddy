@@ -2,6 +2,8 @@ import React from 'react';
 import BuddyVotesWindow from './BuddyVotesWindow.jsx';
 import BookmarkMessages from './BookmarkMessages.jsx';
 
+// TripRoom > TripRoomComponents > Your Are Here (tripBookmarksList)
+
 var TripBookmarksList = function({bookmarkedTrips, updateBookmarkVote}) {
 
   var bookmarksList = bookmarkedTrips.map( (bookmark, bookmarkId) => (

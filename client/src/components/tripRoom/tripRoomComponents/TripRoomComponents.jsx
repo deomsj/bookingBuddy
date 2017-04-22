@@ -10,8 +10,6 @@ class TripRoomComponents extends Component {
     this.setLocation = this.setLocation.bind(this);
     this.addBookmark = this.addBookmark.bind(this);
     this.updateBookmarkVote = this.updateBookmarkVote.bind(this);
-    // this.handleBookmarkMessageChange = this.handleBookmarkMessageChange.bind(this);
-    // this.handleBookmarkMessageSubmit = this.handleBookmarkMessageSubmit.bind(this);
     this.state = {
       priceRange: props.tripData.priceRange,
       dateRange: props.tripData.dateRange,
@@ -57,26 +55,6 @@ class TripRoomComponents extends Component {
       bookmarkedTrips: updatedBookmarks
     });
   }
-
-  // handleBookmarkMessageChange(e) {
-  //   this.setState({
-  //     bookmarkMessageText: e.target.value
-  //   });
-  // }
-
-  // handleBookmarkMessageSubmit(e) {
-  //   e.preventDefault();
-  //   var newMessage = {
-  //     user: 'Nate',
-  //     content: this.state.bookmarkMessageText,
-  //     id: Date.now()
-  //   };
-
-  //   this.setState((prevState) => ({
-  //     bookmarkMessages: prevState.bookmarkMessages.concat(newMessage),
-  //     bookmarkMessageText: ''
-  //   }));
-  // }
 
   render() {
 
