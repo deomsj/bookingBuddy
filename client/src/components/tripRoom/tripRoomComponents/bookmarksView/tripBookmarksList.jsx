@@ -1,27 +1,39 @@
 import React from 'react';
 import BuddyVotesWindow from './BuddyVotesWindow.jsx';
+import BookmarkMessages from './BookmarkMessages.jsx';
+
+// TripRoom > TripRoomComponents > Your Are Here (tripBookmarksList)
 
 var TripBookmarksList = function({bookmarkedTrips, updateBookmarkVote}) {
 
   var bookmarksList = bookmarkedTrips.map( (bookmark, bookmarkId) => (
     <div key={bookmarkId} className="row">
-      <div className="col s12 m6">
-        <h5>{bookmark.hotelRecomendationObj.HotelName}</h5>
-        <div className="col s12 m6">
-          <img src={bookmark.hotelRecomendationObj.Image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
-        </div>
-        <div className="col s12 m6">
+      <div className="col s12 m7">
+        <div className="col s12 m7">
+          <h5>{bookmark.hotelRecomendationObj.HotelName}</h5>
           <p>{bookmark.bookmarkComment}</p>
         </div>
+        <div className="col s12 m5">
+          <img src={bookmark.hotelRecomendationObj.Image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
+        </div>
       </div>
-      <div className="col s12 m6">
-        <BuddyVotesWindow bookmarkId={bookmarkId} buddyVotes={bookmark.buddyVotes} updateBookmarkVote={updateBookmarkVote}/>
+      <div className="col s12 m5">
+        <BuddyVotesWindow
+          bookmarkId={bookmarkId}
+          buddyVotes={bookmark.buddyVotes}
+          updateBookmarkVote={updateBookmarkVote}
+        />
+      </div>
+      <div className="row">
+        <div className="col s12">
+          <BookmarkMessages bookmark={bookmark}/>
+        </div>
       </div>
     </div>
   ));
 
   return  (
-    <div>
+    <div className="row">
       {bookmarksList}
     </div>
   );

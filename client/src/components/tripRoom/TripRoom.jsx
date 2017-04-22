@@ -48,7 +48,7 @@ class TripRoom extends React.Component {
           },
           success: function(expediaResults) {
             console.log(expediaResults, "expediaResults");
-            // this.setState({expediaResults: expediaResults});      
+            // this.setState({expediaResults: expediaResults});
           }.bind(this)
         });
       }.bind(this)
@@ -65,17 +65,6 @@ class TripRoom extends React.Component {
       </div>
     );
   }
-
-  // <iframe src={this.state.url} width='750' height='350'></iframe>
-  // <img src={this.state.hotelImage}/>
-
-  // renderComment({body, author}) {
-  //   return (
-  //     <div>
-  //       <li></li>;
-  //     </div>
-  //   );
-  // }
 }
 
 export default TripRoom;
