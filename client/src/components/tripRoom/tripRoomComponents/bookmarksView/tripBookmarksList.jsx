@@ -24,7 +24,7 @@ var TripBookmarksList = function({bookmarkedTrips, updateBookmarkVote}) {
       </div>
       <div className="row">
         <div className="col s12">
-          <BookmarkMessages />
+          <BookmarkMessages bookmark={bookmark}/>
         </div>
       </div>
     </div>

@@ -48,7 +48,7 @@ class TripRoom extends React.Component {
           },
           success: function(expediaResults) {
             console.log(expediaResults, "expediaResults");
-            // this.setState({expediaResults: expediaResults});      
+            // this.setState({expediaResults: expediaResults});
           }.bind(this)
         });
       }.bind(this)
