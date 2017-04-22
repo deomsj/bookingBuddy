@@ -96,6 +96,7 @@ var tripMaster = function(obj) {
                       // res.send(err)
                     }
 
+
   db.query('INSERT INTO \
                   budget(total, trip_id, flight, activitites) \
                   VALUES($1, $2, $3, $4) RETURNING id',
@@ -119,8 +120,40 @@ var tripMaster = function(obj) {
           });
         });
       });
+
 };
 
+  // console.log(obj.buddies, "BUDDIES!")
+  // obj.buddies.forEach(function(item, ind, coll) {
+  //   console.log(item, "ITEM");
+  //   db.query('INSERT INTO \
+  //                 users(namef, namel, email) \
+  //                 VALUES($1, $2, $3) RETURNING id',
+  //                 [item.name, item.name, item.email], function(err, userResults) {
+  //                   // console.log(userResults, "userResults")
+  //                   if (err) {
+  //                     // res.send(err)
+  //                   }
+  //     db.query('INSERT INTO \
+  //                   trips(name, description) \
+  //                   VALUES($1, $2) RETURNING id',
+  //                   [obj.tripName, obj.description], function(err, tripResults) {
+  //                     if (err) {
+  //                     // console.log(tripResults);
+  //                     // res.send(err)
+  //                     }
+  //       db.query('INSERT INTO \
+  //                     userTrips(user_id, trip_id) \
+  //                     VALUES($1, $2) RETURNING id',
+  //                     [userResults.rows[0].id, tripResults.rows[0].id], function(err, userTripsResults) {
+  //                       if (err) {
+  //                         // res.send(err)
+  //                       }
+  //       });
+  //     });
+  //   });
+  // });
+  
 var moreTrips = function(obj) {
   console.log('Creating Trip Master!', obj);
   db.query('INSERT INTO \

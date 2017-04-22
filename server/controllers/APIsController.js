@@ -17,18 +17,18 @@ var options = {
 };
 
 
-//var expedia = require("expedia")(options);
+var expedia = require("expedia")(options);
 
 module.exports.expediaAPI = function(req, res, next) {
-  console.log("Inside expediaA Api...")
+  console.log("Inside expediaA Api...", req.body)
   var options = {
     "customerSessionId" : "thisisauniqueID",
     "customerIpAddress" : "127.0.0.1",
     "customerUserAgent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko)",
     "HotelListRequest": {
-      "city": req.body.location[0],
+      "city": req.body.location,
       "countryCode": "US",
-      "arrivalDate": "4/21/2017",
+      "arrivalDate": "4/23/2017",
       "departureDate": "4/29/2017",
       "RoomGroup": {
         "Room": { "numberOfAdults": "2" }
@@ -39,7 +39,7 @@ module.exports.expediaAPI = function(req, res, next) {
 
   expedia.hotels.list(options, function(err, data){
       if(err){console.log("ERROR",err) };
-      console.log("Getting Expedia Hotel Data...");
+      console.log("Getting Expedia Hotel Data...", data);
       res.send(data.HotelListResponse.HotelList);
   });
 };

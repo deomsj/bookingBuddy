@@ -167,7 +167,9 @@ class TripCreationForm extends Component {
     var obj = this.state;
     obj.name = tripData.profile.name;
     obj.email = tripData.profile.email;
+    obj.buddies = tripData.buddyData;
     console.log(tripData.profile.name, "Profile...")
+    console.log(tripData.buddyData, "BUDDIES!!!")
     $.ajax({
       type: 'POST',
       url: '/createTrip',
@@ -177,6 +179,17 @@ class TripCreationForm extends Component {
         console.log('New trip created' , data);
       }.bind(this)
     });
+
+    $.ajax({
+      type: 'POST',
+      url: '/email',
+      dataType: 'json',
+      data: obj,
+      success: function(data) {
+        console.log('New trip created' , data);
+      }.bind(this)
+    });
+
   }
 
   render() {

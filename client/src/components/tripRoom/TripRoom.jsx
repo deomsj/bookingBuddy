@@ -29,7 +29,6 @@ class TripRoom extends React.Component {
   }
 
   fetchTripInformation(Id){
-    //get all trip data
     console.log("GETTING TRIP DATA!")
     $.ajax({
       type: 'POST',
@@ -39,6 +38,19 @@ class TripRoom extends React.Component {
       success: function(data) {
         console.log(data, "Data");
         // this.setState({tripDate: data});
+        $.ajax({
+          type: 'POST',
+          url: '/expedia',
+          dataType: 'json',
+          data: { beginningDate : data.commonDates.beginning,
+            endingDate : data.commonDates.ending,
+            location : data.commonTrips[0]
+          },
+          success: function(expediaResults) {
+            console.log(expediaResults, "expediaResults");
+            // this.setState({expediaResults: expediaResults});      
+          }.bind(this)
+        });
       }.bind(this)
     });
   }
