@@ -45,6 +45,32 @@ span[class^="preferences-"] .material-icons {
   margin-right: 2px;
 }
 
+
+/* ## Bookmarks
+---------------------------------------- */
+
+.bookmark-message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.bookmark-message .content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 75%;
+          flex: 1 0 75%;
+  margin-left: 5%;
+}
+
+
 /* # Homepage
 ---------------------------------------- */
 
