@@ -25,10 +25,12 @@ var io = socket(server);
 io.on('connection', function (socket) {
   console.log('user connected');
 
+  // Used in LandingPage and TripRoom
   socket.on('new message', function(data) {
     socket.broadcast.emit('new message', {
       name: data.name,
-      text: data.text
+      text: data.text,
+      color: data.color
     });
   });
 

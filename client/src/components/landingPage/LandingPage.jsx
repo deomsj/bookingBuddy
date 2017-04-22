@@ -13,12 +13,12 @@ var colors = [
 ];
 var randomColor = colors[Math.floor(Math.random() * (colors.length - 1))] + '-text';
 
-var ChatMessages = function({name, text}) {
+var ChatMessages = function({name, text, color}) {
   return (
     <div>
-      <p className={randomColor}>{name}</p>
+      <p className={color}>{name}</p>
       <div className="chip">
-        <div className={randomColor}>
+        <div className={color}>
           {text}
         </div>
       </div>
@@ -38,7 +38,8 @@ class LandingPage extends Component {
       messages: this.state.messages.concat(
         {
           name: data.name,
-          text: data.text
+          text: data.text,
+          color: data.color
         })
       });
     }.bind(this));
@@ -50,14 +51,16 @@ class LandingPage extends Component {
       messages: this.state.messages.concat(
         {
           name: 'You',
-          text: text
+          text: text,
+          color: randomColor
         })
     });
     $('#chatTextField').val('');
 
     socket.emit('new message', {
       name: 'Someone',
-      text: text
+      text: text,
+      color: randomColor
     });
   }
 
@@ -177,7 +180,7 @@ class LandingPage extends Component {
                   </div>
 
                   {this.state.messages.map((message, index) =>
-                    <ChatMessages name={message.name} text={message.text} key={index} />
+                    <ChatMessages name={message.name} text={message.text} color={message.color} key={index} />
                     )}
 
                 </div>
