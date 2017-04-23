@@ -9,7 +9,7 @@ module.exports.createTrip = function(req, res, next) {
   make.beginDate = make.beginDate.replace(/[-]/g, '/');
   make.endDate = make.endDate.replace(/[-]/g, '/');
   db.query('SELECT id FROM users WHERE email = ($1)', [make.email], function(err, data) { 
-    console.log(data, "data");
+    // console.log(data, "data");
     if(data.rows.length === 0) {
       create({ email : make.email,  
         activitiesBudget : parseInt(make.activitiesBudget),
@@ -25,7 +25,6 @@ module.exports.createTrip = function(req, res, next) {
         name : make.name
       });
     } else {
-      console.log("HERE!!!")
       make.id = data.rows[0].id;
       additionalTrips({ email : make.email, 
         activitiesBudget : parseInt(make.activitiesBudget),
@@ -80,7 +79,7 @@ module.exports.getTripPreferences = function(req, res, next) {
 };
 
 module.exports.getTotalBudgetForTrip = function(req, res, next) {
-  console.log(req.body, "Getting total trip budget...");
+  console.log( "Getting total trip budget...");
   //key represents the trip id
     //SELECT * FROM trips <------ to see your current trip id(s)!
     //gets total contribution (sum) associated with a single trip
@@ -101,7 +100,7 @@ module.exports.getTotalBudgetForTrip = function(req, res, next) {
 };
 
 module.exports.getTripData = function(req, res, next) {
-  console.log(req.body, "tripData");
+  console.log( "tripData");
   var dat = {};
   var sum = 0;
   var commonTrips = [];
@@ -168,7 +167,7 @@ module.exports.getTripData = function(req, res, next) {
   }); 
 
   db.query('SELECT name FROM locations WHERE trip_id = ($1)', [req.body.tripId], function(err, dataa) {
-    console.log(req.body.tripId, "TRIP ID!!!!!", dataa, "LOCATIONS!")
+    // console.log(req.body.tripId, "TRIP ID!!!!!", dataa, "LOCATIONS!")
     var counter = {};
     dataa.rows.forEach(function(item, ind, coll) {
       if(counter[item.name] === undefined) {

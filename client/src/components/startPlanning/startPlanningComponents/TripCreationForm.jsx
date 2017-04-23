@@ -177,20 +177,17 @@ class TripCreationForm extends Component {
       dataType: 'json',
       data: obj,
       success: function(data) {
-        console.log('New trip created' , data);
-      }.bind(this)
-    });
-
     $.ajax({
-      type: 'POST',
-      url: '/email',
-      dataType: 'json',
-      data: obj,
-      success: function(data) {
-        console.log('New trip created' , data);
+          type: 'POST',
+          url: '/email',
+          dataType: 'json',
+          data: obj,
+          success: function(data) {
+            console.log('New trip created' , data);
       }.bind(this)
-    });
-
+      });
+    }.bind(this)
+  });
   }
 
   render() {
