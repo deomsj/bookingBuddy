@@ -8,8 +8,8 @@ var VoteButton = function ({text, selected, handleClick}) {
   return (<button onClick={handleClick} className="green lighten-4 btn" style={{'padding':'5px 10px'}}>{text}</button>);
 };
 
-var BuddyVoteSlider = function ({bookmarkId, buddyVoteObj, updateBookmarkVote}) {
-  var socket = io();
+var BuddyVoteSlider = function ({bookmarkID, buddyVoteObj, updateBookmarkVote}) {
+  // var socket = io();
 
   var vote = buddyVoteObj.buddyVote;
 
@@ -18,23 +18,23 @@ var BuddyVoteSlider = function ({bookmarkId, buddyVoteObj, updateBookmarkVote}) 
     var updatedBuddyVote =  {
       buddyName: buddyVoteObj.buddyName,
       buddyEmail: buddyVoteObj.buddyEmail,
-      buddyVote: 1
+      buddyVote: num
     }
 
 
-    updateBookmarkVote(bookmarkId, updatedBuddyVote);
+    updateBookmarkVote(bookmarkID, updatedBuddyVote);
     // emit vote here
-    socket.emit('new vote', {
-      bookmarkId: bookmarkId,
-      buddyName: buddyVoteObj.buddyName,
-      num: num
-    });
+    // socket.emit('new vote', {
+    //   bookmarkID: bookmarkID,
+    //   buddyName: buddyVoteObj.buddyName,
+    //   num: num
+    // });
   };
 
   // new function to listen for vote
-  socket.on('new vote', function(data) {
-    updateBookmarkVote(data.bookmarkId, data.buddyName, data.num);
-  });
+  // socket.on('new vote', function(data) {
+  //   updateBookmarkVote(data.bookmarkID, data.buddyName, data.num);
+  // });
 
   var voteYes = function() {
     updateVote(1);

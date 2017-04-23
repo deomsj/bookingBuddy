@@ -5,7 +5,7 @@ import {
   Link
 } from 'react-router-dom';
 
-var socket = io();
+// var socket = io();
 var colors = [
   'red', 'pink', 'purple', 'deep-purple', 'indigo',
   'blue', 'cyan', 'teal', 'green',
@@ -33,16 +33,16 @@ class LandingPage extends Component {
       messages: []
     };
 
-    socket.on('new message', function(data) {
-      this.setState({
-      messages: this.state.messages.concat(
-        {
-          name: data.name,
-          text: data.text,
-          color: data.color
-        })
-      });
-    }.bind(this));
+    // socket.on('new message', function(data) {
+    //   this.setState({
+    //   messages: this.state.messages.concat(
+    //     {
+    //       name: data.name,
+    //       text: data.text,
+    //       color: data.color
+    //     })
+    //   });
+    // }.bind(this));
   }
 
   sendMessage() {
@@ -57,11 +57,11 @@ class LandingPage extends Component {
     });
     $('#chatTextField').val('');
 
-    socket.emit('new message', {
-      name: 'Someone',
-      text: text,
-      color: randomColor
-    });
+    // socket.emit('new message', {
+    //   name: 'Someone',
+    //   text: text,
+    //   color: randomColor
+    // });
   }
 
   updateMessage(event) {

@@ -15,31 +15,95 @@ var tripsArray = [{
 ];
 
 
-
-
-
-var tripData = {
+var tripData  = {
   tripId: 12345,
   tripName: 'Hiking Trip',
-  locations: ['Hawaii', 'Florida', 'Bahamas'],
-  priceRange: '$1,500-$2,500',
-  dateRange: '12/10 - 12/21',
-  buddyList: ['Lou', 'Preston', 'Max', 'Nate', 'Jesse'],
-  bookmarkedTrips: [],
-  url:''
-};
+  commonDates:  {
+    beginning: '4/29/2017',
+    duration: 4,
+    ending: '5/12/2017'
+  },
+  commonLocations: [
+    'Cabo San Fruede',
+    'Bahamas'
+  ],
+  averageNightlyHotelBudget: 127.00,
+  buddyList: [{
+      name: 'Lou',
+      email: 'formMasterLou@gmail.com',
+    }, {
+      name: 'Preston',
+      email: 'gotYourBackPreston@gmail.com',
+    }, {
+      name: 'Nate',
+      email: 'flexBoxFriday@gmail.com',
+    }, {
+      name: 'Max',
+      email: 'mustLoveCoffee@gmail.com',
+    }, {
+      name: 'Jesse',
+      email: 'seriouslySeriousAboutOldBay@gmail.com',
+    }],
+  bookmarks: [{
+    bookmarkID: Date.now(),
+    tripId: 23,
+    bookmarkerName: 'Lou',
+    boormarkerNote: 'stringComment',
+    bookmarkedHotelId: 'expediaHotelString',
+    bookmarkComments: [{
+      buddyName: 'Lou',
+      buddyEmail: 'formMasterLou@gmail.com',
+      date: 1492888181571,
+      comment: 'messageMadeUnderBookmark'}
+    ],
+    buddyVotes: [{
+      buddyName: 'Lou',
+      buddyEmail: 'formMasterLou@gmail.com',
+      buddyVote: -1
+    },{
+      buddyName: 'Preston',
+      buddyEmail: 'gotYourBackPreston@gmail.com',
+      buddyVote: 1
+    }, {
+      buddyName: 'Nate',
+      buddyEmail: 'flexBoxFriday@gmail.com',
+      buddyVote: -1
+    }, {
+      buddyName: 'Max',
+      buddyEmail: 'mustLoveCoffee@gmail.com',
+      buddyVote: 0
+    }, {
+      buddyName: 'Jesse',
+      buddyEmail: 'seriouslySeriousAboutOldBay@gmail.co',
+      buddyVote: -1
+    }]
+  }]
+}
+
+
+
+// var tripData = {
+//   tripId: 12345,
+//   tripName: 'Hiking Trip',
+//   locations: ['Hawaii', 'Florida', 'Bahamas'],
+//   priceRange: '$1,500-$2,500',
+//   dateRange: '12/10 - 12/21',
+//   buddyList: ['Lou', 'Preston', 'Max', 'Nate', 'Jesse'],
+//   bookmarkedTrips: [],
+//   url:''
+// };
 
 
 
 var hotelRecomendations = [{
-  hotelRecomendationId: 12345,
+  hotelId: 12345,
   HotelName: 'Villa La Estancia Beach Resort & Spa',
   Price: 250.91,
   StarRating: 5,
   Description: 'Paradise meets comfort at Villa La Estancia',
   Image: 'https://media-cdn.tripadvisor.com/media/photo-s/07/45/9b/f3/villa-la-estancia.jpg'
 }, {
-  hotelRecomendationId: 21218,
+  hotelId: 21218,
   HotelName: 'Cabo Azul Resort by Diamond Resorts',
   Price: 189.27,
   StarRating: 3,

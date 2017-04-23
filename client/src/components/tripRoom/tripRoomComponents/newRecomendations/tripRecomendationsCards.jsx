@@ -5,12 +5,7 @@ import Bookmarker from './bookmarker.jsx';
 /////////////////////////
 // Trip Recomendations Cards
 /////////////////////////
-  // hotelRecomendationId: 12345,
-  // HotelName: 'Sagamore Pendry Baltimore',
-  // Price: 450.91,
-  // StarRating: 5,
-  // Description: 'where all the ballers and shot callers come to relax and recharge',
-  // Image: 'https://s3-media3.fl.yelpcdn.com/bphoto/8qcpzDf8VSeYxPtHG4Lu5g/o.jpg'
+
 
 class TripRecomendationsCards extends React.Component {
   constructor (props) {

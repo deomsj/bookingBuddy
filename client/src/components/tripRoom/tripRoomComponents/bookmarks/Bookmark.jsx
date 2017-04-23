@@ -32,20 +32,44 @@ class Bookmark extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      hotelName: 'name',
-      image: 'http://71.18.53.79/images/beijing-hotel.jpg',
-      price: '$400.12',
-      stars: 5,
+      hotelName: '',
+      image: '',
+      price: '',
+      stars: '',
       description: 'This will be a decription of the hotel'
     }
   }
 
+  componentDidMount(){
+    this.getUpToDateHotelInfoFromExpedia();
+  }
+
   getUpToDateHotelInfoFromExpedia(){
-  //Query Expedia API here to setState with current hotel data using:
-    //this.props.bookmark.bookmarkedHotelId
-    //this.props.expediaParams.beginning
-    //this.props.expediaParams.duration
-    //this.props.expediaParams.ending
+
+    console.log('When rendering bookmarks, we will query expedia to get current hotel data using bookmarkedHotelId: ',
+                   this.props.bookmark.bookmarkedHotelId);
+
+    //Query Expedia API here to setState with current hotel data using:
+      //this.props.bookmark.bookmarkedHotelId
+      //this.props.expediaParams.beginning
+      //this.props.expediaParams.duration
+      //this.props.expediaParams.ending
+
+    var returnedFromExpedia = {
+      hotelName: 'hotel name',
+      image: 'http://71.18.53.79/images/beijing-hotel.jpg',
+      price: '$400.12',
+      stars: 5,
+      description: 'This will be a decription of the hotel'
+    };
+
+    this.setState({
+      hotelName: returnedFromExpedia.hotelName,
+      image: returnedFromExpedia.image,
+      price: returnedFromExpedia.price,
+      stars: returnedFromExpedia.stars,
+      description: returnedFromExpedia.description
+    });
   }
 
   render(){
@@ -54,7 +78,7 @@ class Bookmark extends Component {
         <div className="col s12 m7">
           <div className="col s12 m7">
             <h5>{this.state.hotelName}</h5>
-            <p>{bookmark.boormarkerNote}</p>
+            <p>{this.props.bookmark.boormarkerNote}</p>
           </div>
           <div className="col s12 m5">
             <img src={this.state.image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
@@ -62,7 +86,7 @@ class Bookmark extends Component {
         </div>
         <div className="col s12 m5">
           <BuddyVotesWindow
-            bookmarkId={this.props.bookmark.bookmarkId}
+            bookmarkID={this.props.bookmark.bookmarkID}
             buddyVotes={this.props.bookmark.buddyVotes}
             updateBookmarkVote={this.props.updateBookmarkVote}
           />
