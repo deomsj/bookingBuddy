@@ -27,6 +27,10 @@ io.on('connection', function (socket) {
 
   // Used in LandingPage and TripRoom
   socket.on('new message', function(data) {
+
+
+
+
     socket.broadcast.emit('new message', {
       name: data.name,
       text: data.text,

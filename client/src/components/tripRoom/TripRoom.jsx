@@ -60,6 +60,8 @@ class TripRoom extends React.Component {
       <div>
         <TripRoomComponents
           tripData={tripData}
+          tripId={this.props.tripId}
+          profile={this.props.profile}
           hotelRecomendations={hotelRecomendations}
         />
       </div>
