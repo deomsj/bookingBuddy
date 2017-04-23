@@ -9,8 +9,8 @@ const LoginStatusDisplay = ({isLoggedIn, logInOrOut}) => (
 
 // Navigation Menu
 const NavBarLinks = ({isLoggedIn, logInOrOut}) => (
-  <nav className="green lighten-1" role="navigation">
-    <div className="nav-wrapper container">
+  <nav>
+    <div className="nav-wrapper green lighten-1">
       <NavLink id="logo-container" exact to="/" className="brand-logo">Booking Buddy</NavLink>
       <ul className="right hide-on-med-and-down">
         {

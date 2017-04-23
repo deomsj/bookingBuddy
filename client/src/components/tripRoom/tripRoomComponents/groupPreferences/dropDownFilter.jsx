@@ -1,37 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 ////////////////
 // Drop Down
 ////////////////
 
-class DropDownFilter extends React.Component {
+class DropDownFilter extends Component {
 
-  constructor (props) {
+  constructor (props){
     super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      value: ''
-    };
   }
 
-  handleChange(event) {
-    this.setState({
-      value: event.target.value
+  componentDidMount(){
+    $(document).ready(function() {
+      $('select').material_select();
     });
-    this.props.setter(event.target.value);
   }
 
-  render () {
-    var options = this.props.options.map((option, i) => (
-        <option value={option} key={i}> {option} </option>
-      ));
+  render() {
+    var {locations, selectedLocation, setter} = this.props;
+
+    var options = locations.map((location, i) => (
+      <option value={location} key={i}> {location} </option>
+    ));
 
     return (
-      <select value={this.state.value} onChange={this.handleChange}>
+      <select className='multiple' value={selectedLocation} onChange={setter}>
         {options}
       </select>
     );
   }
 }
+
 
 module.exports = DropDownFilter;

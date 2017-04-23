@@ -68,20 +68,24 @@ class App extends Component {
     <div className="App">
       <Router>
         <div>
-          <NavBarLinks isLoggedIn={this.state.isLoggedIn} logInOrOut={this.logInOrOut} />
-          <Route exact path="/"
-            render={() =>
-              !this.state.isLoggedIn ? <LandingPage /> : <Redirect to='/profile' />
-          } />
-          <Route path="/profile"
-            render={() => <Profile profile={this.state.profile} selectTrip={this.selectTrip} /> }
-          />
-          <Route exact path="/landingPage" component={LandingPage} />
-          <Route path="/start-planning"
-            render={() => <StartPlanning userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
-          <Route path="/trip-room"
-            render={() => <TripRoom userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
-          <Route path="/about-us" component={AboutUs} />
+          <div className="navbar-fixed">
+            <NavBarLinks isLoggedIn={this.state.isLoggedIn} logInOrOut={this.logInOrOut}/>
+          </div>
+          <div>
+            <Route exact path="/"
+              render={() =>
+                !this.state.isLoggedIn ? <LandingPage /> : <Redirect to='/profile' />
+            } />
+            <Route path="/profile"
+              render={() => <Profile profile={this.state.profile} selectTrip={this.selectTrip} /> }
+            />
+            <Route exact path="/landingPage" component={LandingPage} />
+            <Route path="/start-planning"
+              render={() => <StartPlanning userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
+            <Route path="/trip-room"
+              render={() => <TripRoom profile={this.state.profile} tripId={this.state.trip_id} /> } />
+            <Route path="/about-us" component={AboutUs} />
+          </div>
         </div>
       </Router>
     </div>

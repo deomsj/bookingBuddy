@@ -34,7 +34,7 @@ class Profile extends Component {
       dataType: 'json',
       data: { email : email },
       success: function(data) {
-        this.setState({tripsArray:data});
+        //this.setState({tripsArray:data});
       }.bind(this)
     });
   }

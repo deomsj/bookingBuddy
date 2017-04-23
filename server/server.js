@@ -20,34 +20,34 @@ var server = app.listen(port, function() {
 });
 
 // Socket stuff
-var io = socket(server);
+// var io = socket(server);
 
-io.on('connection', function (socket) {
-  console.log('user connected');
+// io.on('connection', function (socket) {
+//   console.log('user connected');
 
-  // Used in LandingPage and TripRoom
-  socket.on('new message', function(data) {
-    socket.broadcast.emit('new message', {
-      name: data.name,
-      text: data.text,
-      color: data.color
-    });
-  });
+//   // Used in LandingPage and TripRoom
+//   // socket.on('new message', function(data) {
+//   //   socket.broadcast.emit('new message', {
+//   //     name: data.name,
+//   //     text: data.text,
+//   //     color: data.color
+//   //   });
+//   // });
 
-  // Used in buddyVoteSlider
-  socket.on('new vote', function (data) {
-    socket.broadcast.emit('new vote', {
-      bookmarkId: data.bookmarkId,
-      buddyName: data.buddyName,
-      num: data.num
-    });
-  });
+//   // Used in buddyVoteSlider
+//   socket.on('new vote', function (data) {
+//     socket.broadcast.emit('new vote', {
+//       bookmarkId: data.bookmarkId,
+//       buddyName: data.buddyName,
+//       num: data.num
+//     });
+//   });
 
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
+//   socket.on('disconnect', function(){
+//     console.log('user disconnected');
+//   });
 
-});
+// });
 
 
 module.exports = app;

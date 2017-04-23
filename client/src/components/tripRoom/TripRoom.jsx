@@ -60,6 +60,8 @@ class TripRoom extends React.Component {
       <div>
         <TripRoomComponents
           tripData={tripData}
+          tripId={this.props.tripId}
+          profile={this.props.profile}
           hotelRecomendations={hotelRecomendations}
         />
       </div>
@@ -69,3 +71,41 @@ class TripRoom extends React.Component {
 
 export default TripRoom;
 
+
+
+// var tripData  = {
+//   tripId: 12345,
+//   tripName: 'Hiking Trip',
+//   commonDates:  {
+//     beginning: '4/29/2017',
+//     duration: 4,
+//     ending: '5/12/2017'
+//   },
+//   commonLocations: [
+//     'cityName1',
+//     'cityName2'
+//   ],
+//   averageNightlyHotelBudget: 127.00,
+//   buddyList: [{
+//       name: 'Lou',
+//       email: 'formMasterLou@gmail.com',
+//     }],
+//   bookmarks: [{
+//     bookmarkID: Date.now(),
+//     tripId: 23,
+//     bookmarkerName: 'Lou',
+//     boormarkerNote: 'stringComment',
+//     bookmarkedHotelId: 'expediaHotelString',
+//     bookmarkComments: [{
+//       buddyName: 'Lou',
+//       buddyEmail: 'formMasterLou@gmail.com',
+//       date: 1492888181571,
+//       comment: 'messageMadeUnderBookmark'}
+//     ],
+//     buddyVotes: [{
+//       buddyName: 'Lou',
+//       buddyEmail: 'formMasterLou@gmail.com',
+//       buddyVote: -1
+//     }]
+//   }]
+// }
