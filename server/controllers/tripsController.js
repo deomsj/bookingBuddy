@@ -4,12 +4,12 @@ var create = gets.tripMaster;
 var additionalTrips = gets.moreTrips;
 
 module.exports.createTrip = function(req, res, next) {
-  console.log(req.body, "Creating new trip data...");
+  console.log("Creating new trip data...");
   var make = req.body;
   make.beginDate = make.beginDate.replace(/[-]/g, '/');
   make.endDate = make.endDate.replace(/[-]/g, '/');
   db.query('SELECT id FROM users WHERE email = ($1)', [make.email], function(err, data) { 
-    console.log(data, "data");
+    // console.log(data, "data");
     if(data.rows.length === 0) {
       create({ email : make.email,  
         activitiesBudget : parseInt(make.activitiesBudget),
@@ -25,7 +25,6 @@ module.exports.createTrip = function(req, res, next) {
         name : make.name
       });
     } else {
-      console.log("HERE!!!")
       make.id = data.rows[0].id;
       additionalTrips({ email : make.email, 
         activitiesBudget : parseInt(make.activitiesBudget),
@@ -80,7 +79,7 @@ module.exports.getTripPreferences = function(req, res, next) {
 };
 
 module.exports.getTotalBudgetForTrip = function(req, res, next) {
-  console.log(req.body, "Getting total trip budget...");
+  console.log( "Getting total trip budget...");
   //key represents the trip id
     //SELECT * FROM trips <------ to see your current trip id(s)!
     //gets total contribution (sum) associated with a single trip
@@ -101,24 +100,21 @@ module.exports.getTotalBudgetForTrip = function(req, res, next) {
 };
 
 module.exports.getTripData = function(req, res, next) {
-  console.log(req.body, "tripData");
+  console.log( "tripData");
   var dat = {};
   var sum = 0;
   var commonTrips = [];
   var len;
+
+  db.query('select * from userTrips where trip_id = ($1)',[req.body.tripId], function(err, data) {
+    len = data.rows.length;
+  });
 
   db.query('SELECT * FROM bookmarks WHERE trip_id = (SELECT id FROM trips WHERE name = ($1))', [req.body.tripId],
     function(err, data) {
       data.bookmarks = data.rows;
       console.log(data.rows, "GETTRIPDATABOOKMARKS!");
   });
-
-  db.query('SELECT total FROM budget INNER JOIN userTrips ON(budget.trip_id = userTrips.user_id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
-    data.rows.forEach(function(item, ind, coll) {
-      sum += parseInt(item.total);
-      dat.hotelTripSum = sum;
-    });
-  }); 
 
   var commonDateObj = {beginning: '', ending: '', duration: ''};
 
@@ -149,7 +145,7 @@ module.exports.getTripData = function(req, res, next) {
       commonDateObj.ending += Math.min(...endHighDay) + '/';
       commonDateObj.ending += Math.min(...endHighYear);
       db.query('SELECT duration FROM dates WHERE trip_number = ($1)', [req.body.tripId], function(err, data) {
-        commonDateObj.duration = data.rows[0].duration;
+        commonDateObj.duration = parseInt(data.rows[0].duration);
         dat.commonDates = commonDateObj;
       });
     });
@@ -158,12 +154,22 @@ module.exports.getTripData = function(req, res, next) {
   db.query('SELECT name FROM trips WHERE id = ($1)', [req.body.tripId], function(err, data) {
     dat.tripName = data.rows[0].name;
   });
-  db.query('select * from userTrips where trip_id = ($1)',[req.body.tripId], function(err, data) {
-    len = data.rows.length;
-  });
-  db.query('SELECT name FROM locations INNER JOIN userTrips ON(locations.user_trip_id = userTrips.user_id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
-    var counter = {};
+
+  db.query('SELECT total FROM budget INNER JOIN userTrips ON(budget.trip_id = userTrips.user_id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
     data.rows.forEach(function(item, ind, coll) {
+      sum += parseInt(item.total);
+      if(ind === coll.length-1) {
+        setTimeout(function() {
+          dat.averageNightlyHotelBudget = Math.round(parseInt(sum)/parseInt(commonDateObj.duration));
+        }, 500);
+      }
+    });
+  }); 
+
+  db.query('SELECT name FROM locations WHERE trip_id = ($1)', [req.body.tripId], function(err, dataa) {
+    // console.log(req.body.tripId, "TRIP ID!!!!!", dataa, "LOCATIONS!")
+    var counter = {};
+    dataa.rows.forEach(function(item, ind, coll) {
       if(counter[item.name] === undefined) {
         counter[item.name] = 1;
       } else {
@@ -171,7 +177,7 @@ module.exports.getTripData = function(req, res, next) {
       }
     });
     for(var key in counter) {
-      if(counter[key] > 1) {
+      if(counter[key] > 0) {
         commonTrips.push(key);
       }
     }

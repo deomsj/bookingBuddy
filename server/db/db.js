@@ -34,7 +34,7 @@ var tripUser1 = {
   //tripUser === invitee
   email: 'toll6@gmail.com',
   name: 'Jo',
-  locations: ['Atlanta', 'Fresno'],
+  locations: ['Atlanta', 'Fresno', 'Los Angeles'],
   beginDate: '04/06/2017',
   endDate: '10/26/2017',
   duration: '7',
@@ -58,6 +58,7 @@ var tripUser3 = {
   //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
     //SELECT * FROM trips; <--- in postgres this will show your trip id
 };
+
 
 
 var tripMaster = function(obj) {
@@ -107,9 +108,9 @@ var tripMaster = function(obj) {
 
   obj.locations.forEach(function(location, ind, coll) {
   db.query('INSERT INTO \
-                  locations(name, user_trip_id) \
-                  VALUES($1, $2) RETURNING id',
-                  [location, userTripsResults.rows[0].id], function(err, userResults) {
+                  locations(name, user_trip_id, trip_id) \
+                  VALUES($1, $2, $3) RETURNING id',
+                  [location, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, userResults) {
                     if (err) {
                       // res.send(err)
                     }
@@ -218,7 +219,7 @@ var tripUser = function(obj) {
 
   db.query('INSERT INTO \
                   userTrips(user_id, trip_id) \
-                  VALUES($1, $2) RETURNING id',
+                  VALUES($1, $2) RETURNING id, trip_id',
                   [userResults.rows[0].id, obj.tripId], function(err, userTripsResults) {
                     if (err) {
 // IF YOU EXPERIENCE ERROR HERE CHANGE "tripId" in tripUser object TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
@@ -244,9 +245,9 @@ var tripUser = function(obj) {
 
   obj.locations.forEach(function(location, ind, coll) {
   db.query('INSERT INTO \
-                  locations(name, user_trip_id) \
-                  VALUES($1, $2) RETURNING id',
-                  [location, userTripsResults.rows[0].id],
+                  locations(name, user_trip_id, trip_id) \
+                  VALUES($1, $2, $3) RETURNING id',
+                  [location, userTripsResults.rows[0].id, userTripsResults.rows[0].trip_id],
                   function(err, userResults) {
                     if (err) {
                       // res.send(err)
