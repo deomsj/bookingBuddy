@@ -45,7 +45,7 @@
            duration: 5, // NUMBER        why string?
            beginDate: 'string', //STRING    PERFECT!
            endDate: 'string' // STRING      PERFECT!
-         },    
+         }    
     };     
      
 
