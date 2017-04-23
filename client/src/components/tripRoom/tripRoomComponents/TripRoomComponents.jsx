@@ -3,6 +3,7 @@ import {hotelRecomendations} from '../data/tripRoomDummyData';
 import TripRecomendationsCards from './newRecomendations/tripRecomendationsCards.jsx';
 import GroupPreferencesBar from './groupPreferences/groupPreferencesBar.jsx';
 import TripBookmarksList from './bookmarks/tripBookmarksList.jsx';
+import TripRoomChat from './Chat/TripRoomChat.jsx';
 
 //props: tripData, tripId, profile
 class TripRoomComponents extends Component {
@@ -156,27 +157,43 @@ class TripRoomComponents extends Component {
   render() {
 
     return (
-      <div className="container">
-        <h1 className="orange-text darken-2">'Hiking Trip'</h1>
-        <GroupPreferencesBar
-          averageNightlyHotelBudget={this.state.averageNightlyHotelBudget}
-          beginning={this.state.beginning}
-          ending={this.state.ending}
-          locations={this.state.locations}
-          selectedLocation={this.state.selectedLocation}
-          setLocation={this.setLocation}
-        />
-        <TripRecomendationsCards
-          hotelRecomendations={this.props.hotelRecomendations}
-          addBookmark={this.addBookmark}
-        />
-        <TripBookmarksList
-          bookmarks={this.state.bookmarks}
-          profile={this.props.profile}
-          expediaParams={this.state}
-          updateBookmarkVote={this.updateBookmarkVote}
-          addBookmarkComment={this.addBookmarkComment}
-        />
+      <div>
+
+        <div className="row">
+          <div className="col s12 m7 l8 tripRoomMainContentContainer">
+              <h1 className="orange-text darken-2">'Hiking Trip'</h1>
+              <GroupPreferencesBar
+                      averageNightlyHotelBudget={this.state.averageNightlyHotelBudget}
+                      beginning={this.state.beginning}
+                      ending={this.state.ending}
+                      locations={this.state.locations}
+                      selectedLocation={this.state.selectedLocation}
+                      setLocation={this.setLocation}
+                />
+              <TripRecomendationsCards
+                hotelRecomendations={this.props.hotelRecomendations}
+                addBookmark={this.addBookmark}
+                />
+              <TripBookmarksList
+                bookmarks={this.state.bookmarks}
+                profile={this.props.profile}
+                expediaParams={this.state}
+                updateBookmarkVote={this.updateBookmarkVote}
+                addBookmarkComment={this.addBookmarkComment}
+              />
+          </div>
+          <div className="tripRoomChatContainer col s12 m5 offset-m7 l4 offset-l8 pinned card-panel green lighten-3 hide-on-small-only" style={{'height':'100%'}}>
+            <h4>Booking Buddies</h4>
+            <ul>
+              <li>Lou</li>
+              <li>Max</li>
+              <li>Preston</li>
+              <li>Nate</li>
+              <li>Jesse</li>
+            </ul>
+            <TripRoomChat />
+          </div>
+        </div>
       </div>
     );
   }

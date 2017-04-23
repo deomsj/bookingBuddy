@@ -45,14 +45,14 @@ class BookmarkComments extends Component {
     return (
       <ul className="collapsible" data-collapsible="accordion">
         <li>
-          <div className="collapsible-header">MESSAGES</div>
+          <div className="collapsible-header center-align">Comments</div>
           <div className="collapsible-body">
             <form onSubmit={this.bookmarkCommentSubmit}>
               <input
                 onChange={this.bookmarkCommentChange}
                 value={this.state.bookmarkCommentText}
               />
-              <button>{'Add Comment'}</button>
+              <button className="center-align">{'Add Comment'}</button>
             </form>
             <BookmarkCommentsList comments={this.props.bookmark.bookmarkComments} />
           </div>

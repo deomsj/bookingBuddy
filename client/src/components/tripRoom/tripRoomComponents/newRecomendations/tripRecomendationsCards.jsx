@@ -41,8 +41,7 @@ class TripRecomendationsCards extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="col s12 m8 l6">
+      <div>
           <div className="card hoverable">
             <DisplayCurrentRec
               currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]}
@@ -52,7 +51,6 @@ class TripRecomendationsCards extends React.Component {
               <a onClick={this.advanceToNextRec}>Next</a>
             </div>
           </div>
-        </div>
         <Bookmarker bookmarkThisRec={this.bookmarkThisRec}/>
       </div>
     );

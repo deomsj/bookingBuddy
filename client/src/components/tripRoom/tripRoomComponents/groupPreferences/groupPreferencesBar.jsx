@@ -14,14 +14,12 @@ var GroupPreferencesBar =
           <i className="material-icons green-text">credit_card</i>${averageNightlyHotelBudget}
         </span>
       </div>
-      <div className="col s3">
+      <div className="col s4">
         <span className="preferences-date">
           <i className="material-icons green-text">today</i>{beginning + ' - ' +ending}
         </span>
       </div>
-    </div>
-    <div className="row">
-      <div className="input-field col s3">
+      <div className="input-field col s3" style={{'margin':'-20px 5px 0px'}}>
         <DropDownFilter locations={locations} selectedLocation={selectedLocation} setter={setLocation} />
       </div>
     </div>

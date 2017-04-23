@@ -75,16 +75,20 @@ class Bookmark extends Component {
   render(){
     return (
       <div className="row">
-        <div className="col s12 m7">
-          <div className="col s12 m7">
+        <div className="col s12 l4">
+          <div>
             <h5>{this.state.hotelName}</h5>
-            <p>{this.props.bookmark.boormarkerNote}</p>
           </div>
-          <div className="col s12 m5">
-            <img src={this.state.image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
+          <div className="row">
+            <div className="col s8 offset-s2">
+              <img src={this.state.image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
+            </div>
+            <div className="s10 offset-s1">
+              <p className="center-align">{this.props.bookmark.boormarkerNote}</p>
+            </div>
           </div>
         </div>
-        <div className="col s12 m5">
+        <div className="col s12 l8">
           <BuddyVotesWindow
             bookmarkID={this.props.bookmark.bookmarkID}
             buddyVotes={this.props.bookmark.buddyVotes}

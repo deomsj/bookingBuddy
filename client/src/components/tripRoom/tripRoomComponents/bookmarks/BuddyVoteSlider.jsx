@@ -2,10 +2,10 @@ import React from 'react';
 
 var VoteButton = function ({text, selected, handleClick}) {
   if (selected){
-    return (<button onClick={handleClick} className="green darken-2 btn">{text}</button>);
+    return (<button onClick={handleClick} className="green darken-3 btn btn-small" style={{'padding':'2px 15px'}}>{text}</button>);
   }
 
-  return (<button onClick={handleClick} className="green lighten-4 btn" style={{'padding':'5px 10px'}}>{text}</button>);
+  return (<button onClick={handleClick} className="green lighten-3 btn btn-small" style={{'padding':'2px 5px'}}>{text}</button>);
 };
 
 var BuddyVoteSlider = function ({bookmarkID, buddyVoteObj, updateBookmarkVote}) {
@@ -50,7 +50,7 @@ var BuddyVoteSlider = function ({bookmarkID, buddyVoteObj, updateBookmarkVote}) 
 
   return (
     <div className='row'>
-      <span className='col s2'>{buddyVoteObj.buddyName} : </span>
+      <span className='col s3'>{buddyVoteObj.buddyName} : </span>
       <VoteButton className='col s2' text="I'm In!" selected={vote === 1} handleClick={voteYes} />
       <VoteButton className='col s2' text="Maybe" selected={vote === 0} handleClick={voteMaybe} />
       <VoteButton className='col s2' text="Not for Me" selected={vote === -1} handleClick={voteNo} />

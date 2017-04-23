@@ -20,6 +20,12 @@ h5, h4 {
   margin: 2px;
 }
 
+.btn-small {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0.5rem;
+}
+
 /* # Trip Preferences Page
 ________________________________________*/
 
@@ -130,4 +136,21 @@ span[class^="preferences-"] .material-icons {
 .bling-header {
   font-size: 44px;
   padding: 5px 0 9px 0;
+}
+
+/* # Nav Bar
+---------------------------------------- */
+div.nav-wrapper.container {
+  width: 100%;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+/* # Trip Room
+---------------------------------------- */
+
+div.tripRoomMainContentContainer.col {
+  width: 94%;
+  padding-left: 4%;
+  padding-right: 2%;
 }
