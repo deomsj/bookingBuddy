@@ -1,21 +1,23 @@
 import React from 'react';
-import BuddyVotesWindow from './BuddyVotesWindow.jsx';
-import BookmarkMessages from './BookmarkMessages.jsx';
+import Bookmark from './Bookmark.jsx';
 
-// TripRoom > TripRoomComponents > You Are Here (tripBookmarksList)
+// TripRoom > TripRoomComponents > You Are Here (TripBookmarksList)
 
 var TripBookmarksList = function(
   {bookmarks, profile, expediaParams, updateBookmarkVote, addBookmarkComment}) {
 
-  var bookmarksList = bookmarks.map( (bookmark) => (
-    <Bookmark
-      bookmark={bookmark}
-      profile={profile}
-      expediaParams={expediaParams}
-      updateBookmarkVote={updateBookmarkVote}
-      addBookmarkComment={addBookmarkComment}
-      key={bookmark.bookmarkId} />
-  ));
+  var bookmarksList = [];
+  if(bookmarks.length){
+    bookmarksList = bookmarks.map( (bookmark, index) => (
+      <Bookmark
+        bookmark={bookmark}
+        profile={profile}
+        expediaParams={expediaParams}
+        updateBookmarkVote={updateBookmarkVote}
+        addBookmarkComment={addBookmarkComment}
+        key={index} />
+    ));
+  }
 
   return  (
     <div className="row">

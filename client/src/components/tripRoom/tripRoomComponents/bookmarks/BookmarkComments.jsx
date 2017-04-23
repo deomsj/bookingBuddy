@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BookmarkMessagesList from './BookmarkMessagesList.jsx';
+import BookmarkCommentsList from './BookmarkCommentsList.jsx';
 
 // TripBookmarksList > Bookmark > You Are Here (BookmarkComments)
 
@@ -32,7 +32,7 @@ class BookmarkComments extends Component {
       bookmarkCommentText: ''
     });
 
-    this.props.addBookmarkComment(this.props.bookmark.bookmarkId, newComment);
+    this.props.addBookmarkComment(this.props.bookmark.bookmarkID, newComment);
   }
 
   componentDidMount() {

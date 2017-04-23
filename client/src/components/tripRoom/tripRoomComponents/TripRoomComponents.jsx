@@ -1,45 +1,8 @@
 import React, { Component } from 'react';
-import {hotelRecomendations} from './data/tripRoomDummyData';
+import {hotelRecomendations} from '../data/tripRoomDummyData';
 import TripRecomendationsCards from './newRecomendations/tripRecomendationsCards.jsx';
 import GroupPreferencesBar from './groupPreferences/groupPreferencesBar.jsx';
-import TripBookmarksList from './bookmarksView/tripBookmarksList.jsx';
-
-// tripData  = {
-//   commonDates:  { //Single Object
-//     beginning: '4/29/2017', //STRING
-//     duration: '4', //NUMBER
-//     ending: '5/12/2017' //STRING
-//   },
-//   commonLocations: [ //ARRAY of STRINGs
-//     'cityName1',
-//     'cityName2'
-//   ],
-//   averageNightlyHotelBudget: 127.00, //NUMBER
-//   buddyList: [{
-//       name: 'Lou',
-//       email: 'formMasterLou@gmail.com',
-//     }],
-//   bookmarks: [{
-//     bookmarkID: 1492888181571, //assign value based on exact time that bookmark was created date.now()
-//     tripId: 23, //passed in from props of trip room tripId
-//     bookmarkerName: 'Lou',
-//     boormarkerNote: 'stringComment',
-//     bookmarkedHotelId: 'expediaHotelString',
-//     bookmarkComments: [{
-//       buddyName: 'Lou',
-//       buddyEmail: 'formMasterLou@gmail.com',
-//       date: 1492888181571,
-//       comment: 'messageMadeUnderBookmark'}
-//     ],
-//     buddyVotes: [{
-//       buddyName: 'Lou',
-//       buddyEmail: 'formMasterLou@gmail.com',
-//       buddyVote: -1
-//     }]
-//   }]
-// }
-
-
+import TripBookmarksList from './bookmarks/tripBookmarksList.jsx';
 
 //props: tripData, tripId, profile
 class TripRoomComponents extends Component {
@@ -62,29 +25,14 @@ class TripRoomComponents extends Component {
     };
   }
 
-  setLocation(selection) {
+  setLocation(event) {
     this.setState({
-      selectedLocation: selection
+      selectedLocation: event.target.value
     });
   }
 
-  // {
-  //   bookmarkComments: [{
-  //     buddyName: 'Lou', //givenName from Auth0 profile
-  //     buddyEmail: 'formMasterLou@gmail.com',
-  //     date: 1492888181571 //date Number retrieved programaatically at time of post
-  //     comment: 'messageMadeUnderBookmark'}
-  //   ],
-  //   buddyVotes: [{
-  //     buddyName: 'Lou',
-  //     buddyEmail: 'formMasterLou@gmail.com',
-  //     buddyVote: -1
-  //   }],
-
-  // }
-
   addBookmark(newBookmark) {
-    newBookmark['bookmarkId'] = Date.now();
+    newBookmark['bookmarkID'] = Date.now();
     newBookmark['buddyVotes'] = this.props.tripData.buddyList.map((buddy) => ({
       buddyName: buddy.name,
       buddyEmail: buddy.email,
@@ -98,14 +46,20 @@ class TripRoomComponents extends Component {
       bookmarks: this.state.bookmarks.concat(newBookmark)
     });
 
-    //@back_end_magicician_preston
-    //fire off ajax request to add new bookmark to db here by calling the function below
-    //this.addNewBookmarktoDB(newBookmark);
+    this.addNewBookmarktoDB(newBookmark);
   }
 
 
   addNewBookmarktoDB(newBookmark) {
     // this might gonna need some work....
+
+    var dataToSent = newBookmark;
+
+    console.log('send AJAX request to ADD NEW BOOKMARK to DB');
+    console.log(dataToSent);
+
+    //@back_end_magicician_preston
+    //fire off ajax requests to add new bookmark to our DB by uncommenting function below
 
     // $.ajax({
     //   type: 'POST',
@@ -118,10 +72,10 @@ class TripRoomComponents extends Component {
     // });
   }
 
-  updateBookmarkVote(bookmarkId, updatedBuddyVote) {
+  updateBookmarkVote(bookmarkID, updatedBuddyVote) {
 
     var updatedBookmarks = this.state.bookmarks.map((bookmark) => {
-      if (bookmark.bookmarkId === bookmarkId) {
+      if (bookmark.bookmarkID === bookmarkID) {
         bookmark.buddyVotes.forEach( (buddyVoteObj) => {
           if(buddyVoteObj.buddyName === updatedBuddyVote.buddyName) {
             buddyVoteObj.buddyVote = updatedBuddyVote.buddyVote;
@@ -135,23 +89,24 @@ class TripRoomComponents extends Component {
       bookmarks: updatedBookmarks
     });
 
-    //@back_end_magicician_preston
-    //fire off ajax requests to update bookmark votes by uncommenting function below
-    this.updateBookmarkVoteInDb(updatedBuddyVote)
+    this.updateBookmarkVoteInDb(bookmarkID, updatedBuddyVote)
   }
 
 
 
   //fire off ajax requests to update bookmark votes
-  var updateBookmarkVoteInDb(updatedBuddyVote){
+  updateBookmarkVoteInDb(bookmarkID, updatedBuddyVote){
 
     var dataToSent = {
-      bookmarkId: 1231231231,
+      bookmarkID: bookmarkID,
       updatedBuddyVote : updatedBuddyVote
-    }
+    };
 
-    console.log('ready to send off AJAX request to update bookmark in DB');
+    console.log('send AJAX request to UPDATE BOOKMARK VOTE in DB');
     console.log(dataToSent);
+
+    //@back_end_magicician_preston
+    //uncommenting function below to fire off ajax requests to update a bookmark vote in DB
 
     // $.ajax({
     //   type: 'POST',
@@ -161,9 +116,9 @@ class TripRoomComponents extends Component {
     // }.bind(this));
   }
 
-  addBookmarkComment(bookmarkId, newComment){
+  addBookmarkComment(bookmarkID, newComment){
     var updatedBookmarks = this.state.bookmarks.map((bookmark) => {
-      if (bookmark.bookmarkId === bookmarkId) {
+      if (bookmark.bookmarkID === bookmarkID) {
         bookmark.bookmarkComments.push(newComment);
       }
       return bookmark;
@@ -173,23 +128,28 @@ class TripRoomComponents extends Component {
       bookmarks: updatedBookmarks
     });
 
-    //@back_end_magicician_preston
-    //fire off ajax requests to update bookmark comments by uncommenting function below
-    //this.addCommentToBookmarkInDb(newComment)
+    this.addCommentToBookmarkInDb(bookmarkID, newComment)
   }
 
   //fire off ajax requests to update bookmark comments
-  addCommentToBookmarkInDb(newComment){
+  addCommentToBookmarkInDb(bookmarkID, newComment){
     var dataToSent = {
-      bookmarkId: this.props.bookmark.bookmardId,
+      bookmarkID: bookmarkID,
       commentObj: newComment
     };
-    $.ajax({
-      type: 'POST',
-      url: '/addCommentToBookmark',
-      dataType: 'json',
-      data: dataToSent
-    }.bind(this));
+
+    console.log('send AJAX request to ADD BOOKMARK COMMENT in DB');
+    console.log(dataToSent);
+
+    //@back_end_magicician_preston
+    //uncommenting function below to fire off ajax requests to add a new comment to a bookmark in DB
+
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/addCommentToBookmark',
+    //   dataType: 'json',
+    //   data: dataToSent
+    // }.bind(this));
   }
 
 
@@ -197,11 +157,13 @@ class TripRoomComponents extends Component {
 
     return (
       <div className="container">
-        <h1 className="orange-text darken-2">{this.props.tripData.tripName}</h1>
+        <h1 className="orange-text darken-2">'Hiking Trip'</h1>
         <GroupPreferencesBar
-          priceRange={this.state.priceRange}
-          dateRange={this.state.dateRange}
+          averageNightlyHotelBudget={this.state.averageNightlyHotelBudget}
+          beginning={this.state.beginning}
+          ending={this.state.ending}
           locations={this.state.locations}
+          selectedLocation={this.state.selectedLocation}
           setLocation={this.setLocation}
         />
         <TripRecomendationsCards
