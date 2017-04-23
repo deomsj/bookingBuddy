@@ -18,8 +18,7 @@ class TripRecomendationsCards extends React.Component {
     this.bookmarkThisRec = this.bookmarkThisRec.bind(this);
     this.advanceToNextRec = this.advanceToNextRec.bind(this);
     this.state = {
-      currentRecIndex: 0,
-      bookmarkComment: ''
+      currentRecIndex: 0
     };
   }
 
@@ -36,12 +35,12 @@ class TripRecomendationsCards extends React.Component {
     });
   }
 
-  bookmarkThisRec(comment) {
+  bookmarkThisRec(bookmarkerNote) {
+    var bookmarkedHotelObject = this.props.hotelRecomendations[this.state.currentRecIndex]
     var newBookmark = {
-      hotelRecomendationObj: this.props.hotelRecomendations[this.state.currentRecIndex],
-      bookmarkComment: comment
+      bookmarkedHotelId: bookmarkedHotelObject.hotelId,
+      bookmarkerNote: bookmarkerNote
     };
-    this.setState({bookmarkComment: comment});
     this.props.addBookmark(newBookmark);
   }
 

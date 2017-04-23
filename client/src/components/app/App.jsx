@@ -80,7 +80,7 @@ class App extends Component {
           <Route path="/start-planning"
             render={() => <StartPlanning userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
           <Route path="/trip-room"
-            render={() => <TripRoom userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
+            render={() => <TripRoom profile={this.state.profile} tripId={this.state.trip_id} /> } />
           <Route path="/about-us" component={AboutUs} />
         </div>
       </Router>

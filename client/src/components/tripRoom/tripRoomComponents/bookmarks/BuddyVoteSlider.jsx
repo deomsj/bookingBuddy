@@ -2,28 +2,36 @@ import React from 'react';
 
 var VoteButton = function ({text, selected, handleClick}) {
   if (selected){
-    return (<button onClick={handleClick} className="waves-effect waves-light green darken-2 btn">{text}</button>);
+    return (<button onClick={handleClick} className="green darken-2 btn">{text}</button>);
   }
 
-  return (<button onClick={handleClick} className="waves-effect waves-light green lighten-4 btn" style={{'padding':'5px 10px'}}>{text}</button>);
+  return (<button onClick={handleClick} className="green lighten-4 btn" style={{'padding':'5px 10px'}}>{text}</button>);
 };
 
-
-
-
 var BuddyVoteSlider = function ({bookmarkId, buddyVoteObj, updateBookmarkVote}) {
-  var vote = buddyVoteObj.buddyVote;
   var socket = io();
 
+  var vote = buddyVoteObj.buddyVote;
+
   var updateVote = function(num) {
-    socket.emit('new vote', function() {
+
+    var updatedBuddyVote =  {
+      buddyName: buddyVoteObj.buddyName,
+      buddyEmail: buddyVoteObj.buddyEmail,
+      buddyVote: 1
+    }
+
+
+    updateBookmarkVote(bookmarkId, updatedBuddyVote);
+    // emit vote here
+    socket.emit('new vote', {
       bookmarkId: bookmarkId,
       buddyName: buddyVoteObj.buddyName,
       num: num
     });
-    updateBookmarkVote(bookmarkId, buddyVoteObj.buddyName, num);
   };
 
+  // new function to listen for vote
   socket.on('new vote', function(data) {
     updateBookmarkVote(data.bookmarkId, data.buddyName, data.num);
   });
