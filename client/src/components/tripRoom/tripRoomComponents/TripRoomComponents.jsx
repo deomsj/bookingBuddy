@@ -32,6 +32,16 @@ class TripRoomComponents extends Component {
     });
   }
 
+  getVoteTotal(bookmark){
+    return bookmark.buddyVotes.reduce((sum,buddy)=>sum + buddy.buddyVote, 0);
+  }
+
+  sortBookmarks(bookmarksArray) {
+    return bookmarksArray.slice().sort(function(bookmarkA, bookmarkB) {
+      return this.getVoteTotal(bookmarkB) - this.getVoteTotal(bookmarkA);
+    }.bind(this))
+  }
+
   addBookmark(newBookmark) {
     newBookmark['bookmarkID'] = Date.now();
     newBookmark['buddyVotes'] = this.props.tripData.buddyList.map((buddy) => ({
@@ -43,8 +53,12 @@ class TripRoomComponents extends Component {
     newBookmark['bookmarkerName'] = this.props.profile.given_name;
     newBookmark['bookmarkComments']= [];
 
+    //sort bookmarks array after adding new bookmark
+    var newBookmarks = this.state.bookmarks.concat(newBookmark)
+    newBookmarks = this.sortBookmarks(newBookmarks);
+
     this.setState({
-      bookmarks: this.state.bookmarks.concat(newBookmark)
+      bookmarks: newBookmarks
     });
 
     this.addNewBookmarktoDB(newBookmark);
