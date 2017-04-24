@@ -61,16 +61,16 @@ class TripRoomComponents extends Component {
 
     //@back_end_magicician_preston
     //fire off ajax requests to add new bookmark to our DB by uncommenting function below
-
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/addNewBookmarktoDB',
-    //   dataType: 'json',
-    //   data: newBookmark,
-    //   success: function() {
-    //     console.log('Bookmark Added');
-    //   }.bind(this)
-    // });
+      //DONE! - Inserting Bookmark and Buddy Votes To DB - P.M.
+    $.ajax({
+      type: 'POST',
+      url: '/addNewBookmarktoDB',
+      dataType: 'json',
+      data: newBookmark,
+      success: function(data) {
+        console.log('Bookmark Added');
+      }.bind(this)
+    });
   }
 
   updateBookmarkVote(bookmarkID, updatedBuddyVote) {
@@ -108,13 +108,16 @@ class TripRoomComponents extends Component {
 
     //@back_end_magicician_preston
     //uncommenting function below to fire off ajax requests to update a bookmark vote in DB
-
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/updateBookmarkVote',
-    //   dataType: 'json',
-    //   data: dataToSent
-    // }.bind(this));
+    //DONE - Updated Buddy Votes In DB - P.M.
+    $.ajax({
+      type: 'POST',
+      url: '/updateBookmarkVote',
+      dataType: 'json',
+      data: dataToSent,
+      success: function(data) {
+        console.log('Update Vote', data);
+      }.bind(this)
+    });
   }
 
   addBookmarkComment(bookmarkID, newComment){
@@ -144,14 +147,17 @@ class TripRoomComponents extends Component {
 
     //@back_end_magicician_preston
     //uncommenting function below to fire off ajax requests to add a new comment to a bookmark in DB
-
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/addCommentToBookmark',
-    //   dataType: 'json',
-    //   data: dataToSent
-    // }.bind(this));
-  }
+    //Done! - Adding comment to database - P.M.
+    $.ajax({
+      type: 'POST',
+      url: '/addCommentToBookmark',
+      dataType: 'json',
+      data: dataToSent,
+      success: function(data) {
+        console.log('Update Vote');
+      }.bind(this)
+    });
+  };
 
 
   render() {

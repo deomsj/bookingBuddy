@@ -37,7 +37,7 @@ class TripRoom extends React.Component {
       data: { tripId : Id },
       success: function(data) {
         console.log(data, "Data");
-        // this.setState({tripDate: data});
+        this.setState({tripDate: data});
         $.ajax({
           type: 'POST',
           url: '/expedia',

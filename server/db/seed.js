@@ -56,32 +56,30 @@ db.query('CREATE TABLE \
   db.query('CREATE TABLE \
                   bookmarks( \
                   id SERIAL PRIMARY KEY, \
-                  client_id VARCHAR(26), \
+                  bookmark_id VARCHAR(26), \
                   name VARCHAR(30), \
-                  email VARCHAR(30), \
+                  hotel_id VARCHAR(30), \
                   bookmark VARCHAR(300), \
-                  trip_id INTEGER REFERENCES trips(id), \
-                  user_trip_id INTEGER REFERENCES userTrips(id))');
+                  trip_id INTEGER REFERENCES trips(id))');
 
   db.query('CREATE TABLE \
                   comments( \
                   id SERIAL PRIMARY KEY, \
                   client_id VARCHAR(26), \
                   name VARCHAR(30), \
-                  email VARCHAR(30), \
+                  email VARCHAR(50), \
                   comment VARCHAR(300), \
                   trip_id INTEGER REFERENCES trips(id), \
-                  bookmark_id INTEGER REFERENCES bookmarks(id))');
+                  bookmark_id VARCHAR)');
 
   db.query('CREATE TABLE \
                   votes( \
                   id SERIAL PRIMARY KEY, \
-                  client_id VARCHAR(26), \
                   name VARCHAR(30), \
-                  email VARCHAR(30), \
+                  email VARCHAR(50), \
                   vote VARCHAR(10), \
                   trip_id INTEGER REFERENCES trips(id), \
-                  bookmark_id INTEGER REFERENCES bookmarks(id))');
+                  bookmark_id VARCHAR(22))');
 
 
 });

@@ -101,19 +101,37 @@ module.exports.getTotalBudgetForTrip = function(req, res, next) {
 
 module.exports.getTripData = function(req, res, next) {
   console.log( "tripData");
-  var dat = {};
+  var dat = { bookmarks:[], buddyList : [] };
   var sum = 0;
   var commonTrips = [];
   var len;
 
   db.query('select * from userTrips where trip_id = ($1)',[req.body.tripId], function(err, data) {
     len = data.rows.length;
+    dat.tripId = req.body.tripId;
+    if( err ) {
+      console.log("userTrips Error", err);
+    }
+    data.rows.forEach(function(item, index, coll) {
+      var obj = {};
+      db.query('SELECT * FROM users WHERE id = ($1)', [item.user_id], function(err, data) {
+        if( err ) {
+          console.log("users Error", err);
+        }
+        obj.name = data.rows[0].namef;
+        obj.email = data.rows[0].email;
+      });
+      dat.buddyList.push(obj);
+    });
   });
+
 
   db.query('SELECT * FROM bookmarks WHERE trip_id = (SELECT id FROM trips WHERE name = ($1))', [req.body.tripId],
     function(err, data) {
+      if( err ) {
+        console.log("Bookmarks Error", err);
+      }
       data.bookmarks = data.rows;
-      console.log(data.rows, "GETTRIPDATABOOKMARKS!");
   });
 
   var commonDateObj = {beginning: '', ending: '', duration: ''};
@@ -182,83 +200,109 @@ module.exports.getTripData = function(req, res, next) {
       }
     }
     dat.commonTrips = commonTrips;
-    setTimeout(function() {
-     res.send(dat);
-    }, 500);
   });
 
-};
+  db.query('SELECT * FROM bookmarks WHERE trip_id = ($1)', [req.body.tripId], function(err, data) {
+    if(data.rows.length > 0) {
+      data.rows.forEach(function(item, ind, coll) {
+        var obj = { bookmarkComments : [], buddyVotes : [] };
+        obj.bookmarkID = item.bookmark_id;
+        obj.tripId = req.body.tripId;
+        obj.bookmarkerName = item.name;
+        obj.bookmarkerNote = item.bookmark;
+        obj.bookmarkedHotelId = "";
+        db.query('SELECT * FROM comments where bookmark_id = ($1)', [item.bookmark_id], function(err, comment) {
+      
+          comment.rows.forEach(function(item, ind, coll) {
+            var obj2 = {};
+            obj2.buddyName = item.name;
+            obj2.buddyEmail = item.email;
+            obj2.date = item.bookmark_id;
+            obj2.comment = item.comment;
+            obj.bookmarkComments.push(obj2);
+          });
+          db.query('SELECT * FROM votes WHERE bookmark_id = ($1)', [item.bookmark_id], function(err, vote) {
+            
+            vote.rows.forEach(function(item, ind, coll) {
+              var obj2 = {};
+              obj2.buddyName = item.name;
+              obj2.buddyEmail = item.email;
+              obj2.buddyVote = item.vote;
+              obj.buddyVotes.push(obj2);          
 
-module.exports.commonTripLocations = function(req, res, next) {
-  //key represents the trip id
-  //gets common trip location(s) out of all user locations associated with a certain trip
-  var commonTrips = [];
-  var common = {};
-  var max;
-  var tripName;
-  db.query('SELECT name FROM trips WHERE id = ($1)', [req.body.tripId], function(err, data) {
-    tripName = data.rows[0].name;
-  });
-  db.query('SELECT name FROM locations', function(err, data) {
-    max = data.rows.length - 1;
-  });
-
-  db.query('SELECT * FROM userTrips WHERE trip_id = ($1)', [req.body.tripId], function(err, data) {
-    var len = data.rows.length;
-    data.rows.forEach(function(item, ind, coll) {
-      db.query('SELECT * FROM locations WHERE user_trip_id = ($1)', [item.tripId], function(err, data) {
-        if (err) {
-          console.log(err, 'err');
-        }
-        data.rows.forEach(function(item, index, collection) {
-          max--;
-          if (common[item.name] === undefined) {
-            common[item.name] = 1;
-          } else {
-            common[item.name]++;
-          }
-          if (max === 0) {
-            for (var key in common) {
-              if (common[key] === len) {
-                commonTrips.push(key);
-              }
-            }
-            console.log(commonTrips, "Common trip(s)...");
-            res.send({commonTrips: commonTrips, tripName:tripName});
-          }
+            });
+            dat.bookmarks.push(obj);
+          });
         });
       });
-    });
+      setTimeout(function() {
+        res.send(dat);
+      }, 500);
+    };
   });
 };
 
+
 module.exports.addTripBookmark = function(req, res, next) {
-  //must be sent with tripname, email addres of user making bookmark, and the actual bookmark message 
-  //ex. addTripBookmark({email:'lifeisgood@gmail.com', bookmark:'The best trip is now here!', tripname:'abc123'});
-  console.log(req.body, "Adding Trip Bookmark");
-  db.query('SELECT id FROM trips WHERE name = ($1)', [req.body.tripname], function(err, trip) {
-    db.query('SELECT id FROM userTrips WHERE user_id = (SELECT id FROM users WHERE email = ($1)) AND trip_id  = (SELECT id FROM trips WHERE name = ($2))', [req.body.email, req.body.tripname],
-      function(err, data) { 
-        console.log(data.rows)
-        db.query('INSERT INTO \
-                      bookmarks(bookmark, user_trip_id, email, trip_id) \
-                      VALUES($1, $2, $3, $4) RETURNING bookmark',
-                      [req.body.bookmark, data.rows[0].id, req.body.email, trip.rows[0].id], function(err, userResults) {
-                        if (err) {
-                          res.send(err)
-                        }
-                        res.send({results:userResults.rows});
-                      });
+  console.log("Adding Trip Bookmark!");
+  db.query('SELECT * FROM bookmarks WHERE bookmark_id = ($1)', [req.body.bookmarkID], function(err, data){
+    if(data.rows.length === 0) {
+      db.query('INSERT INTO \
+                    bookmarks(hotel_id, bookmark, bookmark_id, trip_id, name) \
+                    VALUES($1, $2, $3, $4, $5) RETURNING bookmark',
+                    [req.body.bookmarkedHotelId, req.body.bookmarkerNote, req.body.bookmarkID, req.body.tripId, req.body.bookmarkerName], function(err, userResults) {
+                      if (err) {
+                        console.log("Bookmarks error", err);
+                      }
+        req.body.buddyVotes.forEach(function(item, ind, coll) {
+          db.query('INSERT INTO \
+                        votes(vote, name, email, bookmark_id, trip_id) \
+                        VALUES($1, $2, $3, $4, $5) RETURNING id',
+                        [item.buddyVote, item.buddyName, item.buddyEmail, req.body.bookmarkID, req.body.tripId], function(err, userResults) {
+                          if (err) {
+                            console.log("Votes Error", err);
+                          }
+
+          });
+        });
       });
-  })
+    };
+  });
 }
+
+module.exports.updateBookmarkVote = function(req, res, next) {
+  console.log( "updateBookmarkVote!");
+  var voteInfo = req.body;
+  db.query('UPDATE votes SET vote = ($1) WHERE email = ($2) AND bookmark_id = ($3)', [voteInfo.updatedBuddyVote.buddyVote, voteInfo.updatedBuddyVote.buddyEmail, voteInfo.bookmarkID], function(err, data) {
+    if (err) {
+      console.log("Update Vote Error", err);
+    }
+  });
+};
+
+module.exports.addCommentToBookmark = function(req, res, next) {
+  console.log("Adding Comment TO Bookmark");
+  var comment = req.body;
+  db.query('SELECT * FROM comments WHERE client_id = ($1) AND email = ($2)', [comment.commentObj.date, comment.commentObj.buddyEmail], function(err, data) { 
+      if (data.rows.length === 0) {
+      db.query('INSERT INTO \
+                    comments(email, comment, bookmark_id, name, client_id) \
+                    VALUES($1, $2, $3, $4, $5) RETURNING id',
+                    [comment.commentObj.buddyEmail, comment.commentObj.comment, comment.bookmarkID, comment.commentObj.buddyName, comment.commentObj.date], function(err, userResults) {
+                      if (err) {
+                        console.log("Bookmarks error", err);
+                      }
+                    });
+    };
+  });
+};
 
 module.exports.viewTripBookmark = function(req, res, next) {
   //example // viewTripBookmark({tripname : 'abc123'})
-  console.log(req.body, "<--- Trip Bookmarks...");
+  console.log( "<--- Trip Bookmarks...");
   db.query('SELECT * FROM bookmarks WHERE trip_id = (SELECT id FROM trips WHERE name = ($1))', [req.body.tripname],
     function(err, data) {
-      res.send({data:data.rows});
+      // res.send({data:data.rows});
   });
 }
 

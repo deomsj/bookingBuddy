@@ -25,7 +25,7 @@ module.exports.expediaAPI = function(req, res, next) {
     "customerIpAddress" : "127.0.0.1",
     "customerUserAgent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko)",
     "HotelListRequest": {
-      "city": 'Fresno',
+      "city": req.body.location,
       "countryCode": "US",
       "arrivalDate": req.body.beginningDate,
       "departureDate": req.body.endingDate,
@@ -38,7 +38,7 @@ module.exports.expediaAPI = function(req, res, next) {
 
   expedia.hotels.list(options, function(err, data){
       if(err){console.log("ERROR",err) };
-      console.log("Getting Expedia Hotel Data...", data);
+      console.log("Getting Expedia Hotel Data...");
       res.send(data.HotelListResponse.HotelList);
   });
 };

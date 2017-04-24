@@ -9,11 +9,12 @@ router.post('/expedia', APIsController.expediaAPI);
 router.post('/hotwire', APIsController.hotwirePostRequest);
 
 router.post('/getTotal', tripsController.getTotalBudgetForTrip);
-router.post('/commonTripLocations', tripsController.commonTripLocations);
 router.post('/commonTripDates', tripsController.commonTripDates);
 router.post('/getTripData', tripsController.getTripData);
-router.post('/addTripBookmark', tripsController.addTripBookmark);
+router.post('/addNewBookmarktoDB', tripsController.addTripBookmark);
 router.post('/viewTripBookmark', tripsController.viewTripBookmark);
+router.post('/updateBookmarkVote', tripsController.updateBookmarkVote);
+router.post('/addCommentToBookmark', tripsController.addCommentToBookmark);
 
 router.post('/userTripNames', usersController.userTripNames);
 router.post('/userLocations', usersController.getUserLocations);
