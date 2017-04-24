@@ -100,6 +100,8 @@ class TripRoomComponents extends Component {
       return bookmark;
     });
 
+    updatedBookmarks = this.sortBookmarks(updatedBookmarks);
+
     this.setState({
       bookmarks: updatedBookmarks
     });
