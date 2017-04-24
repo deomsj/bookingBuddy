@@ -26,13 +26,21 @@ h5, h4 {
 }
 
 .btn-small {
-    height: 24px;
-    line-height: 24px;
-    padding: 0 0.5rem;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 0.5rem;
 }
+
+/* # Profile Page
+________________________________________*/
+
 
 /* # Trip Preferences Page
 ________________________________________*/
+
+.start-planning .collapsible-body {
+  padding: 10px;
+}
 
 .locationInput {
   display: -webkit-box;
@@ -120,8 +128,12 @@ span[class^="preferences-"] .material-icons {
 ---------------------------------------- */
 
 .bookmark-comments form {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px;
+}
+
+.bookmark-comments .input-field.comment-input {
+  margin-top: 0;
 }
 
 .bookmark-comments .comments-open,
@@ -141,7 +153,20 @@ span[class^="preferences-"] .material-icons {
   display: none;
 }
 
+.bookmark-comments .collection-item {
+  padding: 20px;
+}
+
+.comment-header {
+  margin-bottom: 10px;
+}
+
+.comment-header .author {
+  font-size: 20px;
+}
+
 .comment-header .datetime {
+  font-weight: 300;
   margin-left: 10px;
 }
 
@@ -157,11 +182,6 @@ span[class^="preferences-"] .material-icons {
 
 .parallax-container .section {
   width: 100%;
-}
-
-
-.collapsible-body {
-  padding: 10px 10px 10px 10px;
 }
 
 .homepage-intro,

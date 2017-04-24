@@ -51,15 +51,18 @@ class BookmarkComments extends Component {
             <i className="material-icons comments-close">keyboard_arrow_up</i>
           </div>
           <div className="collapsible-body">
-            <form onSubmit={this.bookmarkCommentSubmit}>
-              <div className="comment-input">
-                <input
+            <form className="grey lighten-5" onSubmit={this.bookmarkCommentSubmit}>
+              <div className="input-field comment-input">
+                <textarea
+                  id="comment-input"
+                  className="materialize-textarea"
                   onChange={this.bookmarkCommentChange}
                   value={this.state.bookmarkCommentText}
-                />
+                ></textarea>
+                <label for="comment-input">What do you think?</label>
               </div>
               <div className="comment-submit">
-                <button type="submit" className="btn waves-effect waves-light orange">Add Comment</button>
+                <button type="submit" className="btn orange">Add Comment</button>
               </div>
             </form>
             <BookmarkCommentsList comments={this.props.bookmark.bookmarkComments} />

@@ -6,12 +6,12 @@ import Moment from 'moment';
 var BookmarkCommentsList = function({ comments }) {
 
   var commentsList = comments.slice().reverse().map((comment, index) => (
-    <li className="collection-item bookmark-comment" key={index}>
+    <li className="collection-item bookmark-comment grey lighten-5" key={index}>
       <div className="comment-header">
         <span className="author">{comment.buddyName}</span>
-        <time className="datetime">{Moment(comment.date).fromNow()}</time>
+        <time className="datetime grey-text text-darken-1">{Moment(comment.date).fromNow()}</time>
       </div>
-      <div className="rcomment-body">
+      <div className="comment-body">
         {comment.comment}
       </div>
     </li>
