@@ -1,21 +1,26 @@
 h5, h4 {
   text-align: center;
 }
+
 .icon-block {
   padding: 0 15px;
 }
+
 .icon-block .material-icons {
   font-size: inherit;
 }
+
 .row.center a {
   margin: 2px;
   width: 200px;
 }
+
 .profilePic {
   width: 100%;
   border: 2px solid grey;
   border-radius: 5px;
 }
+
 .btn {
   margin: 2px;
 }
@@ -98,6 +103,7 @@ ________________________________________*/
 
 /* # Trip Page
 ---------------------------------------- */
+
 span[class^="preferences-"] {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -113,25 +119,30 @@ span[class^="preferences-"] .material-icons {
 /* ## Bookmarks
 ---------------------------------------- */
 
-.bookmark-message {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-flow: row nowrap;
-      flex-flow: row nowrap;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+.bookmark-comments form {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
-.bookmark-message .content {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 75%;
-          flex: 1 0 75%;
-  margin-left: 5%;
+.bookmark-comments .comments-open,
+.bookmark-comments .comments-close {
+  float: right;
+}
+
+.bookmark-comments .comments-close {
+  display: none;
+}
+
+.bookmark-comments .active .comments-close {
+  display: block;
+}
+
+.bookmark-comments .active .comments-open {
+  display: none;
+}
+
+.comment-header .datetime {
+  margin-left: 10px;
 }
 
 
@@ -198,6 +209,7 @@ span[class^="preferences-"] .material-icons {
 
 /* # Nav Bar
 ---------------------------------------- */
+
 div.nav-wrapper.container {
   width: 100%;
   padding-left: 4%;
