@@ -43,16 +43,27 @@ class BookmarkComments extends Component {
 
   render() {
     return (
-      <ul className="collapsible" data-collapsible="accordion">
+      <ul className="collapsible bookmark-comments" data-collapsible="accordion">
         <li>
-          <div className="collapsible-header center-align">Comments</div>
+          <div className="collapsible-header">
+            <span>Comments</span>
+            <i className="material-icons comments-open">keyboard_arrow_down</i>
+            <i className="material-icons comments-close">keyboard_arrow_up</i>
+          </div>
           <div className="collapsible-body">
-            <form onSubmit={this.bookmarkCommentSubmit}>
-              <input
-                onChange={this.bookmarkCommentChange}
-                value={this.state.bookmarkCommentText}
-              />
-              <button className="center-align">{'Add Comment'}</button>
+            <form className="grey lighten-5" onSubmit={this.bookmarkCommentSubmit}>
+              <div className="input-field comment-input">
+                <textarea
+                  id="comment-input"
+                  className="materialize-textarea"
+                  onChange={this.bookmarkCommentChange}
+                  value={this.state.bookmarkCommentText}
+                ></textarea>
+                <label for="comment-input">What do you think?</label>
+              </div>
+              <div className="comment-submit">
+                <button type="submit" className="btn orange">Add Comment</button>
+              </div>
             </form>
             <BookmarkCommentsList comments={this.props.bookmark.bookmarkComments} />
           </div>

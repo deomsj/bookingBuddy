@@ -153,7 +153,6 @@ class TripCreationForm extends Component {
       tripName: e.target.value,
     });
     tripData.tripName = this.state.tripName;
-
   }
 
   changeTripSummary(e) {
@@ -177,81 +176,81 @@ class TripCreationForm extends Component {
       dataType: 'json',
       data: obj,
       success: function(data) {
-    $.ajax({
+        $.ajax({
           type: 'POST',
           url: '/email',
           dataType: 'json',
           data: obj,
           success: function(data) {
             console.log('New trip created' , data);
+          }.bind(this)
+        });
       }.bind(this)
-      });
-    }.bind(this)
-  });
+    });
   }
 
   render() {
     return (
       <div>
-      <div className="row">
-        <form className="col s12">
-          <div className="row">
-            <div className="input-field col s12">
-              <input placeholder="Trip Name" className="validate" onChange={this.changeTripName} value={this.state.tripName} /> <br />
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <textarea className="materialize-textarea" placeholder="Trip Description" onChange={this.changeTripSummary} defaultValue={this.state.tripSummary}/>
-            </div>
-          </div>
-          <TripMemberInvitesForm />
-        </form>
-      </div>
-      <div className="row">
-        <div className="section">
-          <ul className="collapsible popout" data-collapsible="accordion">
-            <li>
-              <div className="collapsible-header">
-                <strong><i className="material-icons green-text darken-2">location_on</i>Location</strong>
+        <div className="row">
+          <form className="col s12 trip-create">
+            <div className="row">
+              <div className="input-field col s12">
+                <input placeholder="Trip Name" className="validate" onChange={this.changeTripName} value={this.state.tripName} /> <br />
               </div>
-              <div className="collapsible-body">
-                <div className="row">
-                  <div className="col s8">
-                    <input type="text" id="autocomplete-input" className="autocomplete" placeholder="Tell us where you would like to go" onClick={this.changeLocation} onChange={this.changeLocation} value={this.state.location} />
-                  </div>
-                  <div className="col s4">
-                    <button onClick={this.addLocation} className="btn btn-large orange">Add Location</button>
-                  </div>
-                  <div>
-                    <LocationsList locations={this.state.locations} />
-                  </div>
+            </div>
+            <div className="row">
+              <div className="input-field col s12">
+                <textarea className="materialize-textarea" placeholder="Trip Description" onChange={this.changeTripSummary} defaultValue={this.state.tripSummary}/>
+              </div>
+            </div>
+            <TripMemberInvitesForm />
+          </form>
+        </div>
+        <div className="row">
+          <div className="section">
+            <ul className="collapsible popout" data-collapsible="accordion">
+              <li>
+                <div className="collapsible-header">
+                  <strong><i className="material-icons green-text darken-2">location_on</i>Location</strong>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div className="collapsible-header">
-                <strong><i className="material-icons green-text darken-2">schedule</i>Durations</strong>
-              </div>
-              <div className="collapsible-body">
-                <div className="row">
-                  <div className="input-field col s12">
-                  <p>Tell us how many nights you want to spend on your getaway?</p>
-                    <form action="#">
-                      <p id="totalNights" className="bling green-text darken-2"><strong>Nights: {this.state.duration} </strong></p>
-                    </form>
-                    <form action="#">
-                    <p className="range-field">
-                    <input type="range" min="1" max="28" onChange={this.changeDuration} value={this.state.duration} />
-                    </p>
-                    </form>
+                <div className="collapsible-body">
+                  <div className="row">
+                    <div className="col s8">
+                      <input type="text" id="autocomplete-input" className="autocomplete" placeholder="Tell us where you would like to go" onClick={this.changeLocation} onChange={this.changeLocation} value={this.state.location} />
+                    </div>
+                    <div className="col s4">
+                      <button onClick={this.addLocation} className="btn btn-large orange">Add Location</button>
+                    </div>
+                    <div>
+                      <LocationsList locations={this.state.locations} />
                     </div>
                   </div>
                 </div>
               </li>
               <li>
                 <div className="collapsible-header">
-                <strong><i className="material-icons green-text darken-2">today</i>When</strong>
+                  <strong><i className="material-icons green-text darken-2">schedule</i>Durations</strong>
+                </div>
+                <div className="collapsible-body">
+                  <div className="row">
+                    <div className="input-field col s12">
+                      <p>Tell us how many nights you want to spend on your getaway?</p>
+                      <form action="#">
+                        <p id="totalNights" className="bling green-text darken-2"><strong>Nights: {this.state.duration} </strong></p>
+                      </form>
+                      <form action="#">
+                        <p className="range-field">
+                          <input type="range" min="1" max="28" onChange={this.changeDuration} value={this.state.duration} />
+                        </p>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="collapsible-header">
+                  <strong><i className="material-icons green-text darken-2">today</i>When</strong>
                 </div>
                 <div className="collapsible-body">
                   <div className="row">
@@ -261,9 +260,9 @@ class TripCreationForm extends Component {
                   </div>
                   <div className="row">
                     <form action="#">
-                    <div className="col s6">
-                      <input type="date" className="datepicker" placeholder="Select a start date:" onChange={this.changeBeginDate} value={this.state.beginDate}></input>
-                    </div>
+                      <div className="col s6">
+                        <input type="date" className="datepicker" placeholder="Select a start date:" onChange={this.changeBeginDate} value={this.state.beginDate}></input>
+                      </div>
                     </form>
                     <form action="#">
                     <div className="col s6">
@@ -272,44 +271,46 @@ class TripCreationForm extends Component {
                     </form>
                   </div>
                 </div>
-            </li>
-            <li>
-              <div className="collapsible-header">
-                <strong><p className="bling green-text darken-2">$</p>Budget</strong>
-              </div>
-              <div className="collapsible-body">
-                <form action="#">
-                  <p className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}
-                  </strong>
-                  </p>
-                </form>
-                <span className="col s10">What's your nightly budget for <b>hotel</b> accommodations?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
+              </li>
+              <li>
+                <div className="collapsible-header">
+                  <strong><p className="bling green-text darken-2">$</p>Budget</strong>
+                </div>
+                <div className="collapsible-body">
                   <form action="#">
-                    <p className="range-field">
-                    <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
+                    <p className="bling green-text darken-2">
+                      <strong>Total Budget: ${this.state.totalBudget}</strong>
                     </p>
                   </form>
-                <span className="col s10">How much can you spend on <b>flight</b> travel?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.flightBudget}</strong></span>
+                  <span className="col s10">What's your nightly budget for <b>hotel</b> accommodations?</span>
+                  <span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
                   <form action="#">
                     <p className="range-field">
-                    <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
+                      <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
                     </p>
                   </form>
-                  <span className="col s10">What's your daily budget for <b>activities</b>?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.activitiesBudget}</strong></span>
+                  <span className="col s10">How much can you spend on <b>flight</b> travel?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.flightBudget}</strong></span>
                   <form action="#">
                     <p className="range-field">
-                    <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
+                      <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
                     </p>
                   </form>
-              </div>
-            </li>
-          </ul>
+                  <span className="col s10">What's your daily budget for <b>activities</b>?</span>
+                  <span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.activitiesBudget}</strong></span>
+                  <form action="#">
+                    <p className="range-field">
+                      <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
+                    </p>
+                  </form>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <Link className="orange btn" onClick={this.submitNewTrip} to="/profile"> Create Trip </Link>
         </div>
       </div>
-      <div>
-       <Link className="orange btn" onClick={this.submitNewTrip} to="/profile"> Create Trip </Link>
-      </div>
-    </div>
     );
   }
 }

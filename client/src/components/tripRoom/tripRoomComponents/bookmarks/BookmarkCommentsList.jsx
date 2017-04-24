@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
+import Moment from 'moment';
 
 // TripBookmarksList > Bookmark > BookmarkComments > You Are Here (BookmarkCommentsList)
 
 var BookmarkCommentsList = function({ comments }) {
 
   var commentsList = comments.slice().reverse().map((comment, index) => (
-    <li className="collection-item bookmark-comment" key={index}>
-      <span className="author">{comment.buddyName}</span>
-      <span className="content">{comment.comment}</span>
+    <li className="collection-item bookmark-comment grey lighten-5" key={index}>
+      <div className="comment-header">
+        <span className="author">{comment.buddyName}</span>
+        <time className="datetime grey-text text-darken-1">{Moment(comment.date).fromNow()}</time>
+      </div>
+      <div className="comment-body">
+        {comment.comment}
+      </div>
     </li>
   ));
 

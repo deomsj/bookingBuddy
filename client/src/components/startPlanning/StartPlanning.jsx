@@ -31,7 +31,7 @@ const PlanningRoutes = ({userEmail, tripId}) => (
 );
 
 const StartPlanning = ({userEmail, tripId}) => (
-  <div className="container">
+  <div className="container start-planning">
     <h2>Start Planning</h2>
     <PlanningRoutes userEmail={userEmail} tripId={tripId} />
   </div>
