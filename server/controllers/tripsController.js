@@ -235,10 +235,10 @@ module.exports.getTripData = function(req, res, next) {
           });
         });
       });
-      setTimeout(function() {
-        res.send(dat);
-      }, 500);
     };
+    setTimeout(function() {
+      res.send(dat);
+    }, 500);
   });
 };
 
