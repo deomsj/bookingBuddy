@@ -11,7 +11,6 @@ var options = {
       apiKey: '65cc419lbqf590p1njeuv4p0q0',
       secret: 'bvp038hq772sm',
       sig: md5('65cc419lbqf590p1njeuv4p0q0' + 'bvp038hq772sm' + Math.floor(new Date() / 1000)),
-      // sig: "d44f9fb2c7c70f13bd8ea1bc4019a859",
       locale: "en_US",  // optional defaults to en_US
       currencyCode: "USD"  // optional defaults to USD
 };
@@ -39,7 +38,7 @@ module.exports.expediaAPI = function(req, res, next) {
 
   expedia.hotels.list(options, function(err, data){
       if(err){console.log("ERROR",err) };
-      console.log("Getting Expedia Hotel Data...", data);
+      console.log("Getting Expedia Hotel Data...");
       res.send(data.HotelListResponse.HotelList);
   });
 };
