@@ -19,7 +19,7 @@ const FriendsLocationsList = ({friendsData}) => {
   console.log(friendsData,"friendsData!")
   var uniqueLocations = [];
   var friendsLocations;
-  if (Object.keys(friendsData).length !== 0) { 
+  if (Object.keys(friendsData).length !== 0) {
     for (var key in friendsData) {
       friendsLocations = friendsData[key].locations.map(
         (location, index) => {
@@ -29,20 +29,21 @@ const FriendsLocationsList = ({friendsData}) => {
       });
     }
     var locations = uniqueLocations.map(
-      (location, index) =>{        
+      (location, index) =>{
         return (
           <span className="checkbox" key={index}>
             <input type="checkbox" className="filled-in" id="filled-in-box" ></input>
             <label htmlFor="filled-in-box">{location}</label>
           </span>
         );
-      });  
+      });
     return (
-      <div><p className="orange-text darken-2">These are the locations your friends have already selected:</p>
-         <span>{locations}</span>
+      <div>
+        <p className="orange-text darken-2">These are the locations your friends have already selected:</p>
+        <span>{locations}</span>
       </div>
     );
-  }  
+  }
 };
 
 const FriendNights = ({friendsData}) => {
@@ -63,17 +64,17 @@ const FriendNights = ({friendsData}) => {
       }
     }
     return (
-     <div className="friendsBox col s5">
-         <p className="icon-block orange-text darken-2">Your friends chose between {lowest} and {highest} nights for their trip</p>
-    </div> 
+      <div className="friendsBox col s5">
+        <p className="icon-block orange-text darken-2">Your friends chose between {lowest} and {highest} nights for their trip</p>
+      </div>
     )
-  }  
+  }
 };
-  
+
 
 const FriendBudget = ({friendsData}) => {
   var keys = Object.keys(friendsData);
-  if (keys.length !== 0) { 
+  if (keys.length !== 0) {
     var lowest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
     for (var i = 0; i < keys.length; i++) {
       var currentL = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
@@ -89,11 +90,11 @@ const FriendBudget = ({friendsData}) => {
       }
     }
     return (
-         <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div> 
+      <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div>
     )
-  }  
-};  
-  
+  }
+};
+
 
 const LocationsList = ({locations
 }) => {
@@ -270,10 +271,10 @@ class TripPreferencesForm extends Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="section">
+      <div className="section">
+        <div className="row">
           <ul className="collapsible popout" data-collapsible="accordion">
-
+            {/* LOCATIONS */}
             <li className="locationAccordion">
               <div className="collapsible-header">
                 <strong><i className="material-icons green-text darken-2">location_on</i>Location</strong>
@@ -284,9 +285,9 @@ class TripPreferencesForm extends Component {
                     <div className="row locationInput">
                       <div>
                         <input type="text" id="autocomplete-input" className="autocomplete" placeholder="Tell us where you would like to go" onClick={this.changeLocation} onChange={this.changeLocation} value={this.state.location} />
-                      </div>  
-                          <button onClick={this.addLocation} className="btn btn-large orange">Add Location</button>
-                    </div>    
+                      </div>
+                      <button onClick={this.addLocation} className="btn btn-large orange">Add Location</button>
+                    </div>
                     <LocationsList locations={this.state.locations} />
                   </div>
                   <div className="col s1">
@@ -297,8 +298,7 @@ class TripPreferencesForm extends Component {
                 </div>
               </div>
             </li>
-
-
+            {/* DURATIONS */}
             <li className="durationsAccordion">
               <div className="collapsible-header">
                 <strong><i className="material-icons green-text darken-2">schedule</i>Durations</strong>
@@ -316,14 +316,13 @@ class TripPreferencesForm extends Component {
                       </p>
                       </form>
                     </div>
-                    
+
                         <FriendNights friendsData={this.state.friendsData}/>
-                    
+
                   </div>
                 </div>
               </li>
-
-
+              {/* WHEN */}
               <li className="whenAccordion">
                 <div className="collapsible-header">
                 <strong><i className="material-icons green-text darken-2">today</i>When</strong>
@@ -348,46 +347,47 @@ class TripPreferencesForm extends Component {
                   </div>
                 </div>
             </li>
-
-
+            {/* BUDGET */}
             <li className="budgetAccordion">
               <div className="collapsible-header">
-                <strong><p className="bling green-text darken-2">$</p>Budget</strong>
+                <strong><span className="bling green-text darken-2">$</span>Budget</strong>
               </div>
               <div className="collapsible-body">
                 <form action="#">
-                  <p className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}</strong> 
+                  <p className="bling green-text darken-2">
+                    <strong>Total Budget: ${this.state.totalBudget}</strong>
                   </p>
                 </form>
                 <div className="row">
-                  <div className="col s9">  
-                    <span>What's your nightly budget for <b>hotel</b> accommodations?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
-                      <form action="#">
-                        <p className="range-field">
-                        <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
-                        </p>
-                      </form>
-                    <span>How much can you spend on <b>flight</b> travel?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.flightBudget}</strong></span>
-                      <form action="#">
-                        <p className="range-field">
-                        <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
-                        </p>
-                      </form>
-                      <span>What's your daily budget for <b>activities</b>?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.activitiesBudget}</strong></span>
-                      <form action="#">
-                        <p className="range-field">
-                        <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
-                        </p>
-                      </form>
-                    </div> 
-                    <div className="col s3">
-                      <FriendBudget friendsData={this.state.friendsData} />
-                    </div> 
+                  <div className="col s9">
+                    <span>What's your nightly budget for <strong>hotel</strong> accommodations?</span>
+                    <span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
+                    <form action="#">
+                      <p className="range-field">
+                      <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
+                      </p>
+                    </form>
+                    <span>How much can you spend on <strong>flight</strong> travel?</span>
+                    <span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.flightBudget}</strong></span>
+                    <form action="#">
+                      <p className="range-field">
+                      <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
+                      </p>
+                    </form>
+                    <span>What's your daily budget for <strong>activities</strong>?</span>
+                    <span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.activitiesBudget}</strong></span>
+                    <form action="#">
+                      <p className="range-field">
+                      <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
+                      </p>
+                    </form>
                   </div>
-                </div>      
+                  <div className="col s3">
+                    <FriendBudget friendsData={this.state.friendsData} />
+                  </div>
+                </div>
+              </div>
             </li>
-
-
           </ul>
         </div>
       </div>
