@@ -11,7 +11,6 @@ var options = {
       apiKey: '65cc419lbqf590p1njeuv4p0q0',
       secret: 'bvp038hq772sm',
       sig: md5('65cc419lbqf590p1njeuv4p0q0' + 'bvp038hq772sm' + Math.floor(new Date() / 1000)),
-      // sig: "d44f9fb2c7c70f13bd8ea1bc4019a859",
       locale: "en_US",  // optional defaults to en_US
       currencyCode: "USD"  // optional defaults to USD
 };
@@ -26,7 +25,7 @@ module.exports.expediaAPI = function(req, res, next) {
     "customerIpAddress" : "127.0.0.1",
     "customerUserAgent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko)",
     "HotelListRequest": {
-      "city": req.body.location,
+      "city": 'Fresno',
       "countryCode": "US",
       "arrivalDate": req.body.beginningDate,
       "departureDate": req.body.endingDate,
