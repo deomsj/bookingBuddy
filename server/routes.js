@@ -8,7 +8,6 @@ var usersController = require('./controllers/usersController');
 router.post('/expedia', APIsController.expediaAPI);
 router.post('/hotwire', APIsController.hotwirePostRequest);
 
-router.post('/getTotal', tripsController.getTotalBudgetForTrip);
 router.post('/commonTripDates', tripsController.commonTripDates);
 router.post('/getTripData', tripsController.getTripData);
 router.post('/addNewBookmarktoDB', tripsController.addTripBookmark);
