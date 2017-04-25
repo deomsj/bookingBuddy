@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {tripData} from '../../../tripRoom/data/tripRoomDynamicData';
-import {friendsData} from '../../../tripRoom/data/friendsDummyData';
+//import {friendsData} from '../../../tripRoom/data/friendsDummyData';
 import {
   BrowserRouter as Router,
   Route,
@@ -40,8 +40,7 @@ const FriendsLocationsList = ({friendsData}) => {
 };
 
 
-const LocationsList = ({locations
-}) => {
+const LocationsList = ({locations}) => {
   var locations = locations.map(
     (location, index) => {
 
@@ -53,66 +52,70 @@ const LocationsList = ({locations
     );
   });
   return (
-    <div>
-       <span>{locations}</span>
+     <div className="locationsList">
+       {locations}
     </div>
   );
 };
 
 
-class LocationCard extends Component {  
-  constructor(props) {
-    super(props);
-    this.changeLocation = this.changeLocation.bind(this);
-    this.addLocation = this.addLocation.bind(this);
-  }  
+// class LocationCard extends Component {  
+//   constructor(props) {
+//     super(props);
+//     this.changeLocation = this.changeLocation.bind(this);
+//     this.addLocation = this.addLocation.bind(this);
+//   }  
 
-  addLocation (e) {
+//   addLocation (e) {
 
-    e.preventDefault();
+//     e.preventDefault();
 
-    this.setState((prevState) => ({
-      locations: prevState.locations.concat(prevState.location),
-      location: ''
-    }));
-  }
+//     this.setState((prevState) => ({
+//       locations: prevState.locations.concat(prevState.location),
+//       location: ''
+//     }));
+//   }
 
-  addFriendsLocation (location) {
+  // addFriendsLocation (location) {
 
-    this.setState((prevState) => ({
-      locations: prevState.locations.concat(location),
-    }));
-  }
+  //   this.setState((prevState) => ({
+  //     locations: prevState.locations.concat(location),
+  //   }));
+  // }
 
-  changeLocation(e) {
-    this.setState({
-      location: e.target.value,
-    });
-  }
+  // changeLocation(e) {
+  //   this.setState({
+  //     location: e.target.value,
+  //   });
+  // }
 
 
-        render() {
-          return (
-            <li>
-              <div className="collapsible-header">
-                <strong><i className="material-icons green-text darken-2">location_on</i>Location</strong>
-              </div>
-              <div className="collapsible-body">
-                <div className="row">
-                  <div className="col s7">
-                    <input type="text" id="autocomplete-input" className="autocomplete" placeholder="Tell us where you would like to go" onClick={this.changeLocation} onChange={this.changeLocation} value={this.state.location} />
-                      <span>
-                        <button onClick={this.addLocation} className="btn btn-large orange">Add Location</button>
-                      </span>
-                    <LocationsList locations={this.state.locations} />
-                  </div>
-                  <div className="friendsBox col s5">
-                    <FriendsLocationsList friendsData={this.state.friendsData} />
-                  </div>
-                </div>
-              </div>
-            </li>
-          )}; 
-        };   
+var LocationCard = function({changeLocation, location, addLocation, locations, friendsData}) {
+  return (
+    <li className="locationAccordion">
+      <div className="collapsible-header">
+        <strong><i className="material-icons green-text darken-2">location_on</i>Location</strong>
+      </div>
+      <div className="collapsible-body">
+        <div className="row">
+          <div className="col s7">
+            <div className="row locationInput">
+              <div>
+                <input type="text" id="autocomplete-input" className="autocomplete" placeholder="Tell us where you would like to go" onClick={changeLocation} onChange={changeLocation} value={location} />
+              </div>  
+                  <button onClick={addLocation} className="btn btn-large orange">Add Location</button>
+            </div>    
+            <LocationsList locations={locations} />
+          </div>
+          <div className="col s1">
+          </div>
+          <div className="friendsBox col s4">
+            <FriendsLocationsList friendsData={friendsData} />
+          </div>
+        </div>
+      </div>
+    </li>
+  )
+};   
 
 export default LocationCard;
