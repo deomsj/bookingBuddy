@@ -25,77 +25,84 @@ const FriendBudget = ({friendsData}) => {
       }
     }
     return (
-         <span className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</span> 
+         <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div> 
     )
   }  
 };  
   
-class BudgetCard extends Component {  
-  constructor(props) {
-    super(props);
-    this.changeHotelBudget = this.changeHotelBudget.bind(this);
-    this.changeActivitiesBudget = this.changeActivitiesBudget.bind(this);
-    this.changeFlightBudget = this.changeFlightBudget.bind(this);
-  }  
+// class BudgetCard extends Component {  
+//   constructor(props) {
+//     super(props);
+//     this.changeHotelBudget = this.changeHotelBudget.bind(this);
+//     this.changeActivitiesBudget = this.changeActivitiesBudget.bind(this);
+//     this.changeFlightBudget = this.changeFlightBudget.bind(this);
+//   }  
 
-  changeHotelBudget(e) {
-    var updatedBudget = this.state.duration * (parseInt(e.target.value) + this.state.activitiesBudget) + this.state.flightBudget;
-    this.setState({
-      totalBudget: updatedBudget,
-      hotelBudget: parseInt(e.target.value),
-    });
-  }
+//   changeHotelBudget(e) {
+//     var updatedBudget = this.state.duration * (parseInt(e.target.value) + this.state.activitiesBudget) + this.state.flightBudget;
+//     this.setState({
+//       totalBudget: updatedBudget,
+//       hotelBudget: parseInt(e.target.value),
+//     });
+//   }
 
-  changeActivitiesBudget(e) {
-    var updatedBudget = this.state.duration * (this.state.hotelBudget + parseInt(e.target.value)) + this.state.flightBudget;
-    this.setState({
-      totalBudget: updatedBudget,
-      activitiesBudget: parseInt(e.target.value),
-    });
-  }
+//   changeActivitiesBudget(e) {
+//     var updatedBudget = this.state.duration * (this.state.hotelBudget + parseInt(e.target.value)) + this.state.flightBudget;
+//     this.setState({
+//       totalBudget: updatedBudget,
+//       activitiesBudget: parseInt(e.target.value),
+//     });
+//   }
 
-  changeFlightBudget(e) {
-    var updatedBudget = this.state.duration * (this.state.hotelBudget + this.state.activitiesBudget) + parseInt(e.target.value);
-    this.setState({
-      totalBudget: updatedBudget,
-      flightBudget: parseInt(e.target.value),
-    });
-  }  
+//   changeFlightBudget(e) {
+//     var updatedBudget = this.state.duration * (this.state.hotelBudget + this.state.activitiesBudget) + parseInt(e.target.value);
+//     this.setState({
+//       totalBudget: updatedBudget,
+//       flightBudget: parseInt(e.target.value),
+//     });
+//   }  
 
 
-        render() {
-          return (
-            <li>
-              <div className="collapsible-header">
-                <strong><p className="bling green-text darken-2">$</p>Budget</strong>
-              </div>
-              <div className="collapsible-body">
-                <form action="#">
-                  <p className="bling green-text darken-2"><strong>Total Budget: ${this.state.totalBudget}</strong> <small><FriendBudget friendsData={this.state.friendsData} /></small>
-                  </p>
-                </form>
-                <span className="col s10">What's your nightly budget for <b>hotel</b> accommodations?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
-                  <form action="#">
-                    <p className="range-field">
-                    <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
-                    </p>
-                  </form>
-                <span className="col s10">How much can you spend on <b>flight</b> travel?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.flightBudget}</strong></span>
-                  <form action="#">
-                    <p className="range-field">
-                    <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
-                    </p>
-                  </form>
-                  <span className="col s10">What's your daily budget for <b>activities</b>?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.activitiesBudget}</strong></span>
-                  <form action="#">
-                    <p className="range-field">
-                    <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
-                    </p>
-                  </form>
-              </div>
-            </li>
-          )};
-        };    
+var BudgetCard = function ({totalBudget, hotelBudget, changeHotelBudget, flightBudget, changeFlightBudget, activitiesBudget, changeActivitiesBudget, friendsData}) {
+  return (
+     <li className="budgetAccordion">
+      <div className="collapsible-header">
+        <strong><p className="bling green-text darken-2">$</p>Budget</strong>
+      </div>
+      <div className="collapsible-body">
+        <form action="#">
+          <p className="bling green-text darken-2"><strong>Total Budget: ${totalBudget}</strong> 
+          </p>
+        </form>
+        <div className="row">
+          <div className="col s9">  
+            <span>What's your nightly budget for <b>hotel</b> accommodations?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${hotelBudget}</strong></span>
+              <form action="#">
+                <p className="range-field">
+                <input type="range"  min="0" max="1500" step="25" onChange={changeHotelBudget} value={hotelBudget} />
+                </p>
+              </form>
+            <span>How much can you spend on <b>flight</b> travel?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${flightBudget}</strong></span>
+              <form action="#">
+                <p className="range-field">
+                <input type="range"  min="0" max="5000" step="100" onChange={changeFlightBudget} value={flightBudget}/>
+                </p>
+              </form>
+              <span>What's your daily budget for <b>activities</b>?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${activitiesBudget}</strong></span>
+              <form action="#">
+                <p className="range-field">
+                <input type="range" min="0" max="1000" step="10" onChange={changeActivitiesBudget} value={activitiesBudget}/>
+                </p>
+              </form>
+            </div> 
+            <div className="col s3">
+              <FriendBudget friendsData={friendsData} />
+            </div> 
+          </div>
+        </div>      
+    </li>
+  )
+};    
 
 
 export default BudgetCard;            
