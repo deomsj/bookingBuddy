@@ -172,8 +172,25 @@ class TripPreferencesForm extends Component {
     });
   }
 
+  updateUserTripPreferences(email, tripId, state){
+    state.email = email;
+    state.tripID = tripID;
+    //submit Prefereces specific to a user and trip
+      //data returned should follow formate of state
+    $.ajax({
+      type: 'POST',
+      url: '/updateUserPreferences',
+      dataType: 'json',
+      data: {state},
+      success: function(data) {
+        console.log(data, "User Trip Preferences");
+         //this.setState(data);
+         
+      }.bind(this)
+    });
+  }
+
   handleData(data) {
-    //var profile = this.props.profile;
     var name = this.props.profile.name;
     this.setState({
       locations: data[name].locations,
@@ -486,6 +503,7 @@ class TripPreferencesForm extends Component {
             </li> */}
 
             <BudgetCard friendsData={this.state.friendsData} activitiesBudget={this.state.activitiesBudget} hotelBudget={this.state.hotelBudget} flightBudget={this.state.flightBudget} changeActivitiesBudget={this.changeActivitiesBudget} changeHotelBudget={this.changeHotelBudget} changeFlightBudget={this.changeFlightBudget} totalBudget={this.state.totalBudget}/>
+            <Link className="orange btn" onClick={this.updateUserTripPreferences} to="/profile"> Submit </Link>
           </ul>
           <div>
         </div>
