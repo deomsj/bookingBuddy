@@ -16,7 +16,7 @@ const PlanningLinks = () => (
   </div>
 );
 
-const PlanningRoutes = ({userEmail, tripId}) => (
+const PlanningRoutes = ({userEmail, tripId, profile}) => (
   <Router>
     <div>
       <PlanningLinks />
@@ -25,15 +25,15 @@ const PlanningRoutes = ({userEmail, tripId}) => (
         render={() => <TripCreationForm userEmail={userEmail} /> } />
       <Route
         path="/start-planning/trip-preferences"
-        render={() => <TripPreferencesForm userEmail={userEmail} tripId={tripId} /> } />
+        render={() => <TripPreferencesForm profile={profile} userEmail={userEmail} tripId={tripId} /> } />
     </div>
   </Router>
 );
 
-const StartPlanning = ({userEmail, tripId}) => (
+const StartPlanning = ({userEmail, tripId, profile}) => (
   <div className="container start-planning">
     <h2>Start Planning</h2>
-    <PlanningRoutes userEmail={userEmail} tripId={tripId} />
+    <PlanningRoutes profile={profile} userEmail={userEmail} tripId={tripId} />
   </div>
 );
 

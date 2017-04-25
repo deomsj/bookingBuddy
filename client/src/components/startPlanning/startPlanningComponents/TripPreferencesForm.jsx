@@ -124,6 +124,7 @@ class TripPreferencesForm extends Component {
     this.changeDuration = this.changeDuration.bind(this);
     this.changeBeginDate = this.changeBeginDate.bind(this);
     this.changeEndDate = this.changeEndDate.bind(this);
+    this.handleData = this.handleData.bind(this);
     this.state = {
       locations: [],
       hotelBudget: 0,
@@ -149,6 +150,7 @@ class TripPreferencesForm extends Component {
     console.log('getting current tripPreferences for user ' + this.props.userEmail + ' for trip # ' + this.props.tripId);
 
     this.getUserTripPreferences(this.props.userEmail, this.props.tripId);
+    console.log("profile:", this.props.profile)
   }
 
   getUserTripPreferences(email, tripId){
@@ -163,9 +165,24 @@ class TripPreferencesForm extends Component {
             },
       success: function(data) {
         console.log(data, "User Trip Preferences");
-         this.setState(data);
+         //this.setState(data);
+         this.handleData(data);
       }.bind(this)
     });
+  }
+
+  handleData(data) {
+    //var profile = this.props.profile;
+    var name = this.props.profile.name;
+    this.setState({
+      locations: data[name].locations,
+      hotelBudget: data[name].hotelBudget,
+      activitiesBudget: data[name].activitiesBudget,
+      flightBudget: data[name].flightBudget,
+      duration: data[name].duration,
+      beginDate: data[name].beginDate,
+      endDate: data[name].endDate
+    })
   }
 
   // getFriendsTripPreferences(email, tripId){
