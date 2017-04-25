@@ -92,6 +92,24 @@ class TripPreferencesForm extends Component {
     });
   }
 
+  updateUserTripPreferences(email, tripId, state){
+    state.email = email;
+    state.tripID = tripID;
+    //submit Prefereces specific to a user and trip
+      //data returned should follow formate of state
+    $.ajax({
+      type: 'POST',
+      url: '/updateUserPreferences',
+      dataType: 'json',
+      data: {state},
+      success: function(data) {
+        console.log(data, "User Trip Preferences");
+         //this.setState(data);
+         
+      }.bind(this)
+    });
+  }
+
   handleData(data) {
     //var profile = this.props.profile;
     console.log('data sent back to client on visit to tripPreferences', data);
