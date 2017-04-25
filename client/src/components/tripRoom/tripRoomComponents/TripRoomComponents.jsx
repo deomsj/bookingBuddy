@@ -17,12 +17,12 @@ class TripRoomComponents extends Component {
     this.state = {
       bookmarks: props.tripData.bookmarks,
       hotelRecomendations: hotelRecomendations,
-      locations: props.tripData.commonLocations, //['Cabo San Lucas']
+      locations: props.tripData.commonLocations,
       selectedLocation: '',
-      beginning: props.tripData.commonDates.beginning , //'4/29/2017'
-      duration: props.tripData.commonDates.duration, //4
-      ending: props.tripData.commonDates.ending, //'5/12/2017'
-      averageNightlyHotelBudget: props.tripData.averageNightlyHotelBudget //127
+      beginning: props.tripData.commonDates.beginning ,
+      duration: props.tripData.commonDates.duration,
+      ending: props.tripData.commonDates.ending,
+      averageNightlyHotelBudget: props.tripData.averageNightlyHotelBudget
     };
   }
 
@@ -32,7 +32,25 @@ class TripRoomComponents extends Component {
     });
   }
 
+  getVoteTotal(bookmark){
+    return bookmark.buddyVotes.reduce((sum,buddy)=>sum + buddy.buddyVote, 0);
+  }
+
+  sortBookmarks(bookmarksArray) {
+    return bookmarksArray.slice().sort(function(bookmarkA, bookmarkB) {
+      return this.getVoteTotal(bookmarkB) - this.getVoteTotal(bookmarkA);
+    }.bind(this))
+  }
+
   addBookmark(newBookmark) {
+
+    //ensure that we do not repeat a hotel that has already been bookmarked
+    for(var i=0; i< this.state.bookmarks.length; i++){
+      if(this.state.bookmarks[i].bookmarkedHotelId === newBookmark.bookmarkedHotelId){
+        console.log('ain\'t nobody got time for duplicate bookmarks');
+      }
+    }
+
     newBookmark['bookmarkID'] = Date.now();
     newBookmark['buddyVotes'] = this.props.tripData.buddyList.map((buddy) => ({
       buddyName: buddy.name,
@@ -43,11 +61,16 @@ class TripRoomComponents extends Component {
     newBookmark['bookmarkerName'] = this.props.profile.given_name;
     newBookmark['bookmarkComments']= [];
 
+    //sort bookmarks array after adding new bookmark
+    var newBookmarks = this.state.bookmarks.concat(newBookmark)
+    newBookmarks = this.sortBookmarks(newBookmarks);
+
     this.setState({
-      bookmarks: this.state.bookmarks.concat(newBookmark)
+      bookmarks: newBookmarks
     });
 
     this.addNewBookmarktoDB(newBookmark);
+
   }
 
 
@@ -86,13 +109,15 @@ class TripRoomComponents extends Component {
       return bookmark;
     });
 
+    //sort bookmarks array after updating a bookmark vote
+    updatedBookmarks = this.sortBookmarks(updatedBookmarks);
+
     this.setState({
       bookmarks: updatedBookmarks
     });
 
     this.updateBookmarkVoteInDb(bookmarkID, updatedBuddyVote)
   }
-
 
 
   //fire off ajax requests to update bookmark votes
