@@ -254,7 +254,6 @@ class TripRoom extends Component {
     });
   }
 
-<<<<<<< HEAD
   getTripRecomendationFromExpedia(){
     console.log('off to see bout dem expedia recs you asked for...');
 
@@ -288,9 +287,6 @@ class TripRoom extends Component {
       }
     });
   }
-
-=======
->>>>>>> add loading view and consolidate trip room files
 
 
 
