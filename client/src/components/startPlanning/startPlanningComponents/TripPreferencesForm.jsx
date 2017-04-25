@@ -164,7 +164,7 @@ class TripPreferencesForm extends Component {
               tripId : tripId
             },
       success: function(data) {
-        console.log(data, "TP");
+        console.log(data, "User Trip Preferences");
         // this.setState(data);
       }.bind(this)
     });

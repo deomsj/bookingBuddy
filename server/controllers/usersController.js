@@ -25,51 +25,53 @@ module.exports.registerUser = function(req, res, next) {
 
 
 module.exports.email = function(obj) {
-  console.log("IN EMAIL!");
-  setTimeout(function(){
-    var checkEmail = obj.body.buddies[0].email;
-    db.query('SELECT id FROM users where namef = ($1)', [obj.body.buddies[0].name], function(err, results) {
-      if(results.rows.length === 0) {
-        obj.body.buddies.forEach(function(item, ind, coll) {
-          db.query('SELECT id FROM trips WHERE name = ($1)', [obj.body.tripName], function(err, data) {
+  console.log("IN EMAIL!", obj.body);
+  if(obj.body.length > 0) {
+    setTimeout(function(){
+      var checkEmail = obj.body.buddies[0].email;
+      db.query('SELECT id FROM users where namef = ($1)', [obj.body.buddies[0].name], function(err, results) {
+        if(results.rows.length === 0) {
+          obj.body.buddies.forEach(function(item, ind, coll) {
+            db.query('SELECT id FROM trips WHERE name = ($1)', [obj.body.tripName], function(err, data) {
 
-            db.query('INSERT INTO \
-                      users(namef, namel, email) \
-                      VALUES($1, $2, $3) RETURNING id',
-                      [item.name, item.name, item.email], function(err, userResults) {
+              db.query('INSERT INTO \
+                        users(namef, namel, email) \
+                        VALUES($1, $2, $3) RETURNING id',
+                        [item.name, item.name, item.email], function(err, userResults) {
+                          if (err) {
+                            console.log(err, "ERROR!");
+                          };
+
+                db.query('INSERT INTO \
+                      userTrips(user_id, trip_id) \
+                      VALUES($1, $2) RETURNING id, trip_id',
+                      [userResults.rows[0].id, data.rows[0].id], function(err, userTripsResults) {
                         if (err) {
                           console.log(err, "ERROR!");
                         };
 
-              db.query('INSERT INTO \
-                    userTrips(user_id, trip_id) \
-                    VALUES($1, $2) RETURNING id, trip_id',
-                    [userResults.rows[0].id, data.rows[0].id], function(err, userTripsResults) {
-                      if (err) {
-                        console.log(err, "ERROR!");
-                      };
-
-                let mailOptions = {
-                  from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
-                  to: item.email, // list of receivers
-                  subject: 'Hey ' + item.name + ', '+obj.body.name+ ' has invited you on an exclusive vacation!', // Subject line
-                  text: 'Whatever we want to tell the db ', // plain text body
-                  html: '<b>Its vacation time! Go to the following link to plan your group vacation.</b>' + ' http://localhost:3000/profile<br><b> Enjoy enjoy!</b>' // html body
-                };
-
-                transporter.sendMail(mailOptions, (error, info) => {
-                  if (error) {
-                    return console.log(error);
+                  let mailOptions = {
+                    from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
+                    to: item.email, // list of receivers
+                    subject: 'Hey ' + item.name + ', '+obj.body.name+ ' has invited you on an exclusive vacation!', // Subject line
+                    text: 'Whatever we want to tell the db ', // plain text body
+                    html: '<b>Its vacation time! Go to the following link to plan your group vacation.</b>' + ' http://localhost:3000/profile<br><b> Enjoy enjoy!</b>' // html body
                   };
-                console.log('Message %s sent: %s', info.messageId, info.response);
+
+                  transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                      return console.log(error);
+                    };
+                  console.log('Message %s sent: %s', info.messageId, info.response);
+                  });
                 });
               });
-            });
-          });  
-        });
-      };
-    });
-  }, 500);
+            });  
+          });
+        };
+      });
+    }, 500);
+  }
 };
 
 module.exports.userTripNames = function(req, res) {

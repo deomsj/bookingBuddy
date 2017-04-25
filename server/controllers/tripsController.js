@@ -46,56 +46,44 @@ module.exports.createTrip = function(req, res, next) {
 }
 
 module.exports.getTripPreferences = function(req, res, next) {
-  var obj = {};
+  console.log(req.body, "PREFERENCES!");
+  //get all budgets, end and begin dates and user locations
+  var obj = {tripLocations : [] };
   db.query('select distinct name from locations INNER JOIN userTrips ON(locations.user_trip_id = userTrips.id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
-      obj.tripLocations = data.rows;
+    data.rows.forEach(function(item , index, coll) {
+    //change to array of strings
+      obj.tripLocations.push(item.name);
+    });
   });
 
   db.query('select namef FROM users INNER JOIN userTrips ON (users.id = userTrips.user_id AND userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
     data.rows.forEach(function(item, index, coll) {
       var name = item.namef;
-      obj[name] = {};
-
-      db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, location) {
-         obj[name].locations = location.rows;
-    
-        db.query('select * from dates where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, dates) {
-           obj[name].beginDate = dates.rows[0].beging;
-           obj[name].endDate = dates.rows[0].ending;
-           obj[name].duration = parseInt(dates.rows[0].duration);
-   
-          db.query('select * from budget where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, budget) {
-            obj[name].hotelBudget = parseInt(budget.rows[0].total);
-            obj[name].activitiesBudget = parseInt(budget.rows[0].activitites);
-            obj[name].flightBudget = parseInt(budget.rows[0].flight);
-            if(index === coll.length-1){
-              res.send(obj);
-            }
+      obj[name] = {locations:[]};
+        db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, location) { 
+          location.rows.forEach(function(item, ind, coll) {
+            obj[name].locations.push(item.name);
           });
         });
-      });
+          
+        db.query('select * from dates where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, dates) {
+          if(dates.rows.length > 0) {
+            obj[name].beginDate = dates.rows[0].beging;
+            obj[name].endDate = dates.rows[0].ending;
+            obj[name].duration = parseInt(dates.rows[0].duration);
+          };
+        });
+        db.query('select * from budget where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, budget) {
+          if(budget.rows.length > 0) {
+            obj[name].hotelBudget = parseInt(budget.rows[0].total);
+            obj[name].activitiesBudget = parseInt(budget.rows[0].activitites);
+            obj[name].flightBudget = parseInt(budget.rows[0].flight); 
+          };       
+        });
     });
-  });
-};
-
-module.exports.getTotalBudgetForTrip = function(req, res, next) {
-  console.log( "Getting total trip budget...");
-  //key represents the trip id
-    //SELECT * FROM trips <------ to see your current trip id(s)!
-    //gets total contribution (sum) associated with a single trip
-  var sum = 0;
-  db.query('SELECT * FROM userTrips WHERE trip_id = ($1)', [req.body.id], function(err, data) {
-    data.rows.forEach(function(item, ind, coll) {
-      db.query('SELECT total FROM budget WHERE trip_id = ($1)', [item.id], function(err, data) {
-        if (err) {
-          console.log(err, 'err');
-        }
-        sum += parseInt(data.rows[0].total);
-        if (ind === coll.length - 1) {
-          res.send({sum: sum});
-        }
-      });
-    });
+    setTimeout(function() {
+      res.send(obj);
+    },500);
   });
 };
 
