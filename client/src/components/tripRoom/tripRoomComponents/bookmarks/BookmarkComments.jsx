@@ -53,15 +53,13 @@ class BookmarkComments extends Component {
           <div className="collapsible-body">
             <form className="grey lighten-5" onSubmit={this.bookmarkCommentSubmit}>
               <div className="input-field comment-input">
-                <label>
-                  What do you think?
-                  <textarea
-                    id="comment-input"
-                    className="materialize-textarea"
-                    onChange={this.bookmarkCommentChange}
-                    value={this.state.bookmarkCommentText}
-                  ></textarea>
-                </label>
+                <textarea
+                  id="comment-input"
+                  className="materialize-textarea"
+                  onChange={this.bookmarkCommentChange}
+                  value={this.state.bookmarkCommentText}
+                ></textarea>
+                <label>What do you think?</label>
               </div>
               <div className="comment-submit">
                 <button type="submit" className="btn orange">Add Comment</button>

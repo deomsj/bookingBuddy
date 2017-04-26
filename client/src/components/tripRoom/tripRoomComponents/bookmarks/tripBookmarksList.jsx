@@ -20,11 +20,12 @@ var TripBookmarksList = function(
   }
 
   return  (
-    <div className="row">
-      {bookmarksList}
+    <div className="section">
+      <div className="row">
+        {bookmarksList}
+      </div>
     </div>
   );
 };
-
 
 module.exports = TripBookmarksList;
