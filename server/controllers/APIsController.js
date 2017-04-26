@@ -39,6 +39,7 @@ module.exports.expediaAPI = function(req, res, next) {
   expedia.hotels.list(options, function(err, data){
       if(err){console.log("ERROR",err) };
       console.log("Getting Expedia Hotel Data...");
+      console.log('data returned from expedia: ', data);
       res.send(data.HotelListResponse.HotelList);
   });
 };

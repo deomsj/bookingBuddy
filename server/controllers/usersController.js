@@ -23,6 +23,11 @@ module.exports.registerUser = function(req, res, next) {
   });
 };
 
+//iterate over buddies array and ensure taht each buddy is inivited by email
+//also ensure that list of buddies is trip specific
+// ... i don't want ot have to deal with bobTheSwimmer when there isn't any water near by
+// a function that does this for a single user
+// that we can call multiple times for many buddies or a single time to add somebody to a trip
 
 module.exports.email = function(obj) {
   console.log("IN EMAIL!");
@@ -67,7 +72,7 @@ module.exports.email = function(obj) {
                   });
                 });
               });
-            });  
+            });
           });
         };
       });
@@ -89,7 +94,7 @@ module.exports.updateUserTripPreference = function(req, res) {
                         if (err) {
                           // res.send(err)
                         }
-          });   
+          });
         });
         db.query('INSERT INTO \
                   budget(total, trip_id, flight, activitites) \
@@ -124,21 +129,21 @@ module.exports.updateUserTripPreference = function(req, res) {
                             if (err) {
                               // res.send(err)
                             }
-              });   
+              });
             };
           });
         });
         db.query('update dates set beging = ($1), ending = ($2), duration = ($3) where trip_id = (select id from userTrips where user_id = (select id from users where email = ($4)) and trip_id = ($5))', [req.body.beginDate.replace(/[-]/g, '/').slice(5)+'/'+req.body.beginDate.slice(0,4), req.body.endDate.replace(/[-]/g, '/').slice(5)+'/'+req.body.endDate.slice(0,4), req.body.duration, req.body.email, req.body.tripId], function(err, updateDates) {
-            if (err) { 
+            if (err) {
               console.log("ERROR!!", err);
             }
         });
         db.query('update budget set total = ($1), flight = ($2), activitites = ($3) where trip_id = (select id from userTrips where user_id = (select id from users where email = ($4)) and trip_id = ($5))', [req.body.hotelBudget, req.body.flightBudget, req.body.activitiesBudget, req.body.email, req.body.tripId], function(err, data) {
-          if (err) { 
+          if (err) {
             console.log("ERROR!", err);
           };
         });
-      });
+      }, res.status(201));
     };
   });
 };

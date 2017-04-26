@@ -4,14 +4,14 @@ var create = gets.tripMaster;
 var additionalTrips = gets.moreTrips;
 
 module.exports.createTrip = function(req, res, next) {
-  console.log("Creating new trip data...");
+  console.log("Creating new trip data with this data from client:", req.body);
   var make = req.body;
   make.beginDate = make.beginDate.replace(/[-]/g, '/');
   make.endDate = make.endDate.replace(/[-]/g, '/');
-  db.query('SELECT id FROM users WHERE email = ($1)', [make.email], function(err, data) { 
+  db.query('SELECT id FROM users WHERE email = ($1)', [make.email], function(err, data) {
     // console.log(data, "data");
     if(data.rows.length === 0) {
-      create({ email : make.email,  
+      create({ email : make.email,
         activitiesBudget : parseInt(make.activitiesBudget),
         flightBudget : parseInt(make.flightBudget),
         hotelBudget : parseInt(make.hotelBudget),
@@ -19,14 +19,14 @@ module.exports.createTrip = function(req, res, next) {
         locations : make.locations,
         buddies : make.buddies,
         beginDate : make.beginDate.replace(/[-]/g, '/'),
-        duration : make.duration, 
+        duration : make.duration,
         tripName : make.tripName,
         endDate : make.endDate.replace(/[-]/g, '/'),
         name : make.name
       });
     } else {
       make.id = data.rows[0].id;
-      additionalTrips({ email : make.email, 
+      additionalTrips({ email : make.email,
         activitiesBudget : parseInt(make.activitiesBudget),
         flightBudget : parseInt(make.flightBudget),
         hotelBudget : parseInt(make.hotelBudget),
@@ -34,7 +34,7 @@ module.exports.createTrip = function(req, res, next) {
         locations : make.locations,
         buddies : make.buddies,
         beginDate : make.beginDate.replace(/[-]/g, '/'),
-        duration : make.duration, 
+        duration : make.duration,
         tripName : make.tripName,
         endDate : make.endDate.replace(/[-]/g, '/'),
         name : make.name,
@@ -61,7 +61,7 @@ module.exports.getTripPreferences = function(req, res, next) {
       var name = item.namef;
       obj[name] = {locations:[]};
       console.log(item, "NAMEF!")
-        db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, location) { 
+        db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, location) {
           if(location !== undefined) {
             console.log(location, "LOCATION!")
             location.rows.forEach(function(item, ind, coll) {
@@ -69,7 +69,7 @@ module.exports.getTripPreferences = function(req, res, next) {
             });
           };
         });
-          
+
         db.query('select * from dates where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, dates) {
           if(dates !== undefined) {
             if(dates.rows.length > 0) {
@@ -80,12 +80,12 @@ module.exports.getTripPreferences = function(req, res, next) {
           };
         });
         db.query('select * from budget where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, budget) {
-          if (budget !== undefined) { 
+          if (budget !== undefined) {
             if (budget.rows.length > 0) {
               obj[name].hotelBudget = parseInt(budget.rows[0].total);
               obj[name].activitiesBudget = parseInt(budget.rows[0].activitites);
-              obj[name].flightBudget = parseInt(budget.rows[0].flight); 
-            }; 
+              obj[name].flightBudget = parseInt(budget.rows[0].flight);
+            };
           };
         });
     });
@@ -164,7 +164,7 @@ module.exports.getTripData = function(req, res, next) {
       });
     });
   });
-  
+
   db.query('SELECT name FROM trips WHERE id = ($1)', [req.body.tripId], function(err, data) {
     dat.tripName = data.rows[0].name;
   });
@@ -178,7 +178,7 @@ module.exports.getTripData = function(req, res, next) {
         }, 500);
       }
     });
-  }); 
+  });
 
   db.query('SELECT name FROM locations WHERE trip_id = ($1)', [req.body.tripId], function(err, dataa) {
     // console.log(req.body.tripId, "TRIP ID!!!!!", dataa, "LOCATIONS!")
@@ -208,7 +208,7 @@ module.exports.getTripData = function(req, res, next) {
         obj.bookmarkerNote = item.bookmark;
         obj.bookmarkedHotelId = "";
         db.query('SELECT * FROM comments where bookmark_id = ($1)', [item.bookmark_id], function(err, comment) {
-      
+
           comment.rows.forEach(function(item, ind, coll) {
             var obj2 = {};
             obj2.buddyName = item.name;
@@ -218,13 +218,13 @@ module.exports.getTripData = function(req, res, next) {
             obj.bookmarkComments.push(obj2);
           });
           db.query('SELECT * FROM votes WHERE bookmark_id = ($1)', [item.bookmark_id], function(err, vote) {
-            
+
             vote.rows.forEach(function(item, ind, coll) {
               var obj2 = {};
               obj2.buddyName = item.name;
               obj2.buddyEmail = item.email;
               obj2.buddyVote = item.vote;
-              obj.buddyVotes.push(obj2);          
+              obj.buddyVotes.push(obj2);
 
             });
             dat.bookmarks.push(obj);
@@ -279,7 +279,7 @@ module.exports.updateBookmarkVote = function(req, res, next) {
 module.exports.addCommentToBookmark = function(req, res, next) {
   console.log("Adding Comment TO Bookmark");
   var comment = req.body;
-  db.query('SELECT * FROM comments WHERE client_id = ($1) AND email = ($2)', [comment.commentObj.date, comment.commentObj.buddyEmail], function(err, data) { 
+  db.query('SELECT * FROM comments WHERE client_id = ($1) AND email = ($2)', [comment.commentObj.date, comment.commentObj.buddyEmail], function(err, data) {
       if (data.rows.length === 0) {
       db.query('INSERT INTO \
                     comments(email, comment, bookmark_id, name, client_id) \
