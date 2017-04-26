@@ -1,7 +1,12 @@
-var gets = require('../db/db');
-var db = gets.db;
-var nodemailer = require('nodemailer');
+var pg = require('pg');
 var validator = require('validator');
+var nodemailer = require('nodemailer');
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test7';
+
+var db = new pg.Client(connectionString);
+db.connect(function (err) {
+  if (err) { throw err; }
+});
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -30,53 +35,54 @@ module.exports.registerUser = function(req, res, next) {
 // that we can call multiple times for many buddies or a single time to add somebody to a trip
 
 module.exports.email = function(obj) {
-  console.log("IN EMAIL!");
-  if(obj.body.buddies.length > 0) {
-    console.log("IN THERE!")
-    setTimeout(function(){
+  console.log("IN EMAIL!", obj.body);
+  if(obj.body.buddies !== undefined) {
+    if(obj.body.buddies.length > 0) {
+      setTimeout(function(){
       var checkEmail = obj.body.buddies[0].email;
-      db.query('SELECT id FROM users where namef = ($1)', [obj.body.buddies[0].name], function(err, results) {
-        if(results.rows.length === 0) {
-          obj.body.buddies.forEach(function(item, ind, coll) {
-            db.query('SELECT id FROM trips WHERE name = ($1)', [obj.body.tripName], function(err, data) {
+        db.query('SELECT id FROM users where namef = ($1)', [obj.body.buddies[0].name], function(err, results) {
+          if(results.rows.length === 0) {
+            obj.body.buddies.forEach(function(item, ind, coll) {
+              db.query('SELECT id FROM trips WHERE name = ($1)', [obj.body.tripName], function(err, data) {
 
-              db.query('INSERT INTO \
-                        users(namef, namel, email) \
-                        VALUES($1, $2, $3) RETURNING id',
-                        [item.name, item.name, item.email], function(err, userResults) {
+                db.query('INSERT INTO \
+                          users(namef, namel, email) \
+                          VALUES($1, $2, $3) RETURNING id',
+                          [item.name, item.name, item.email], function(err, userResults) {
+                            if (err) {
+                              console.log(err, "ERROR!");
+                            };
+
+                  db.query('INSERT INTO \
+                        userTrips(user_id, trip_id) \
+                        VALUES($1, $2) RETURNING id, trip_id',
+                        [userResults.rows[0].id, data.rows[0].id], function(err, userTripsResults) {
                           if (err) {
                             console.log(err, "ERROR!");
                           };
 
-                db.query('INSERT INTO \
-                      userTrips(user_id, trip_id) \
-                      VALUES($1, $2) RETURNING id, trip_id',
-                      [userResults.rows[0].id, data.rows[0].id], function(err, userTripsResults) {
-                        if (err) {
-                          console.log(err, "ERROR!");
-                        };
-
-                  let mailOptions = {
-                    from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
-                    to: item.email, // list of receivers
-                    subject: 'Hey ' + item.name + ', '+obj.body.name+ ' has invited you on an exclusive vacation!', // Subject line
-                    text: 'Whatever we want to tell the db ', // plain text body
-                    html: '<h1>Its vacation time! Go to the following link to plan your group vacation.</h1>' + ' http://localhost:3000/profile<br><div><img src="http://charnos.pl/wp-content/uploads/2015/08/wakacje.jpg"</div>' // html body
-                  };
-
-                  transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                      return console.log(error);
+                    let mailOptions = {
+                      from: '"Booking Buddy" <foo@blurdybloop.com>', // sender address
+                      to: item.email, // list of receivers
+                      subject: 'Hey ' + item.name + ', '+obj.body.name+ ' has invited you on an exclusive vacation!', // Subject line
+                      text: 'Whatever we want to tell the db ', // plain text body
+                      html: '<h1>Its vacation time! Go to the following link to plan your group vacation.</h1>' + ' http://localhost:3000/profile<br><div><img src="http://charnos.pl/wp-content/uploads/2015/08/wakacje.jpg"</div>' // html body
                     };
-                  console.log('Message %s sent: %s', info.messageId, info.response);
+
+                    transporter.sendMail(mailOptions, (error, info) => {
+                      if (error) {
+                        return console.log(error);
+                      };
+                    console.log('Message %s sent: %s', info.messageId, info.response);
+                    });
                   });
                 });
-              });
+              });  
             });
-          });
-        };
-      });
-    }, 500);
+          };
+        });
+      }, 500);
+    };
   };
 };
 
@@ -143,7 +149,7 @@ module.exports.updateUserTripPreference = function(req, res) {
             console.log("ERROR!", err);
           };
         });
-      }, res.status(201));
+      }, setTimeout(function() { res.status(201) },500));
     };
   });
 };
