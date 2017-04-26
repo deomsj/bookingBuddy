@@ -42,15 +42,13 @@ class TripRecomendationsCards extends React.Component {
   render() {
     return (
       <div>
-          <div className="card hoverable">
-            <DisplayCurrentRec
-              currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]}
-              className="card-action"
-            />
-            <div className="card-action">
-              <a onClick={this.advanceToNextRec}>Next</a>
-            </div>
-          </div>
+          <DisplayCurrentRec
+            currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]}
+            advanceToNextRec={this.advanceToNextRec}
+          />
+          {/*<div className="card-action">
+            <a onClick={this.advanceToNextRec}>Next</a>
+          </div>*/}
         <Bookmarker bookmarkThisRec={this.bookmarkThisRec}/>
       </div>
     );
