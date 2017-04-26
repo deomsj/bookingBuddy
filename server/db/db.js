@@ -7,71 +7,16 @@ db.connect(function (err) {
   if (err) { throw err; }
 });
 
-var tripCreatorTest = {
-  //Once "create trip" button is hit, api call should be made...
-  email: 'johndoe@gmail.com',
-  //backend will create random and unique trip id ex "abc123"
-    //Send that trip id back to db side as reference to that specific trip for all users
-};
-
-//3 IDEAL FRONTEND SUMBISSION FORMS BELOW!!!
-var tripMaster1 = {
-  //tripMaster === Originator of trip
-    //John Doe creates trip
-  email: 'johndoe@gmail.com',
-  name: 'Doe',
-  locations: ['New York', 'Atlanta', 'Pheonix'],
-  invites: ['f1', 'f2', 'f2'],
-  beginDate: '04/26/2017',
-  endDate: '10/16/2017',
-  duration: '7',
-  hotelBudget: 1100,
-  tripName : 'abc123',
-  tripSummary : "Test trip description"
-};
-
-var tripUser1 = {
-  //tripUser === invitee
-  email: 'toll6@gmail.com',
-  name: 'Jo',
-  locations: ['Atlanta', 'Fresno', 'Los Angeles'],
-  beginDate: '04/06/2017',
-  endDate: '10/26/2017',
-  duration: '7',
-  hotelBudget: 300,
-  tripId: 1
-  //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
-    //SELECT * FROM trips; <--- in postgres this will show your trip id
-};
-
-var tripUser3 = {
-  //tripUser === invitee
-  email: 'caroham29@gmail.com',
-  nameF: 'Ion',
-  nameL: 'Sphere',
-  locations: ['Oakland', 'Atlanta', 'New York'],
-  startDate: '02/02/2017',
-  endDate: '12/22/2017',
-  duration: '7',
-  budget: 1200,
-  tripId: 1
-  //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
-    //SELECT * FROM trips; <--- in postgres this will show your trip id
-};
-
-
-
 var tripMaster = function(obj) {
   console.log('Creating Trip Master!', obj);
-  // db.query('SELECT * FROM users WHERE email = ($1)', [obj.email], function(err, data) { 
-      db.query('INSERT INTO \
-                      trips(name, description) \
-                      VALUES($1, $2) RETURNING id',
-                      [obj.tripName, obj.description], function(err, tripResults) {
-                        if (err) {
-                           console.log("Error in ", err);
-                          // res.send(err)
-                        }
+  db.query('INSERT INTO \
+                  trips(name, description) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.tripName, obj.description], function(err, tripResults) {
+                    if (err) {
+                       console.log("Error attempting to save newTrip:", err);
+                      // res.send(err)
+                    }
 
       db.query('INSERT INTO \
                       users(namef, namel, email) \
@@ -79,6 +24,7 @@ var tripMaster = function(obj) {
                       [obj.name, obj.name, obj.email], function(err, userResults) {
                         console.log(userResults, "userResults")
                         if (err) {
+                          console.log("Error attempting to save newUser:", err);
                           // res.send(err)
                         }
 
@@ -154,7 +100,7 @@ var tripMaster = function(obj) {
   //     });
   //   });
   // });
-  
+
 var moreTrips = function(obj) {
   console.log('Creating Additional Trips', obj);
 
@@ -271,5 +217,69 @@ var tripUser = function(obj) {
 module.exports = {
   db : db,
   tripMaster : tripMaster,
-  moreTrips : moreTrips  
+  moreTrips : moreTrips
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// var tripCreatorTest = {
+//   //Once "create trip" button is hit, api call should be made...
+//   email: 'johndoe@gmail.com',
+//   //backend will create random and unique trip id ex "abc123"
+//     //Send that trip id back to db side as reference to that specific trip for all users
+// };
+
+// //3 IDEAL FRONTEND SUMBISSION FORMS BELOW!!!
+// var tripMaster1 = {
+//   //tripMaster === Originator of trip
+//     //John Doe creates trip
+//   email: 'johndoe@gmail.com',
+//   name: 'Doe',
+//   locations: ['New York', 'Atlanta', 'Pheonix'],
+//   invites: ['f1', 'f2', 'f2'],
+//   beginDate: '04/26/2017',
+//   endDate: '10/16/2017',
+//   duration: '7',
+//   hotelBudget: 1100,
+//   tripName : 'abc123',
+//   tripSummary : "Test trip description"
+// };
+
+// var tripUser1 = {
+//   //tripUser === invitee
+//   email: 'toll6@gmail.com',
+//   name: 'Jo',
+//   locations: ['Atlanta', 'Fresno', 'Los Angeles'],
+//   beginDate: '04/06/2017',
+//   endDate: '10/26/2017',
+//   duration: '7',
+//   hotelBudget: 300,
+//   tripId: 1
+//   //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
+//     //SELECT * FROM trips; <--- in postgres this will show your trip id
+// };
+
+// var tripUser3 = {
+//   //tripUser === invitee
+//   email: 'caroham29@gmail.com',
+//   nameF: 'Ion',
+//   nameL: 'Sphere',
+//   locations: ['Oakland', 'Atlanta', 'New York'],
+//   startDate: '02/02/2017',
+//   endDate: '12/22/2017',
+//   duration: '7',
+//   budget: 1200,
+//   tripId: 1
+//   //CHANGE "tripId" TO WHATEVER TRIP ID IS CREATED FROM TRIP MASTER
+//     //SELECT * FROM trips; <--- in postgres this will show your trip id
+// };
