@@ -1,7 +1,11 @@
-var gets = require('../db/db');
-var db = gets.db;
-var create = gets.tripMaster;
-var additionalTrips = gets.moreTrips;
+var pg = require('pg');
+
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/test7';
+var db = new pg.Client(connectionString);
+
+db.connect(function (err) {
+  if (err) { throw err; }
+});
 
 module.exports.createTrip = function(req, res, next) {
   console.log("Creating new trip data with this data from client:", req.body);
@@ -45,23 +49,130 @@ module.exports.createTrip = function(req, res, next) {
 });
 }
 
+var additionalTrips = function(obj) {
+  console.log('Creating Additional Trips', obj);
+  db.query('INSERT INTO \
+                  trips(name, description) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.tripName, obj.description], function(err, tripResults) {
+                    if (err) {
+                      console.log(err, "ERROR!");
+                    }
+
+  db.query('INSERT INTO \
+                  userTrips(user_id, trip_id) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.id, tripResults.rows[0].id], function(err, userTripsResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+
+                    // console.log(userTripsResults.rows[0], "HELLO!");
+  db.query('INSERT INTO \
+                  dates(beging, ending, duration, trip_id, trip_number) \
+                  VALUES($1, $2, $3, $4, $5) RETURNING id',
+                  [obj.beginDate.slice(5)+'/'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'/'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+
+  db.query('INSERT INTO \
+                  budget(total, trip_id) \
+                  VALUES($1, $2) RETURNING id',
+                  [obj.hotelBudget, userTripsResults.rows[0].id], function(err, budgetResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+
+  obj.locations.forEach(function(location, ind, coll) {
+  db.query('INSERT INTO \
+                  locations(name, user_trip_id, trip_id) \
+                  VALUES($1, $2, $3) RETURNING id',
+                  [location, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, userResults) {
+                    if (err) {
+                      // res.send(err)
+                    }
+                  });
+                });
+              });
+            });
+          });
+        });
+};
+
+var create = function(obj) {
+  console.log('Creating Trip Master!', obj);
+  // db.query('SELECT * FROM users WHERE email = ($1)', [obj.email], function(err, data) { 
+      db.query('INSERT INTO \
+                      trips(name, description) \
+                      VALUES($1, $2) RETURNING id',
+                      [obj.tripName, obj.description], function(err, tripResults) {
+                        if (err) {
+                           console.log("Error in ", err);
+                          // res.send(err)
+                        }
+
+      db.query('INSERT INTO \
+                      users(namef, namel, email) \
+                      VALUES($1, $2, $3) RETURNING id',
+                      [obj.name, obj.name, obj.email], function(err, userResults) {
+                        console.log(userResults, "userResults")
+                        if (err) {
+                          // res.send(err)
+                        }
+
+      db.query('INSERT INTO \
+                      userTrips(user_id, trip_id) \
+                      VALUES($1, $2) RETURNING id',
+                      [userResults.rows[0].id, tripResults.rows[0].id], function(err, userTripsResults) {
+                        if (err) {
+                          // res.send(err)
+                        }
+                        // console.log(userTripsResults.rows[0], "HELLO!");
+      db.query('INSERT INTO \
+                      dates(beging, ending, duration, trip_id, trip_number) \
+                      VALUES($1, $2, $3, $4, $5) RETURNING id',
+                      [obj.beginDate.slice(5)+'/'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'/'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
+                        if (err) {
+                          // res.send(err)
+                        }
+
+
+      db.query('INSERT INTO \
+                      budget(total, trip_id, flight, activitites) \
+                      VALUES($1, $2, $3, $4) RETURNING id',
+                      [obj.hotelBudget, userTripsResults.rows[0].id, obj.flightBudget, obj.activitiesBudget], function(err, budgetResults) {
+                        if (err) {
+                          // res.send(err)
+                        }
+
+      obj.locations.forEach(function(location, ind, coll) {
+      db.query('INSERT INTO \
+                      locations(name, user_trip_id, trip_id) \
+                      VALUES($1, $2, $3) RETURNING id',
+                      [location, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, userResults) {
+                        if (err) {
+                          // res.send(err)
+                        }
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+};
+
 module.exports.getTripPreferences = function(req, res, next) {
   console.log(req.body, "PREFERENCES!");
   //get all budgets, end and begin dates and user locations
-  var obj = {tripLocations : [] };
-  db.query('select distinct name from locations INNER JOIN userTrips ON(locations.user_trip_id = userTrips.id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
-    data.rows.forEach(function(item , index, coll) {
-    //change to array of strings
-      obj.tripLocations.push(item.name);
-    });
-  });
-
+  var obj = {};
   db.query('select namef FROM users INNER JOIN userTrips ON (users.id = userTrips.user_id AND userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
     data.rows.forEach(function(item, index, coll) {
       var name = item.namef;
       obj[name] = {locations:[]};
       console.log(item, "NAMEF!")
-        db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, location) {
+        db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)) and trip_id = ($2)) and trip_id = ($3)', [name, req.body.tripId, req.body.tripId], function(err, location) { 
           if(location !== undefined) {
             console.log(location, "LOCATION!")
             location.rows.forEach(function(item, ind, coll) {

@@ -1,5 +1,4 @@
 var router = require('express').Router();
-var db = require('./db/db');
 
 var APIsController = require('./controllers/APIsController');
 var tripsController = require('./controllers/tripsController');
