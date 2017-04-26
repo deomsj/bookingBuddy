@@ -6,7 +6,7 @@ var cid = config.EXPEDIA_CID;
 var apiKey = config.EXPEDIA_API_KEY;
 var secret = config.EXPEDIA_SECRET;
 
-var options = {
+var queryOptions = {
       cid: '379639',
       apiKey: '65cc419lbqf590p1njeuv4p0q0',
       secret: 'bvp038hq772sm',
@@ -16,7 +16,7 @@ var options = {
 };
 
 
-var expedia = require("expedia")(options);
+var expedia = require("expedia")(queryOptions);
 
 module.exports.expediaAPI = function(req, res, next) {
   console.log("Inside expediaA Api...", req.body);
@@ -39,6 +39,33 @@ module.exports.expediaAPI = function(req, res, next) {
   expedia.hotels.list(options, function(err, data){
       if(err){console.log("ERROR",err) };
       console.log("Getting Expedia Hotel Data...");
+      res.send(data.HotelListResponse.HotelList);
+  });
+};
+
+
+// Bookmarks
+module.exports.expediaBookmarksAPI = function(req, res, next) {
+  console.log("Inside expedia Bookmarks Api...", req.body);
+  var bookmarkOptions = {
+    "customerSessionId" : "thisisauniqueID",
+    "customerIpAddress" : "127.0.0.1",
+    "customerUserAgent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko)",
+    "HotelListRequest": {
+      "hotelIdList": "658268",
+      "arrivalDate": req.body.beginningDate,
+      "departureDate": req.body.endingDate,
+      "RoomGroup": {
+        "Room": { "numberOfAdults": "2" }
+      },
+      "numberOfResults": "1"
+    }
+  }
+
+  expedia.hotels.list(bookmarkOptions, function(err, data){
+      if(err){console.log("ERROR",err) };
+      console.log("Getting Expedia Hotel BOOKMARK Data...");
+      console.log('BOOKMARK data returned from expedia: ', data);
       res.send(data.HotelListResponse.HotelList);
   });
 };

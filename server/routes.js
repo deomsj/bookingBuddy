@@ -5,6 +5,8 @@ var tripsController = require('./controllers/tripsController');
 var usersController = require('./controllers/usersController');
 
 router.post('/expedia', APIsController.expediaAPI);
+router.post('/expedia-bookmarks', APIsController.expediaBookmarksAPI);
+
 router.post('/hotwire', APIsController.hotwirePostRequest);
 
 router.post('/getTripData', tripsController.getTripData);
