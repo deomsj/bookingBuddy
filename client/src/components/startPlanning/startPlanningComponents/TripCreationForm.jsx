@@ -162,29 +162,51 @@ class TripCreationForm extends Component {
     });
   }
 
-  submitNewTrip() {
-    //an ajax request
-    var obj = this.state;
-    obj.name = this.props.profile.name;
-    obj.email = this.props.profile.email;
-    console.log('sending this newTrip data to the db!', obj);
-    $.ajax({
-      type: 'POST',
-      url: '/createTrip',
-      dataType: 'json',
-      data: obj,
-      success: function(data) {
-        $.ajax({
-          type: 'POST',
-          url: '/email',
-          dataType: 'json',
-          data: obj,
-          success: function(data) {
-            console.log('New trip created' , data);
-          }.bind(this)
-        });
-      }.bind(this)
-    });
+  stillNotFilledIn() {
+
+    var incompleteFields = [];
+
+    if(this.state.tripName === '' || this.state.tripSummary === ''){
+      incompleteFields.push('Trip Idea');
+    }
+    if(this.state.locations.length === 0){
+      incompleteFields.push('Locations');
+    }
+    if(this.state.beginDate === '' || this.state.endDate === ''){
+      incompleteFields.push('When');
+    }
+
+    return incompleteFields;
+  }
+
+  submitNewTrip(e) {
+    var incompleteFields = this.stillNotFilledIn();
+    if(incompleteFields.length){
+      e.preventDefault();
+      alert('Please finish completing the following sections first: ' + incompleteFields.join(', '));
+    } else {
+      var obj = this.state;
+      obj.name = this.props.profile.name;
+      obj.email = this.props.profile.email;
+      console.log('sending this newTrip data to the db!', obj);
+      $.ajax({
+        type: 'POST',
+        url: '/createTrip',
+        dataType: 'json',
+        data: obj,
+        success: function(data) {
+          $.ajax({
+            type: 'POST',
+            url: '/email',
+            dataType: 'json',
+            data: obj,
+            success: function(data) {
+              console.log('New trip created' , data);
+            }.bind(this)
+          });
+        }.bind(this)
+      });
+    }
   }
 
   render() {
