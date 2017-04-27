@@ -23,6 +23,8 @@ let transporter = nodemailer.createTransport({
 // that we can call multiple times for many membersInvited or a single time to add somebody to a trip
 
 module.exports.email = function(obj) {
+  // email error 
+    // 
   console.log("IN EMAIL!", obj.body);
   if(obj.body.membersInvited !== undefined) {
     if(obj.body.membersInvited.length > 0) {
@@ -145,9 +147,28 @@ module.exports.updateUserTripPreference = function(req, res) {
 };
 
 module.exports.userTripNames = function(req, res) {
-  console.log(req.body);
+  console.log(typeof(req.body.name), "USER TRIPS!");
+  var name = req.body.email;
+  db.query('select * from users where email = ($1)', [req.body.email], function(err, names) {
+    if (err) {
+      console.log(err, "Error in userTripNames!");
+    }
+    if (names.rows.length !== 0) {
+      console.log(names.rows[0].namef != req.body.name, "BOOL!");
+      if (names.rows[0].namef != req.body.name) {
+        db.query('update users set namef = ($1), namel = ($2) where email = ($3)', [req.body.name, req.body.name, req.body.email], function(err, confirm) {
+          if (err) {
+            console.log(err, "Error updating user name!");
+          };
+        });
+      };
+    };
+  });
+
   db.query('select * from trips INNER JOIN userTrips ON (trips.id = userTrips.trip_id AND userTrips.user_id = (SELECT id FROM users where email = ($1)))', [req.body.email],
-    function(err, data) {
-      data && res.send(data.rows);
+      function(err, data) {
+        setTimeout(function() {
+          data && res.send(data.rows);
+        }, 300);
   });
 };
