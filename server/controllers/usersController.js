@@ -25,19 +25,6 @@ let transporter = nodemailer.createTransport({
 // that we can call multiple times for many membersInvited or a single time to add somebody to a trip
 
 module.exports.email = function(obj) {
-<<<<<<< HEAD
-  console.log("IN EMAIL!", obj.body);
-  if(obj.body.membersInvited !== undefined) {
-    if(obj.body.membersInvited.length > 0) {
-      setTimeout(function(){
-      var checkEmail = obj.body.membersInvited[0].email;
-        db.query('SELECT id FROM users where namef = ($1)', [obj.body.membersInvited[0].name], function(err, results) {
-          if(results.rows.length === 0) {
-            obj.body.membersInvited.forEach(function(item, ind, coll) {
-              db.query('SELECT id FROM trips WHERE name = ($1)', [obj.body.tripName], function(err, data) {
-
-                db.query('INSERT INTO \
-=======
   console.log('IN EMAIL!', obj.body);
   if (obj.body.membersInvited !== undefined) {
     if (obj.body.membersInvited.length > 0) {
@@ -55,7 +42,6 @@ module.exports.email = function(obj) {
                 ) {
                   db.query(
                     'INSERT INTO \
->>>>>>> Fix bug in database
                           users(namef, namel, email) \
                           VALUES($1, $2, $3) RETURNING id',
                     [item.name, item.name, item.email],
@@ -99,26 +85,16 @@ module.exports.email = function(obj) {
                   );
                 });
               });
-<<<<<<< HEAD
-            });
-          };
-        });
-=======
             }
           }
         );
->>>>>>> Fix bug in database
       }, 500);
     }
   }
 };
 
 module.exports.updateUserTripPreference = function(req, res) {
-<<<<<<< HEAD
-  console.log("In UpdateUserTrippreferences...", req.body);
-=======
   console.log('In UpdateUserTrippreferences...');
->>>>>>> Fix bug in database
   var obj = {};
   db.query(
     'select * from dates where trip_number = ($1) and trip_id = (select id from userTrips where  trip_id = ($3) and user_id = (select id from users where email = ($2)))',
@@ -146,14 +122,6 @@ module.exports.updateUserTripPreference = function(req, res) {
               'INSERT INTO \
                   budget(total, trip_id, flight, activitites) \
                   VALUES($1, $2, $3, $4) RETURNING id',
-<<<<<<< HEAD
-                  [req.body.hotelBudget, userData.rows[0].id, req.body.flightBudget, req.body.activitiesBudget], function(err, budgetResults) {
-                    if (err) {
-                      console.log("Error inserting into budget", err);
-                    };
-        });
-        db.query('INSERT INTO \
-=======
               [
                 req.body.hotelBudget,
                 req.body.tripId,
@@ -168,7 +136,6 @@ module.exports.updateUserTripPreference = function(req, res) {
             );
             db.query(
               'INSERT INTO \
->>>>>>> Fix bug in database
                   dates(beging, ending, duration, trip_id, trip_number) \
                   VALUES($1, $2, $3, $4, $5) RETURNING id',
               [
@@ -214,30 +181,6 @@ module.exports.updateUserTripPreference = function(req, res) {
                       'INSERT INTO \
                           locations(name, user_trip_id, trip_id) \
                           VALUES($1, $2, $3) RETURNING id',
-<<<<<<< HEAD
-                          [location, userData.rows[0].id, req.body.tripId], function(err, userResults) {
-                            if (err) {
-                              console.log("Error inserting into locations", err);
-                            }
-              });
-            };
-          });
-        });
-        db.query('update dates set beging = ($1), ending = ($2), duration = ($3) where trip_id = (select id from userTrips where user_id = (select id from users where email = ($4)) and trip_id = ($5))', [req.body.beginDate.replace(/[-]/g, '/').slice(5)+'/'+req.body.beginDate.slice(0,4), req.body.endDate.replace(/[-]/g, '/').slice(5)+'/'+req.body.endDate.slice(0,4), req.body.duration, req.body.email, req.body.tripId], function(err, updateDates) {
-            if (err) {
-              console.log("ERROR!!", err);
-            }
-        });
-        db.query('update budget set total = ($1), flight = ($2), activitites = ($3) where trip_id = (select id from userTrips where user_id = (select id from users where email = ($4)) and trip_id = ($5))', [+req.body.hotelBudget, +req.body.flightBudget, +req.body.activitiesBudget, req.body.email, req.body.tripId], function(err, data) {
-          if (err) {
-            console.log("ERROR!", err);
-          }
-          setTimeout(function() { res.status(201) },1000);
-        });
-      });
-    };
-  });
-=======
                       [location, userData.rows[0].id, req.body.tripId],
                       function(err, userResults) {
                         if (err) {
@@ -289,7 +232,6 @@ module.exports.updateUserTripPreference = function(req, res) {
       }, 500);
     }
   );
->>>>>>> Fix bug in database
 };
 
 module.exports.userTripNames = function(req, res) {
