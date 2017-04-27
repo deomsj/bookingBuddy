@@ -65,11 +65,10 @@ class Bookmark extends Component {
       type: 'POST',
       url: '/expedia-bookmarks',
       dataType: 'json',
-      data: expediaBookmarkQueryParams
-    })
-    .done(function(expediaResults) {
-      // console.log("Expedia Bookmark Query Results: ", expediaResults);
-      handleExpediaBookmarkQueryResults(expediaResults);
+      data: expediaBookmarkQueryParams,
+      success: function(expediaResults) {
+        handleExpediaBookmarkQueryResults(expediaResults);
+      }.bind(this)
     });
   }
 
