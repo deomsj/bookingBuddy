@@ -14,24 +14,19 @@ var countStars = function(stars) {
 };
 
 var hasRemainder = function(stars) {
-  if (stars % 1 !== 0) {
-    return '1/2'
-  } else {
-    return '';
-  }
+  return stars % 1 !== 0;
 }
 
 var convertToFullImageUrl = function(thumbNailUrl){
   var fullImageUrl = 'http://media.expedia.com';
   fullImageUrl += thumbNailUrl;
-  fullImageUrl = fullImageUrl.slice(0, fullImageUrl.length - 5) + 'z' + fullImageUrl.slice( fullImageUrl.length - 4);
+  fullImageUrl = fullImageUrl.slice(0, fullImageUrl.length - 5) + 'b' + fullImageUrl.slice( fullImageUrl.length - 4);
   return fullImageUrl;
 };
 
 var DisplayCurrentRec = function({currentRec}) {
 
   var imageContainerStyle = {
-    // width: '550px',
     minHeight: '300px',
     overflow: 'hidden',
     backgroundSize: 'cover',
@@ -51,8 +46,11 @@ var DisplayCurrentRec = function({currentRec}) {
           <div className="row">
             <div className="col s6">
               <span className='left-align'>
-                <i className="material-icons orange-text">{countStars(currentRec.tripAdvisorRating)}</i>
-                {hasRemainder(currentRec.tripAdvisorRating)}
+                <i className="material-icons orange-text main-stars">{countStars(currentRec.tripAdvisorRating)}</i>
+                {hasRemainder(currentRec.tripAdvisorRating) ?
+                  <i className="material-icons orange-text half-star"> star</i> : null
+                }
+
               </span>
             </div>
             <div className="col s6">
@@ -62,7 +60,7 @@ var DisplayCurrentRec = function({currentRec}) {
           <div className="divider"></div>
           <div className="row">
             <p>{currentRec.locationDescription}</p>
-            <p>{currentRec.shortDescription}</p>
+            <p>{($('<p>'+currentRec.shortDescription+'</p>').text()).replace(/<\/?[^>]+(>|$)/g, "")}</p>
           </div>
         </div>
       </div>
