@@ -9,7 +9,7 @@ import {
 
 const FriendBudget = ({friendsData}) => {
   var keys = Object.keys(friendsData);
-  if (keys.length !== 0) { 
+  if (keys.length !== 0) {
     var lowest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
     for (var i = 0; i < keys.length; i++) {
       var currentL = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
@@ -25,18 +25,18 @@ const FriendBudget = ({friendsData}) => {
       }
     }
     return (
-         <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div> 
+         <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div>
     )
-  }  
-};  
-  
-// class BudgetCard extends Component {  
+  }
+};
+
+// class BudgetCard extends Component {
 //   constructor(props) {
 //     super(props);
 //     this.changeHotelBudget = this.changeHotelBudget.bind(this);
 //     this.changeActivitiesBudget = this.changeActivitiesBudget.bind(this);
 //     this.changeFlightBudget = this.changeFlightBudget.bind(this);
-//   }  
+//   }
 
 //   changeHotelBudget(e) {
 //     var updatedBudget = this.state.duration * (parseInt(e.target.value) + this.state.activitiesBudget) + this.state.flightBudget;
@@ -60,7 +60,7 @@ const FriendBudget = ({friendsData}) => {
 //       totalBudget: updatedBudget,
 //       flightBudget: parseInt(e.target.value),
 //     });
-//   }  
+//   }
 
 
 var BudgetCard = function ({totalBudget, hotelBudget, changeHotelBudget, flightBudget, changeFlightBudget, activitiesBudget, changeActivitiesBudget, friendsData}) {
@@ -71,11 +71,11 @@ var BudgetCard = function ({totalBudget, hotelBudget, changeHotelBudget, flightB
       </div>
       <div className="collapsible-body">
         <form action="#">
-          <p className="bling green-text darken-2"><strong>Total Budget: ${totalBudget}</strong> 
+          <p className="bling green-text darken-2"><strong>Total Budget: ${totalBudget}</strong>
           </p>
         </form>
         <div className="row">
-          <div className="col s9">  
+          <div className="col s9">
             <span>What's your nightly budget for <b>hotel</b> accommodations?</span><span id="totalBudget" className="bling green-text darken-2"><strong>${hotelBudget}</strong></span>
               <form action="#">
                 <p className="range-field">
@@ -94,15 +94,15 @@ var BudgetCard = function ({totalBudget, hotelBudget, changeHotelBudget, flightB
                 <input type="range" min="0" max="1000" step="10" onChange={changeActivitiesBudget} value={activitiesBudget}/>
                 </p>
               </form>
-            </div> 
+            </div>
             <div className="col s3">
               <FriendBudget friendsData={friendsData} />
-            </div> 
+            </div>
           </div>
-        </div>      
+        </div>
     </li>
   )
-};    
+};
 
 
-export default BudgetCard;            
+export default BudgetCard;
