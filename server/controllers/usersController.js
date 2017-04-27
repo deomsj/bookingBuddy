@@ -16,21 +16,21 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-//iterate over buddies array and ensure taht each buddy is inivited by email
-//also ensure that list of buddies is trip specific
+//iterate over membersInvited array and ensure taht each buddy is inivited by email
+//also ensure that list of membersInvited is trip specific
 // ... i don't want ot have to deal with bobTheSwimmer when there isn't any water near by
 // a function that does this for a single user
-// that we can call multiple times for many buddies or a single time to add somebody to a trip
+// that we can call multiple times for many membersInvited or a single time to add somebody to a trip
 
 module.exports.email = function(obj) {
   console.log("IN EMAIL!", obj.body);
-  if(obj.body.buddies !== undefined) {
-    if(obj.body.buddies.length > 0) {
+  if(obj.body.membersInvited !== undefined) {
+    if(obj.body.membersInvited.length > 0) {
       setTimeout(function(){
-      var checkEmail = obj.body.buddies[0].email;
-        db.query('SELECT id FROM users where namef = ($1)', [obj.body.buddies[0].name], function(err, results) {
+      var checkEmail = obj.body.membersInvited[0].email;
+        db.query('SELECT id FROM users where namef = ($1)', [obj.body.membersInvited[0].name], function(err, results) {
           if(results.rows.length === 0) {
-            obj.body.buddies.forEach(function(item, ind, coll) {
+            obj.body.membersInvited.forEach(function(item, ind, coll) {
               db.query('SELECT id FROM trips WHERE name = ($1)', [obj.body.tripName], function(err, data) {
 
                 db.query('INSERT INTO \
@@ -65,7 +65,7 @@ module.exports.email = function(obj) {
                     });
                   });
                 });
-              });  
+              });
             });
           };
         });
@@ -75,7 +75,7 @@ module.exports.email = function(obj) {
 };
 
 module.exports.updateUserTripPreference = function(req, res) {
-  console.log("In UpdateUserTrippreferences...");
+  console.log("In UpdateUserTrippreferences...", req.body);
   var obj = {};
   db.query('select * from dates where trip_number = ($1) and trip_id = (select id from userTrips where  trip_id = ($3) and user_id = (select id from users where email = ($2)))', [req.body.tripId, req.body.email, req.body.tripId], function(err, data) {
     if(data.rows.length === 0) {
@@ -93,7 +93,7 @@ module.exports.updateUserTripPreference = function(req, res) {
         db.query('INSERT INTO \
                   budget(total, trip_id, flight, activitites) \
                   VALUES($1, $2, $3, $4) RETURNING id',
-                  [req.body.hotelBudget, req.body.tripId, req.body.flightBudget, req.body.activitiesBudget], function(err, budgetResults) {
+                  [req.body.hotelBudget, userData.rows[0].id, req.body.flightBudget, req.body.activitiesBudget], function(err, budgetResults) {
                     if (err) {
                       console.log("Error inserting into budget", err);
                     };
@@ -133,14 +133,14 @@ module.exports.updateUserTripPreference = function(req, res) {
               console.log("ERROR!!", err);
             }
         });
-        db.query('update budget set total = ($1), flight = ($2), activitites = ($3) where trip_id = (select id from userTrips where user_id = (select id from users where email = ($4)) and trip_id = ($5))', [req.body.hotelBudget, req.body.flightBudget, req.body.activitiesBudget, req.body.email, req.body.tripId], function(err, data) {
+        db.query('update budget set total = ($1), flight = ($2), activitites = ($3) where trip_id = (select id from userTrips where user_id = (select id from users where email = ($4)) and trip_id = ($5))', [+req.body.hotelBudget, +req.body.flightBudget, +req.body.activitiesBudget, req.body.email, req.body.tripId], function(err, data) {
           if (err) {
             console.log("ERROR!", err);
-          };
+          }
+          setTimeout(function() { res.status(201) },1000);
         });
       });
     };
-    setTimeout(function() { res.status(201) },500);
   });
 };
 

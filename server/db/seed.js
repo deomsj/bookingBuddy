@@ -21,7 +21,7 @@ db.connect(function (err) {
                   trips( \
                   id SERIAL PRIMARY KEY, \
                   description VARCHAR(300), \
-                  name VARCHAR(25) not null)');
+                  name VARCHAR(100) not null)');
 
   db.query('CREATE TABLE \
                   userTrips( \
@@ -49,7 +49,7 @@ db.query('CREATE TABLE \
 db.query('CREATE TABLE \
                   locations( \
                   id SERIAL PRIMARY KEY, \
-                  name VARCHAR(25) not null, \
+                  name VARCHAR(50) not null, \
                   trip_id INTEGER REFERENCES trips(id), \
                   user_trip_id INTEGER REFERENCES userTrips(id))');
 
@@ -57,8 +57,8 @@ db.query('CREATE TABLE \
                   bookmarks( \
                   id SERIAL PRIMARY KEY, \
                   bookmark_id VARCHAR(26), \
-                  name VARCHAR(30), \
-                  hotel_id VARCHAR(30), \
+                  name VARCHAR(50), \
+                  hotel_id VARCHAR(50), \
                   bookmark VARCHAR(300), \
                   trip_id INTEGER REFERENCES trips(id))');
 
@@ -66,7 +66,7 @@ db.query('CREATE TABLE \
                   comments( \
                   id SERIAL PRIMARY KEY, \
                   client_id VARCHAR(26), \
-                  name VARCHAR(30), \
+                  name VARCHAR(50), \
                   email VARCHAR(50), \
                   comment VARCHAR(300), \
                   trip_id INTEGER REFERENCES trips(id), \
@@ -75,7 +75,7 @@ db.query('CREATE TABLE \
   db.query('CREATE TABLE \
                   votes( \
                   id SERIAL PRIMARY KEY, \
-                  name VARCHAR(30), \
+                  name VARCHAR(50), \
                   email VARCHAR(50), \
                   vote VARCHAR(10), \
                   trip_id INTEGER REFERENCES trips(id), \
