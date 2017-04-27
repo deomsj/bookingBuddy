@@ -6,32 +6,6 @@ import {
   Link
 } from 'react-router-dom';
 
-// const FriendNights = ({data}) => {
-//   //var friendsNights = function() {
-//   //console.log(data);
-//   var keys = Object.keys(data);
-//   if (keys.length !== 0) {
-//     var lowest = data[keys[0]].duration;
-//     for (var i = 0; i < keys.length; i++) {
-//       if(lowest > data[keys[i]].duration) {
-//           lowest = data[keys[i]].duration;
-//       }
-//     }
-//     var highest = data[keys[0]].duration;
-//     for (var i = 0; i < keys.length; i++) {
-//       if(highest < data[keys[i]].duration) {
-//           highest = data[keys[i]].duration;
-//       }
-//     }
-//     return (
-//      <div className="friendsBox col s5">
-//          <p className="icon-block orange-text darken-2">Your friends chose between {lowest} and {highest} nights for their trip</p>
-//     </div> 
-//     )
-//   }  
-// };
-
-
 const FriendNights = ({friendsData}) => {
   //var friendsNights = function() {
   //console.log(friendsData);
@@ -49,13 +23,23 @@ const FriendNights = ({friendsData}) => {
           highest = friendsData[keys[i]].duration;
       }
     }
+    if (keys.length < 2) {
+      return (
+        <div className="friendsBox col s5">
+          <p className="icon-block orange-text darken-2">Your friend chose {highest} nights for their trip</p>
+        </div>
+      )
+    }
     return (
      <div className="friendsBox col s5">
          <p className="icon-block orange-text darken-2">Your friends chose between {lowest} and {highest} nights for their trip</p>
     </div>
     )
+  } else {
+    return null;
   }
 };
+
 
 // class DurationsCard extends Component {
 //   constructor(props) {
@@ -91,7 +75,7 @@ var DurationsCard = function({friendsData, duration, changeDuration}) {
               </form>
             </div>
 
-                {/*<FriendNights friendsData={friendsData}/>*/}
+                <FriendNights friendsData={friendsData}/>
 
           </div>
         </div>
