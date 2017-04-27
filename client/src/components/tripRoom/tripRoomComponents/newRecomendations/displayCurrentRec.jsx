@@ -28,7 +28,7 @@ var convertToFullImageUrl = function(thumbNailUrl){
   return fullImageUrl;
 };
 
-var DisplayCurrentRec = function({currentRec, advanceToNextRec}) {
+var DisplayCurrentRec = function({currentRec}) {
 
   var imageContainerStyle = {
     // width: '550px',
@@ -42,7 +42,7 @@ var DisplayCurrentRec = function({currentRec, advanceToNextRec}) {
   console.log('currendRec', currentRec);
 
   return (
-    <div className="recommendation-card card hoverable horizontal">
+    <div className="recommendation-card card horizontal">
       <div className="card-image" style={imageContainerStyle}>
         <span className="card-title">{currentRec.name}</span>
       </div>
@@ -55,9 +55,6 @@ var DisplayCurrentRec = function({currentRec, advanceToNextRec}) {
             <span className='right'> ${currentRec.lowRate} - ${currentRec.highRate} / night </span>
           </div>
           <p>{currentRec.locationDescription}</p>
-        </div>
-        <div className="card-action">
-          <a onClick={advanceToNextRec}>Next</a>
         </div>
       </div>
     </div>
