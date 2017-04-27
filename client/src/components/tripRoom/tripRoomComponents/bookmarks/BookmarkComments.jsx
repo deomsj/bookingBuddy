@@ -43,7 +43,7 @@ class BookmarkComments extends Component {
 
   render() {
     return (
-      <ul className="collapsible bookmark-comments" data-collapsible="accordion">
+      <ul className="collapsible" data-collapsible="accordion">
         <li>
           <div className="collapsible-header">
             <span>Comments</span>
