@@ -7,8 +7,8 @@ import {
 
 const InvitedMember = ({name, email}) => (
   <tr>
-    <td>{name}</td>
-    <td>{email}</td>
+    <td className="col s6">{name}</td>
+    <td className="col s6">{email}</td>
   </tr>
 );
 
@@ -24,8 +24,8 @@ const InvitedMemberList = ({invitedMembers}) => {
     <table className="highlight responsive-table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
+          <th className="col s6">Name</th>
+          <th className="col s6">Email</th>
         </tr>
       </thead>
       <tbody>
@@ -54,19 +54,17 @@ class TripMemberInvitesForm extends Component {
     return (
     <div>
       <div className="row">
-        <form className="col s12" onSubmit={this.addBuddy }>
-          <div className="row">
-            <h3>Invite Your Buddies:</h3>
-            <InvitedMemberList invitedMembers={this.state.invitedMembers}/>
-            <div className="col s6">
-              <input placeholder="name" onChange={this.changeBuddyName} value={this.state.buddyName} /> <br />
-            </div>
-            <div className="col s6">
-              <input type="email" placeholder="email" onChange={this.changeBuddyEmail} value={this.state.buddyEmail} /> <br />
-            </div>
-          </div>
-          <button className="orange btn" >Invite Friend(s)</button>
-        </form>
+        <InvitedMemberList invitedMembers={this.state.invitedMembers}/>
+        <div className="col s6">
+          <input placeholder="name" onChange={this.changeBuddyName} value={this.state.buddyName} />
+          <br />
+        </div>
+        <div className="col s6">
+          <input type="email" placeholder="email" onChange={this.changeBuddyEmail} value={this.state.buddyEmail} /> <br />
+        </div>
+        <div className="center-align">
+          <button className="orange btn" onClick={this.addBuddy}>Invite Friend(s)</button>
+        </div>
       </div>
     </div>
     );
