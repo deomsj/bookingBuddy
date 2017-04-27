@@ -327,7 +327,7 @@ module.exports.getTripData = function(req, res, next) {
         obj.tripId = req.body.tripId;
         obj.bookmarkerName = item.name;
         obj.bookmarkerNote = item.bookmark;
-        obj.bookmarkedHotelId = "";
+        obj.bookmarkedHotelId = item.hotel_id;
         db.query('SELECT * FROM comments where bookmark_id = ($1)', [item.bookmark_id], function(err, comment) {
           comment.rows.forEach(function(item, ind, coll) {
             var obj2 = {};

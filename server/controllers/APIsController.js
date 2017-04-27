@@ -52,7 +52,7 @@ module.exports.expediaBookmarksAPI = function(req, res, next) {
     "customerIpAddress" : "127.0.0.1",
     "customerUserAgent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko)",
     "HotelListRequest": {
-      "hotelIdList": "658268",
+      "hotelIdList": req.body.hotelIdList,
       "arrivalDate": req.body.beginningDate,
       "departureDate": req.body.endingDate,
       "RoomGroup": {
