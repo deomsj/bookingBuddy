@@ -3,8 +3,6 @@ import LocationCard from './TripPreferencesComponents/LocationCard.jsx';
 import DurationsCard from './TripPreferencesComponents/DurationsCard.jsx';
 import WhenCard from './TripPreferencesComponents/WhenCard.jsx';
 import BudgetCard from './TripPreferencesComponents/BudgetCard.jsx';
-import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
-import {friendsData} from '../../tripRoom/data/friendsDummyData';
 import {
   BrowserRouter as Router,
   Route,
@@ -13,8 +11,12 @@ import {
 
 import {worldCities} from '../../../../../worldcities.js'
 
+
+const calculateTotalBudget = function(duration, hotel, activities, flight){
+  return duration * (hotel + activities) + flight;
+}
+
 const FriendsLocationsList = ({friendsData}) => {
-  console.log(friendsData,"friendsData!")
   var uniqueLocations = [];
   var friendsLocations;
   if (Object.keys(friendsData).length !== 0) {
@@ -46,7 +48,6 @@ const FriendsLocationsList = ({friendsData}) => {
 
 const FriendNights = ({friendsData}) => {
   //var friendsNights = function() {
-  console.log(friendsData);
   var keys = Object.keys(friendsData);
   if (keys.length !== 0) {
     var lowest = friendsData[keys[0]].duration;
@@ -137,7 +138,7 @@ class TripPreferencesForm extends Component {
       location: '',
       totalBudget: 0,
       friendsLocations: [],
-      friendsData: friendsData
+      friendsData: undefined
       //membersInvited: [],
       //tripName: '',
       //tripSummary: ''
@@ -148,10 +149,8 @@ class TripPreferencesForm extends Component {
     //this ajax request will get get the user's current preferences for this trip, if they exist
     // if this is the user's first time visiting the form then they will not have any prior preferences stored
       //in this case the server will send back ... ? undefined? 404? null? 'forget about it' ?
-    console.log('getting current tripPreferences for user ' + this.props.userEmail + ' for trip # ' + this.props.tripId);
 
     this.getUserTripPreferences(this.props.userEmail, this.props.tripId);
-    console.log("profile:", this.props.profile)
   }
 
   getUserTripPreferences(email, tripId){
@@ -165,8 +164,6 @@ class TripPreferencesForm extends Component {
               tripId : tripId
             },
       success: function(data) {
-        console.log(data, "User Trip Preferences");
-         //this.setState(data);
          this.handleData(data);
       }.bind(this)
     });
@@ -175,6 +172,8 @@ class TripPreferencesForm extends Component {
   handleData(data) {
     //var profile = this.props.profile;
     var name = this.props.profile.name;
+    var totalBudget = calculateTotalBudget(data[name].duration, data[name].hotelBudget, data[name].activitiesBudget, data[name].flightBudget);
+
     this.setState({
       locations: data[name].locations,
       hotelBudget: data[name].hotelBudget,
@@ -182,73 +181,36 @@ class TripPreferencesForm extends Component {
       flightBudget: data[name].flightBudget,
       duration: data[name].duration,
       beginDate: data[name].beginDate,
-      endDate: data[name].endDate
-    })
+      endDate: data[name].endDate,
+      totalBudget: totalBudget
+    });
+
+    delete data[name];
+
+    this.setState({
+      friendsData: data
+    });
   }
-
-  // getFriendsTripPreferences(email, tripId){
-  //   //getPrefereces specific to a user and trip
-  //     //data returned should follow formate of state
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/getTripPreferences',
-  //     dataType: 'json',
-  //     data: { email : email,
-  //             tripId : tripId
-  //           },
-  //     success: function(data) {
-  //       console.log(data, "TP");
-  //       // this.setState(data);
-  //     }.bind(this)
-  //   });
-  // }
-
-  // submitTripPreferences(email, tripId){
-  //  var UpdatedDataObject = {
-  //    locations: [],
-      // hotelBudget: this.state.hotelBudget,
-      // activitiesBudget: this.state.activitiesBudget,
-      // flightBudget: 0,
-      // duration: 1,
-      // beginDate: '',
-      // endDate: '',}
-  //   //getPrefereces specific to a user and trip
-  //     //data returned should follow formate of state
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/getTripPreferences',
-  //     dataType: 'json',
-  //     data: { email : email,
-  //             tripId : tripId
-  //           },
-  //     success: function(data) {
-  //       console.log(data, "TP");
-  //       // this.setState(data);
-  //     }.bind(this)
-  //   });
-  // }
-
 
   updateUserTripPreferences(){
     //getPrefereces specific to a user and trip
       //data returned should follow formate of state
       var obj = this.state;
-      obj.email = this.props.userEmail 
+      obj.email = this.props.userEmail
       obj.tripId = this.props.tripId
-      console.log("updateUserTripPreferences!!");
+      //console.log("updateUserTripPreferences!!");
     $.ajax({
       type: 'POST',
       url: '/updateUserTripPreferences',
       dataType: 'json',
       data: obj,
       success: function(data) {
-        console.log(data, "Updated User Preferences");
+        //console.log(data, "Updated User Preferences");
         this.setState(data);
-        console.log(this.state);
+        //console.log(this.state);
       }.bind(this)
     });
   }
-
 
   addLocation (e) {
 
@@ -266,16 +228,6 @@ class TripPreferencesForm extends Component {
       locations: prevState.locations.concat(location),
     }));
   }
-
-  // preserveLocation() {
-  //   tripData.locations = this.state.locations;
-  //   console.log(tripData, "Adding Locations!");
-  // }
-
-  // preserveFriendsLocation() {
-  //   friendsData.locations = this.state.friendslocations;
-  //   console.log(friendsData, "Adding Locations!");
-  // }
 
 
   changeLocation(e) {
@@ -317,7 +269,6 @@ class TripPreferencesForm extends Component {
   }
 
   changeBeginDate(e) {
-    console.log(e.target.value);
     this.setState({
       beginDate: e.target.value,
     });
@@ -329,7 +280,7 @@ class TripPreferencesForm extends Component {
   }
 
 
-  componentDidMount() {
+  componentDidUpdate() {
     $(document).ready((function() {
       $('.collapsible').collapsible();
       $('select').material_select();
@@ -342,150 +293,26 @@ class TripPreferencesForm extends Component {
         }).bind(this),
         minLength: 3, // The minimum length of the input for the autocomplete to start. Default: 1.
       }).bind(this);
-      // $('.datepicker').pickadate({
-      //   selectMonths: true, // Creates a dropdown to control month
-      //   selectYears: 15 // Creates a dropdown of 15 years to control year
-      // }).on("submit", this.changeBeginDate);
     }).bind(this)).bind(this);
   }
 
   render() {
+    if(this.state.friendsData === undefined){
+      return (<div>Loading...</div>);
+    }
     return (
       <div className="section">
         <div className="row">
           <ul className="collapsible popout" data-collapsible="accordion">
-            {/* LOCATIONS 
-            <li className="locationAccordion">
-              <div className="collapsible-header">
-                <strong><i className="material-icons green-text darken-2">location_on</i>Location</strong>
-              </div>
-              <div className="collapsible-body">
-                <div className="row">
-                  <div className="col s7">
-                    <div className="row locationInput">
-                      <div>
-                        <input type="text" id="autocomplete-input" className="autocomplete" placeholder="Tell us where you would like to go" onClick={this.changeLocation} onChange={this.changeLocation} value={this.state.location} />
-                      </div>
-                      <button onClick={this.addLocation} className="btn btn-large orange">Add Location</button>
-                    </div>
-                    <LocationsList locations={this.state.locations} />
-                  </div>
-                  <div className="col s1">
-                  </div>
-                  <div className="friendsBox col s4">
-                    <FriendsLocationsList friendsData={this.state.friendsData} />
-                  </div>
-                </div>
-              </div>
-            </li>*/}
 
             <LocationCard friendsData={this.state.friendsData}  location={this.state.location} locations={this.state.locations} changeLocation={this.changeLocation} addLocation={this.addLocation} />
 
-
-            {/* DURATIONS 
-
-            <li className="durationsAccordion">
-              <div className="collapsible-header">
-                <strong><i className="material-icons green-text darken-2">schedule</i>Durations</strong>
-              </div>
-              <div className="collapsible-body">
-                <div className="row">
-                  <div className="input-field col s7">
-                    <p>Tell us how many nights you want to spend on your getaway?</p>
-                      <form action="#">
-                        <p id="totalNights" className="bling green-text darken-2"><strong>Nights: {this.state.duration} </strong></p>
-                      </form>
-                      <form action="#">
-                      <p className="range-field">
-                      <input type="range" min="1" max="28" onChange={this.changeDuration} value={this.state.duration} />
-                      </p>
-                      </form>
-                    </div>
-
-                        <FriendNights friendsData={this.state.friendsData}/>
-
-                  </div>
-                </div>
-              </li> */}
-
-             
-
-              <DurationsCard friendsData={this.state.friendsData}  duration={this.state.duration} changeDuration={this.changeDuration} />
-
-              {/* WHEN 
-
-              <li className="whenAccordion">
-                <div className="collapsible-header">
-                <strong><i className="material-icons green-text darken-2">today</i>When</strong>
-                </div>
-                <div className="collapsible-body">
-                  <div className="row">
-                    <div className="col s12">
-                      <p>Tell us when you would like to go on your trip?</p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <form action="#">
-                    <div className="col s6">
-                      <input type="date" className="datepicker" placeholder="Select a start date:" onChange={this.changeBeginDate} value={this.state.beginDate}></input>
-                    </div>
-                    </form>
-                    <form action="#">
-                    <div className="col s6">
-                      <input type="date" className="datepicker" placeholder="Select an end date:" onChange={this.changeEndDate} value={this.state.endDate}></input>
-                    </div>
-                    </form>
-                  </div>
-                </div>
-            </li>  */}
+            <DurationsCard friendsData={this.state.friendsData}  duration={this.state.duration} changeDuration={this.changeDuration} />
 
             <WhenCard friendsData={this.state.friendsData} changeBeginDate={this.changeBeginDate}changeEndDate={this.changeEndDate} beginDate={this.state.beginDate} endDate={this.state.endDate} />
 
-
-             {/* BUDGET 
-
-            <li className="budgetAccordion">
-              <div className="collapsible-header">
-                <strong><span className="bling green-text darken-2">$</span>Budget</strong>
-              </div>
-              <div className="collapsible-body">
-                <form action="#">
-                  <p className="bling green-text darken-2">
-                    <strong>Total Budget: ${this.state.totalBudget}</strong>
-                  </p>
-                </form>
-                <div className="row">
-                  <div className="col s9">
-                    <span>What's your nightly budget for <strong>hotel</strong> accommodations?</span>
-                    <span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.hotelBudget}</strong></span>
-                    <form action="#">
-                      <p className="range-field">
-                      <input type="range"  min="0" max="1500" step="25" onChange={this.changeHotelBudget} value={this.state.hotelBudget} />
-                      </p>
-                    </form>
-                    <span>How much can you spend on <strong>flight</strong> travel?</span>
-                    <span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.flightBudget}</strong></span>
-                    <form action="#">
-                      <p className="range-field">
-                      <input type="range"  min="0" max="5000" step="100" onChange={this.changeFlightBudget} value={this.state.flightBudget}/>
-                      </p>
-                    </form>
-                    <span>What's your daily budget for <strong>activities</strong>?</span>
-                    <span id="totalBudget" className="bling green-text darken-2"><strong>${this.state.activitiesBudget}</strong></span>
-                    <form action="#">
-                      <p className="range-field">
-                      <input type="range" min="0" max="1000" step="10" onChange={this.changeActivitiesBudget} value={this.state.activitiesBudget}/>
-                      </p>
-                    </form>
-                  </div>
-                  <div className="col s3">
-                    <FriendBudget friendsData={this.state.friendsData} />
-                  </div>
-                </div>
-              </div>
-            </li> */}
-
             <BudgetCard friendsData={this.state.friendsData} activitiesBudget={this.state.activitiesBudget} hotelBudget={this.state.hotelBudget} flightBudget={this.state.flightBudget} changeActivitiesBudget={this.changeActivitiesBudget} changeHotelBudget={this.changeHotelBudget} changeFlightBudget={this.changeFlightBudget} totalBudget={this.state.totalBudget}/>
+
           </ul>
           <div>
         </div>

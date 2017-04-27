@@ -18,7 +18,6 @@ import StartPlanning from '../startPlanning/StartPlanning.jsx';
 import TripRoom from '../tripRoom/TripRoom.jsx';
 import TripCreationForm from '../startPlanning/startPlanningComponents/TripCreationForm.jsx';
 import TripPreferencesForm from '../startPlanning/startPlanningComponents/TripPreferencesForm.jsx';
-import PostRegistration from '../authentication/PostRegistration.jsx';
 import AboutUs from '../AboutUs.jsx';
 
 // Auth
@@ -92,7 +91,6 @@ class App extends Component {
   )};
 };
 
-//<Route path="/postRegistration" component={PostRegistration}/>
 
 // Export module
 export default App;

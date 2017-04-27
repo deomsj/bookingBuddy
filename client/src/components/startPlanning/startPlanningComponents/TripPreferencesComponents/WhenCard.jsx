@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {tripData} from '../../../tripRoom/data/tripRoomDynamicData';
-import {friendsData} from '../../../tripRoom/data/friendsDummyData';
+// import {friendsData} from '../../../tripRoom/data/friendsDummyData';
 import {
   BrowserRouter as Router,
   Route,
@@ -12,7 +11,7 @@ import {
 //     super(props);
 //     this.changeBeginDate = this.changeBeginDate.bind(this);
 //     this.changeEndDate = this.changeEndDate.bind(this);
-//   }    
+//   }
 
 //   changeBeginDate(e) {
 //     console.log(e.target.value);
@@ -53,6 +52,6 @@ var WhenCard = function ({changeBeginDate, changeEndDate, beginDate, endDate}) {
         </div>
     </li>
   )
-};      
+};
 
-export default WhenCard;            
+export default WhenCard;

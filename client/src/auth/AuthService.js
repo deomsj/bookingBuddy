@@ -1,7 +1,6 @@
 import { EventEmitter } from 'events';
 import Auth0Lock from 'auth0-lock';
 import { isTokenExpired } from './jwtHelper';
-import {tripData} from '../components/tripRoom/data/tripRoomDynamicData';
 
 export default class AuthService extends EventEmitter {
   constructor(clientId, domain) {
@@ -65,7 +64,6 @@ export default class AuthService extends EventEmitter {
   setProfile(userProfile) {
     localStorage.setItem('user_profile', JSON.stringify(userProfile));
     // Triggers profile_updated event to update the UI
-    tripData.profile = userProfile;
     this.emit('profile_updated', userProfile);
   }
 

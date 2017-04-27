@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import TripMemberInvitesForm from './TripMemberInvitesForm.jsx';
-import {tripData, userData} from '../../tripRoom/data/tripRoomDynamicData';
 import {worldCities} from '../../../../../worldcities.js'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const LocationsList = ({locations
 }) => {
@@ -43,6 +38,7 @@ class TripCreationForm extends Component {
     this.changeBeginDate = this.changeBeginDate.bind(this);
     this.changeEndDate = this.changeEndDate.bind(this);
     this.submitNewTrip = this.submitNewTrip.bind(this);
+    this.inviteNewBuddy = this.inviteNewBuddy.bind(this);
     this.state = {
       locations: [],
       hotelBudget: 0,
@@ -145,14 +141,20 @@ class TripCreationForm extends Component {
     }).bind(this)).bind(this);
   }
 
-  viewProfile() {
-    console.log(tripData.profile);
+  inviteNewBuddy(buddy){
+    var newInvites = this.state.membersInvited.slice();
+    newInvites.push(buddy);
+    console.log('newInvites in inviteBuddy method: ', newInvites);
+    this.setState({
+      membersInvited: newInvites
+    });
   }
+
+
   changeTripName(e) {
     this.setState({
       tripName: e.target.value,
     });
-    tripData.tripName = this.state.tripName;
   }
 
   changeTripSummary(e) {
@@ -163,13 +165,10 @@ class TripCreationForm extends Component {
 
   submitNewTrip() {
     //an ajax request
+
     var obj = this.state;
-    obj.name = tripData.profile.name;
-    obj.email = tripData.profile.email;
-    obj.buddies = tripData.buddyData;
-    obj.tripName = tripData.tripName;
-    // console.log(tripData.profile.name, "Profile...")
-    // console.log(tripData.buddyData, "BUDDIES!!!")
+    obj.name = this.props.profile.name;
+    obj.email = this.props.profile.email;
     console.log('sending this data to the db!', obj);
     $.ajax({
       type: 'POST',
@@ -191,6 +190,8 @@ class TripCreationForm extends Component {
   }
 
   render() {
+    console.log('this.props.profile.name', this.props.profile.name);
+    console.log('this.props.profile.email', this.props.profile.email);
     return (
       <div>
         <div className="row">
@@ -205,7 +206,7 @@ class TripCreationForm extends Component {
                 <textarea className="materialize-textarea" placeholder="Trip Description" onChange={this.changeTripSummary} defaultValue={this.state.tripSummary}/>
               </div>
             </div>
-            <TripMemberInvitesForm />
+            <TripMemberInvitesForm inviteNewBuddy={this.inviteNewBuddy}/>
           </form>
         </div>
         <div className="row">

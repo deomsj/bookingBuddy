@@ -22,7 +22,7 @@ const PlanningRoutes = ({userEmail, tripId, profile}) => (
       <PlanningLinks />
       <Route
         path="/start-planning/trip-create"
-        render={() => <TripCreationForm userEmail={userEmail} /> } />
+        render={() => <TripCreationForm profile={profile} userEmail={userEmail} /> } />
       <Route
         path="/start-planning/trip-preferences"
         render={() => <TripPreferencesForm profile={profile} userEmail={userEmail} tripId={tripId} /> } />
