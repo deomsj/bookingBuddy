@@ -7,8 +7,10 @@ import {
 } from 'react-router-dom';
 
 const FriendBudget = ({friendsData}) => {
+  console.log("friendsData!", friendsData);
   var keys = Object.keys(friendsData);
   if (keys.length !== 0) {
+    
     var lowest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
     for (var i = 0; i < keys.length; i++) {
       var currentL = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
@@ -23,9 +25,16 @@ const FriendBudget = ({friendsData}) => {
         highest = currentH;
       }
     }
-    return (
-         <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div>
-    )
+    if (keys.length < 2) {
+      return (
+         <div className="friendsBox orange-text darken-2">Your friend's total budget is currently  ${highest} for this trip</div>
+      )
+    }  
+  return (
+       <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div>
+  )
+  } else {
+    return null;
   }
 };
 
@@ -95,7 +104,7 @@ var BudgetCard = function ({totalBudget, hotelBudget, changeHotelBudget, flightB
               </form>
             </div>
             <div className="col s3">
-              {/*<FriendBudget friendsData={friendsData} />*/}
+              <FriendBudget friendsData={friendsData} />
             </div>
           </div>
         </div>

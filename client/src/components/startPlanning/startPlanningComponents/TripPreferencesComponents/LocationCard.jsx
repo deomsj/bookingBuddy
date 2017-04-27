@@ -14,12 +14,14 @@ const FriendsLocationsList = ({friendsData}) => {
   var friendsLocations;
   if (Object.keys(friendsData).length !== 0) {
     for (var key in friendsData) {
-      friendsLocations = friendsData[key].locations.map(
-        (location, index) => {
-        if (!uniqueLocations.includes(location)) {
-          uniqueLocations.push(location);
-        }
-      });
+      if (friendsData[key].locations.length) {
+        friendsLocations = friendsData[key].locations.map(
+          (location, index) => {
+          if (!uniqueLocations.includes(location)) {
+            uniqueLocations.push(location);
+          }
+        });
+      }  
     }
     var locations = uniqueLocations.map(
       (location, index) =>{
@@ -31,10 +33,12 @@ const FriendsLocationsList = ({friendsData}) => {
         );
       });
     return (
-      <div><p className="orange-text darken-2">These are the locations your friends have already selected:</p>
+      <div className="friendsBox"><p className="orange-text darken-2">These are the locations your friends have already selected:</p>
          <span>{locations}</span>
       </div>
     );
+  } else {
+    return null;
   }
 };
 
@@ -108,8 +112,8 @@ var LocationCard = function({changeLocation, location, addLocation, locations, f
           </div>
           <div className="col s1">
           </div>
-          <div className="friendsBox col s4">
-            {/*<FriendsLocationsList friendsData={friendsData} />*/}
+          <div className="col s4">
+            <FriendsLocationsList friendsData={friendsData} />
           </div>
         </div>
       </div>

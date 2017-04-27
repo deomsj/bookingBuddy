@@ -23,11 +23,20 @@ const FriendNights = ({friendsData}) => {
           highest = friendsData[keys[i]].duration;
       }
     }
+    if (keys.length < 2) {
+      return (
+        <div className="friendsBox col s5">
+          <p className="icon-block orange-text darken-2">Your friend chose {highest} nights for their trip</p>
+        </div>
+      )
+    }
     return (
      <div className="friendsBox col s5">
          <p className="icon-block orange-text darken-2">Your friends chose between {lowest} and {highest} nights for their trip</p>
     </div>
     )
+  } else {
+    return null;
   }
 };
 
@@ -66,7 +75,7 @@ var DurationsCard = function({friendsData, duration, changeDuration}) {
               </form>
             </div>
 
-                {/*<FriendNights friendsData={friendsData}/>*/}
+                <FriendNights friendsData={friendsData}/>
 
           </div>
         </div>
