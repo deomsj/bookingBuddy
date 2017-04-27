@@ -164,11 +164,10 @@ class TripCreationForm extends Component {
 
   submitNewTrip() {
     //an ajax request
-
     var obj = this.state;
     obj.name = this.props.profile.name;
     obj.email = this.props.profile.email;
-    console.log('sending this data to the db!', obj);
+    console.log('sending this newTrip data to the db!', obj);
     $.ajax({
       type: 'POST',
       url: '/createTrip',
