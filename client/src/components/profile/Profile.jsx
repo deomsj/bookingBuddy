@@ -53,7 +53,7 @@ class Profile extends Component {
                 <ProfileTripsList userTripsArr={this.state.tripsArray} selectTrip={this.props.selectTrip} />
                 <div className="divider"></div>
                 <div className="section center-align">
-                  <Link className="orange btn" to="/start-planning/trip-create">CREATE NEW TRIP</Link>
+                  <Link className="orange btn" to="/trip-create">CREATE NEW TRIP</Link>
                 </div>
               </div>
             </div>

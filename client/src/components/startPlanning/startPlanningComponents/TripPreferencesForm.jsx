@@ -206,7 +206,7 @@ class TripPreferencesForm extends Component {
       return (<div>Loading...</div>);
     }
     return (
-      <div className="section">
+      <div className="container section">
         <div className="row">
           <ul className="collapsible popout" data-collapsible="accordion">
 
@@ -240,7 +240,7 @@ class TripPreferencesForm extends Component {
           <div>
         </div>
         </div>
-        <Link className="orange btn" onClick={this.updateUserTripPreferences} to="/start-planning/trip-create">Update Preferences</Link>
+        <Link className="orange btn" onClick={this.updateUserTripPreferences} to="/profile">Update Preferences</Link>
       </div>
     );
   }
