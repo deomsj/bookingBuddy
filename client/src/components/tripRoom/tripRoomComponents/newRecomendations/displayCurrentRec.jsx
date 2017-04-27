@@ -48,13 +48,22 @@ var DisplayCurrentRec = function({currentRec}) {
       </div>
       <div className="card-stacked">
         <div className="card-content">
-          <div>
-            <span className='left-align'>
-              <i className="material-icons orange-text">{countStars(currentRec.tripAdvisorRating)}</i>{hasRemainder(currentRec.tripAdvisorRating)}
-            </span>
-            <span className='right'> ${currentRec.lowRate} - ${currentRec.highRate} / night </span>
+          <div className="row">
+            <div className="col s6">
+              <span className='left-align'>
+                <i className="material-icons orange-text">{countStars(currentRec.tripAdvisorRating)}</i>
+                {hasRemainder(currentRec.tripAdvisorRating)}
+              </span>
+            </div>
+            <div className="col s6">
+              <span className='right'>${currentRec.lowRate} - ${currentRec.highRate} / night</span>
+            </div>
           </div>
-          <p>{currentRec.locationDescription}</p>
+          <div className="divider"></div>
+          <div className="row">
+            <p>{currentRec.locationDescription}</p>
+            <p>{currentRec.shortDescription}</p>
+          </div>
         </div>
       </div>
     </div>
