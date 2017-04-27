@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {tripData} from '../../../tripRoom/data/tripRoomDynamicData';
-import {friendsData} from '../../../tripRoom/data/friendsDummyData';
+// import {friendsData} from '../../../tripRoom/data/friendsDummyData';
 import {
   BrowserRouter as Router,
   Route,

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
 import {
   BrowserRouter as Router,
   Route,
@@ -50,10 +49,6 @@ class TripMemberInvitesForm extends Component {
     };
   }
 
-  addTripName() {
-    tripData.tripNameArray.push(tripData.tripName);
-  }
-
   render() {
 
     return (
@@ -96,13 +91,13 @@ class TripMemberInvitesForm extends Component {
       name: this.state.buddyName,
       email: this.state.buddyEmail
     };
-    tripData.buddyData.push(buddy);
-    console.log(tripData);
     this.setState((prevState) => ({
       invitedMembers: prevState.invitedMembers.concat(buddy),
       buddyName: '',
       buddyEmail: ''
     }));
+
+    this.props.inviteNewBuddy(buddy);
   }
 }
 

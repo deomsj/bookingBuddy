@@ -3,8 +3,6 @@ import LocationCard from './TripPreferencesComponents/LocationCard.jsx';
 import DurationsCard from './TripPreferencesComponents/DurationsCard.jsx';
 import WhenCard from './TripPreferencesComponents/WhenCard.jsx';
 import BudgetCard from './TripPreferencesComponents/BudgetCard.jsx';
-import {tripData} from '../../tripRoom/data/tripRoomDynamicData';
-//import {friendsData} from '../../tripRoom/data/friendsDummyData';
 import {
   BrowserRouter as Router,
   Route,
