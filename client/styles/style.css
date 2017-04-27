@@ -256,12 +256,22 @@ span[class^="preferences-"] .material-icons {
   width: 100%;
 }
 
-/* # Landing Page
----------------------------------------- */
-
 .bling-header {
   font-size: 44px;
   padding: 5px 0 9px 0;
+}
+
+.bubble {
+  display: inline-block;
+  background-color: #9ccc65;
+  padding: 2%;
+  border-radius:50%;
+}
+.little {
+  padding: 5px;
+}
+.tiny {
+  padding: 3px;
 }
 
 /* # Nav Bar

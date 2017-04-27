@@ -5,7 +5,6 @@ import {
   Link
 } from 'react-router-dom';
 
-// var socket = io();
 var colors = [
   'red', 'pink', 'purple', 'deep-purple', 'indigo',
   'blue', 'cyan', 'teal', 'green',
@@ -102,15 +101,38 @@ class LandingPage extends Component {
           {/* INTRO */}
           <div className="parallax-container homepage-intro">
             <h1 className="header center orange-text">Planning a trip with friends? Let us Help!</h1>
-            <div className="row center">
-              <h5 className="header col s12 light">With a quick questionnaire, we make it easy to find trips that you and all of your friends can and want to go on!</h5>
-            </div>
+            <h5 className="header col s12 light">Booking Buddy makes planning a trip with your friends a fun and sociable experience</h5>
             <div className="parallax"><img src="https://images.trvl-media.com/media/content/expus/graphics/launch/activity1320x742.jpg" alt="photo" /></div>
           </div>
 
-
+          {/* Why */}
           <div className="container">
             <div className="section">
+              <h5 className="header col s12 light">Insert cool thought bubble section</h5>
+              <h5 className="header col s12 light">More awesomeness...</h5>
+
+              <div className="bubble">
+                Hello, I am a thought bubble
+              </div>
+              <div className="little bubble"></div>
+              <div className="tiny bubble"></div>
+
+              <br />
+              <h5 className="header col s12 light">Take the headache out of planning a trip with your buddies!</h5>
+            </div>
+          </div>
+
+          {/* QUOTE */}
+          <div className="parallax-container homepage-quote">
+            <div className="parallax"><img src="http://aweinclusive.com/wp-content/uploads/2013/03/Beachchairs.jpg" alt="photo" /></div>
+            <h4 className="header col s12">"The social way to plan group travel"</h4>
+            <h5 className="header col s12">- Cara</h5>
+          </div>
+
+          {/* How */}
+          <div className="container">
+            <div className="section">
+              <h5 className="header col s12 light">We make it easy to find trips that your whole group can and wants to go on!</h5>
 
               <div className="row">
                 <div className="col s12 m4">
@@ -145,52 +167,8 @@ class LandingPage extends Component {
           </div>
 
 
-          {/* DATA + CHAT */}
+          {/* CHAT */}
           <div className="section container white homepage-data">
-            <div className="row">
-              <br />
-              <h5 className="header col s12 light">We'll organize all this information and share it with you and your buddies.</h5>
-              <br /><br /><br />
-              <table className="highlight responsive-table">
-                <thead>
-                  <tr>
-                    <th>Group</th>
-                    <th>Available Dates</th>
-                    <th>Budget</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td>Max</td>
-                    <td>May 3rd - May 28th</td>
-                    <td>$1,000</td>
-                  </tr>
-                  <tr>
-                    <td>Lou</td>
-                    <td>May 1st - May 12th</td>
-                    <td>$2,000</td>
-                  </tr>
-                  <tr>
-                    <td>Preston</td>
-                    <td>May 5th - May 11th</td>
-                    <td>$1,200</td>
-                  </tr>
-                  <tr>
-                    <td>Nate</td>
-                    <td>May 1st - May 20th</td>
-                    <td>$1,700</td>
-                  </tr>
-                  <tr>
-                    <td>Jesse</td>
-                    <td>May 4th - May 17th</td>
-                    <td>$1,300</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <br /><br />
-            </div>
             <h5 className="header col s12 light">Chat with your friends about the results and brainstorm ideas.</h5>
             <br />
 
@@ -238,40 +216,8 @@ class LandingPage extends Component {
                 </div>
               </div>
             </div>
-
-
-
-
-
-
-
-
           </div>
-          {/* QUOTE */}
-          <div className="parallax-container homepage-quote">
-            <div className="parallax"><img src="http://aweinclusive.com/wp-content/uploads/2013/03/Beachchairs.jpg" alt="photo" /></div>
-            <h4 className="header col s12">"The social way to plan group travel"</h4>
-            <h5 className="header col s12">- Cara</h5>
-          </div>
-          {/* SLIDER */}
-          <div className="container homepage-slider">
-            <h5 className="header col s12 light">Scroll through and pin favorites from the vacations we find for you</h5>
-            <div className="carousel">
-              <a className="carousel-item" href="#one!"><img src="http://lorempixel.com/250/250/nature/1" alt="pic" /></a>
-              <a className="carousel-item" href="#two!"><img src="http://lorempixel.com/250/250/nature/2" alt="pic" /></a>
-              <a className="carousel-item" href="#three!"><img src="http://lorempixel.com/250/250/nature/3" alt="pic" /></a>
-              <a className="carousel-item" href="#four!"><img src="http://lorempixel.com/250/250/nature/4" alt="pic" /></a>
-              <a className="carousel-item" href="#five!"><img src="http://lorempixel.com/250/250/nature/5" alt="pic" /></a>
-            </div>
 
-            <h5 className="header col s12 light">Pin favorites from our list and add your own</h5>
-            <br /><br />
-            <div>
-              <img src="http://lorempixel.com/250/250/nature/1" alt="pic" />
-              <img src="http://lorempixel.com/250/250/nature/2" alt="pic" />
-              <img src="http://lorempixel.com/250/250/nature/3" alt="pic" />
-            </div>
-          </div>
           {/* GET STARTED */}
           <div className="parallax-container homepage-cta">
             <div className="parallax"><img src="http://www.parisaddress.com/var/source/district/new/tour_eiffel-paris.jpg" alt="photo" /></div>
