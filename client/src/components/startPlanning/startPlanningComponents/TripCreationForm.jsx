@@ -3,8 +3,7 @@ import TripMemberInvitesForm from './TripMemberInvitesForm.jsx';
 import {worldCities} from '../../../../../worldcities.js'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-const LocationsList = ({locations
-}) => {
+const LocationsList = ({locations}) => {
 
   var locations = locations.map(
     (location, index) => {
@@ -191,7 +190,7 @@ class TripCreationForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div className="row">
           <form className="col s12 trip-create">
             <div className="row">

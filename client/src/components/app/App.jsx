@@ -14,11 +14,11 @@ import {
 import NavBarLinks from './NavBarLinks.jsx';
 import Profile from '../profile/Profile.jsx';
 import LandingPage from '../landingPage/LandingPage.jsx';
-import StartPlanning from '../startPlanning/StartPlanning.jsx';
 import TripRoom from '../tripRoom/TripRoom.jsx';
 import TripCreationForm from '../startPlanning/startPlanningComponents/TripCreationForm.jsx';
 import TripPreferencesForm from '../startPlanning/startPlanningComponents/TripPreferencesForm.jsx';
 import AboutUs from '../AboutUs.jsx';
+// import StartPlanning from '../startPlanning/StartPlanning.jsx';
 
 // Auth
 import AuthService from '../../auth/AuthService';
@@ -68,22 +68,43 @@ class App extends Component {
       <Router>
         <div>
           <div className="navbar-fixed">
-            <NavBarLinks isLoggedIn={this.state.isLoggedIn} logInOrOut={this.logInOrOut}/>
+            <NavBarLinks
+              isLoggedIn={this.state.isLoggedIn}
+              logInOrOut={this.logInOrOut} />
           </div>
           <div>
             <Route exact path="/"
               render={() =>
                 !this.state.isLoggedIn ? <LandingPage /> : <Redirect to='/profile' />
-            } />
+              } />
             <Route path="/profile"
-              render={() => <Profile profile={this.state.profile} selectTrip={this.selectTrip} /> }
-            />
-            <Route exact path="/landingPage" render={() => <LandingPage />} />
-            <Route path="/start-planning"
-              render={() => <StartPlanning profile={this.state.profile} userEmail={this.state.profile.email} tripId={this.state.trip_id} /> } />
+              render={() =>
+                <Profile
+                  profile={this.state.profile}
+                  selectTrip={this.selectTrip} />
+              } />
             <Route path="/trip-room"
-              render={() => <TripRoom profile={this.state.profile} tripId={this.state.trip_id} /> } />
+              render={() =>
+                <TripRoom
+                  profile={this.state.profile}
+                  tripId={this.state.trip_id} />
+              } />
             <Route path="/about-us" component={AboutUs} />
+            <Route
+              path="/trip-create"
+              render={() =>
+                <TripCreationForm
+                  profile={this.state.profile}
+                  userEmail={this.state.profile.email} />
+              } />
+            <Route
+              path="/trip-preferences"
+              render={() =>
+                <TripPreferencesForm
+                  profile={this.state.profile}
+                  userEmail={this.state.profile.email}
+                  tripId={this.state.trip_id} />
+              } />
           </div>
         </div>
       </Router>
