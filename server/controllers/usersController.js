@@ -54,7 +54,7 @@ module.exports.email = function(obj) {
                       to: item.email, // list of receivers
                       subject: 'Hey ' + item.name + ', '+obj.body.name+ ' has invited you on an exclusive vacation!', // Subject line
                       text: 'Whatever we want to tell the db ', // plain text body
-                      html: '<h1>Its vacation time! Go to the following link to plan your group vacation.</h1>' + ' http://localhost:3000/profile<br><div><img src="http://charnos.pl/wp-content/uploads/2015/08/wakacje.jpg"</div>' // html body
+                      html: '<h1 style="background-color:green; font-size:22px; color:white">Its vacation time! Go to the following link to plan your group vacation.</h1>' + ' http://localhost:3000/profile<br><div><img style="max-height: 100px; max-width: 100px;" src="http://charnos.pl/wp-content/uploads/2015/08/wakacje.jpg"</div>' // html body
                     };
 
                     transporter.sendMail(mailOptions, (error, info) => {
@@ -87,7 +87,7 @@ module.exports.updateUserTripPreference = function(req, res) {
                       [item, userData.rows[0].id, req.body.tripId], function(err, userResults) {
                         if (err) {
                           console.log("Error inserting into locations", err);
-                        }
+                        };
           });
         });
         db.query('INSERT INTO \
@@ -123,7 +123,7 @@ module.exports.updateUserTripPreference = function(req, res) {
                           [location, userData.rows[0].id, req.body.tripId], function(err, userResults) {
                             if (err) {
                               console.log("Error inserting into locations", err);
-                            }
+                            };
               });
             };
           });
@@ -131,7 +131,7 @@ module.exports.updateUserTripPreference = function(req, res) {
         db.query('update dates set beging = ($1), ending = ($2), duration = ($3) where trip_id = (select id from userTrips where user_id = (select id from users where email = ($4)) and trip_id = ($5))', [req.body.beginDate.replace(/[-]/g, '/').slice(5)+'/'+req.body.beginDate.slice(0,4), req.body.endDate.replace(/[-]/g, '/').slice(5)+'/'+req.body.endDate.slice(0,4), req.body.duration, req.body.email, req.body.tripId], function(err, updateDates) {
             if (err) {
               console.log("ERROR!!", err);
-            }
+            };
         });
         db.query('update budget set total = ($1), flight = ($2), activitites = ($3) where trip_id = (select id from userTrips where user_id = (select id from users where email = ($4)) and trip_id = ($5))', [+req.body.hotelBudget, +req.body.flightBudget, +req.body.activitiesBudget, req.body.email, req.body.tripId], function(err, data) {
           if (err) {
