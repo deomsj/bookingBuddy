@@ -52,9 +52,8 @@ class TripMemberInvitesForm extends Component {
   render() {
 
     return (
-    <div className="container">
+    <div>
       <div className="row">
-        <h5 className="row left-align">Invite buddies to plan this trip with you:</h5>
         <InvitedMemberList invitedMembers={this.state.invitedMembers}/>
         <div className="col s6">
           <input placeholder="name" onChange={this.changeBuddyName} value={this.state.buddyName} />
