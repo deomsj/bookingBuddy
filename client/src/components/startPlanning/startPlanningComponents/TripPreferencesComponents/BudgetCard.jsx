@@ -95,7 +95,7 @@ var BudgetCard = function ({totalBudget, hotelBudget, changeHotelBudget, flightB
               </form>
             </div>
             <div className="col s3">
-              <FriendBudget friendsData={friendsData} />
+              {/*<FriendBudget friendsData={friendsData} />*/}
             </div>
           </div>
         </div>

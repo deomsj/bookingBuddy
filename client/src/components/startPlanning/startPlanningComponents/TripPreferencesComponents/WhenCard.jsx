@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-// import {friendsData} from '../../../tripRoom/data/friendsDummyData';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 
 // class WhenCard extends Component {
 //   constructor(props) {

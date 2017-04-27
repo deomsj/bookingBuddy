@@ -190,8 +190,6 @@ class TripCreationForm extends Component {
   }
 
   render() {
-    console.log('this.props.profile.name', this.props.profile.name);
-    console.log('this.props.profile.email', this.props.profile.email);
     return (
       <div>
         <div className="row">
