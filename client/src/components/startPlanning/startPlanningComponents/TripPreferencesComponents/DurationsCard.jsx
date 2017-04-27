@@ -66,7 +66,7 @@ var DurationsCard = function({friendsData, duration, changeDuration}) {
               </form>
             </div>
 
-                <FriendNights friendsData={friendsData}/>
+                {/*<FriendNights friendsData={friendsData}/>*/}
 
           </div>
         </div>
