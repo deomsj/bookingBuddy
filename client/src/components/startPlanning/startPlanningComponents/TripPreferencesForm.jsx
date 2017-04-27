@@ -76,19 +76,24 @@ class TripPreferencesForm extends Component {
 
   handleData(data) {
     //var profile = this.props.profile;
+    console.log('data sent back to client on visit to tripPreferences', data);
     var name = this.props.profile.name;
+
+    if(data[name]){
+
     var totalBudget = calculateTotalBudget(data[name].duration, data[name].hotelBudget, data[name].activitiesBudget, data[name].flightBudget);
 
-    this.setState({
-      locations: data[name].locations,
-      hotelBudget: data[name].hotelBudget,
-      activitiesBudget: data[name].activitiesBudget,
-      flightBudget: data[name].flightBudget,
-      duration: data[name].duration,
-      beginDate: convertDateFormat(data[name].beginDate),
-      endDate: convertDateFormat(data[name].endDate),
-      totalBudget: totalBudget
-    });
+      this.setState({
+        locations: data[name].locations || [],
+        hotelBudget: data[name].hotelBudget || 0,
+        activitiesBudget: data[name].activitiesBudget || 0,
+        flightBudget: data[name].flightBudget || 0,
+        duration: data[name].duration || 1,
+        beginDate: convertDateFormat(data[name].beginDate)  || '',
+        endDate: convertDateFormat(data[name].endDate)  || '',
+        totalBudget: totalBudget || 0
+      });
+    }
 
     delete data[name];
 
@@ -97,24 +102,45 @@ class TripPreferencesForm extends Component {
     });
   }
 
-  updateUserTripPreferences(){
-    //getPrefereces specific to a user and trip
-      //data returned should follow formate of state
+  stillNotFilledIn() {
+
+    var incompleteFields = [];
+
+    if(this.state.locations.length === 0){
+      incompleteFields.push('Locations');
+    }
+    if(this.state.beginDate === '' || this.state.endDate === ''){
+      incompleteFields.push('When');
+    }
+
+    return incompleteFields;
+  }
+
+  updateUserTripPreferences(e){
+    var incompleteFields = this.stillNotFilledIn();
+    console.log('incompleteFields', incompleteFields);
+    if(incompleteFields.length){
+      console.log('incompleteFields.... STOP ME FROM SUBMITTING');
+      e.preventDefault();
+      alert('Please finish completing the following sections first: ' + incompleteFields.join(', '));
+    } else {
+      console.log('Submit at your lesure');
       var obj = this.state;
       obj.email = this.props.userEmail
       obj.tripId = this.props.tripId
       //console.log("updateUserTripPreferences!!");
-    $.ajax({
-      type: 'POST',
-      url: '/updateUserTripPreferences',
-      dataType: 'json',
-      data: obj,
-      success: function(data) {
-        //console.log(data, "Updated User Preferences");
-        this.setState(data);
-        //console.log(this.state);
-      }.bind(this)
-    });
+      $.ajax({
+        type: 'POST',
+        url: '/updateUserTripPreferences',
+        dataType: 'json',
+        data: obj,
+        success: function(data) {
+          //console.log(data, "Updated User Preferences");
+          this.setState(data);
+          //console.log(this.state);
+        }.bind(this)
+      });
+    }
   }
 
   addLocation (e) {

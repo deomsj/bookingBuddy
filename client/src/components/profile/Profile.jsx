@@ -25,18 +25,20 @@ class Profile extends Component {
   //this ajax request will get all trips assiciated with any user according to thier email address
     //only thing that will change is the email address from the data object below
     var email = this.props.profile.email;
+    var name = this.props.profile.name;
     var getTrips = this.getTripNames;
     getTrips = getTrips.bind(this);
-    setTimeout(()=>{getTrips(email)}, 500);
+    setTimeout(()=>{getTrips(email, name)}, 1000);
   }
 
-  getTripNames(email){
+  getTripNames(email, name){
 
     $.ajax({
       type: 'POST',
       url: '/userTripNames',
       dataType: 'json',
-      data: { email : email },
+      data: { email : email,
+              name: name },
       success: function(data) {
         this.setState({tripsArray:data});
       }.bind(this)

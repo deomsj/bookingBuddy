@@ -8,6 +8,7 @@ db.connect(function (err) {
 });
 
 module.exports.createTrip = function(req, res, next) {
+  console.log('req.body recieved by createTrip', req.body);
   var make = req.body;
   make.beginDate = make.beginDate.replace(/[-]/g, '/');
   make.endDate = make.endDate.replace(/[-]/g, '/');
@@ -19,7 +20,7 @@ module.exports.createTrip = function(req, res, next) {
         hotelBudget : parseInt(make.hotelBudget),
         description : make.tripSummary,
         locations : make.locations,
-        buddies : make.buddies,
+        buddies : make.membersInvited,
         beginDate : make.beginDate.replace(/[-]/g, '/'),
         duration : make.duration,
         tripName : make.tripName,
@@ -34,7 +35,7 @@ module.exports.createTrip = function(req, res, next) {
         hotelBudget : parseInt(make.hotelBudget),
         description : make.tripSummary,
         locations : make.locations,
-        buddies : make.buddies,
+        buddies : make.membersInvited,
         beginDate : make.beginDate.replace(/[-]/g, '/'),
         duration : make.duration,
         tripName : make.tripName,
@@ -98,7 +99,7 @@ var additionalTrips = function(obj) {
 };
 
 var create = function(obj) {
-  console.log('Creating Trip Master!');
+  console.log('Creating Trip Master!', obj);
       db.query('INSERT INTO \
                       trips(name, description) \
                       VALUES($1, $2) RETURNING id',
@@ -123,7 +124,7 @@ var create = function(obj) {
                         if (err) {
                           console.log("Insert Error At userTrips", err);
                         }
-                
+
       db.query('INSERT INTO \
                       dates(beging, ending, duration, trip_id, trip_number) \
                       VALUES($1, $2, $3, $4, $5) RETURNING id',
@@ -172,7 +173,7 @@ module.exports.getTripPreferences = function(req, res, next) {
         db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)) and trip_id = ($2)) and trip_id = ($3)', [name, req.body.tripId, req.body.tripId], function(err, location) {
           if (err) {
             console.log("Preferences Error", err);
-          }; 
+          };
           if(location !== undefined) {
             console.log(location, "LOCATION!")
             location.rows.forEach(function(item, ind, coll) {
@@ -380,7 +381,7 @@ module.exports.addTripBookmark = function(req, res, next) {
 
           });
         });
-      }) 
+      })
       setTimeout(function() { res.status(201) },500);
     } else {
       res.status(404);
@@ -394,7 +395,7 @@ module.exports.updateBookmarkVote = function(req, res, next) {
     if (err) {
       console.log("Update Vote Error", err);
     };
-  }); 
+  });
   setTimeout(function() { res.status(201) },300);
 };
 
@@ -410,7 +411,7 @@ module.exports.addCommentToBookmark = function(req, res, next) {
                       if (err) {
                         console.log("Bookmarks error", err);
                       };
-                    }) 
+                    })
       setTimeout(function() { res.status(201) },500);
     } else {
       res.status(404);
