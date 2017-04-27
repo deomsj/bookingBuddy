@@ -20,11 +20,15 @@ var TripBookmarksList = function(
   }
 
   return  (
-    <div className="row">
-      {bookmarksList}
+    <div className="section">
+      <div className="row">
+        <ul className="collection with-header">
+          <li className="collection-header center-align"><h4>Trip Bookmarks</h4></li>
+          {bookmarksList}
+        </ul>
+      </div>
     </div>
   );
 };
-
 
 module.exports = TripBookmarksList;

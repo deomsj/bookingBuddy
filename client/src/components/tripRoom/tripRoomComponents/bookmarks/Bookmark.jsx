@@ -41,61 +41,63 @@ class Bookmark extends Component {
   }
 
   componentDidMount(){
-    this.getUpToDateHotelInfoFromExpedia();
-  }
-
-  getUpToDateHotelInfoFromExpedia(){
-
-    console.log('When rendering bookmarks, we will query expedia to get current hotel data using bookmarkedHotelId: ',
-                   this.props.bookmark.bookmarkedHotelId);
-
-    //Query Expedia API here to setState with current hotel data using:
-      //this.props.bookmark.bookmarkedHotelId
-      //this.props.expediaParams.beginning
-      //this.props.expediaParams.duration
-      //this.props.expediaParams.ending
-
-    var returnedFromExpedia = {
-      hotelName: 'hotel name',
-      image: 'http://71.18.53.79/images/beijing-hotel.jpg',
-      price: '$400.12',
-      stars: 5,
-      description: 'This will be a decription of the hotel'
+    // console.log('When rendering bookmarks, we will query expedia to get current hotel data using bookmarkedHotelId: ',
+    //                this.props.bookmark);
+    var expediaBookmarkQueryParams = {
+      beginningDate : this.props.expediaParams.beginning,
+      endingDate : this.props.expediaParams.ending,
+      hotelIdList : this.props.bookmark.bookmarkedHotelId
     };
 
-    this.setState({
-      hotelName: returnedFromExpedia.hotelName,
-      image: returnedFromExpedia.image,
-      price: returnedFromExpedia.price,
-      stars: returnedFromExpedia.stars,
-      description: returnedFromExpedia.description
+    var handleExpediaBookmarkQueryResults = function(expediaResults){
+      // console.log('handling results from expedia', expediaResults);
+      var returnedFromExpedia = expediaResults.HotelSummary;
+      this.setState({
+        hotelName: returnedFromExpedia.name,
+        image: returnedFromExpedia.thumbNailUrl,
+        price: returnedFromExpedia.price,
+        stars: returnedFromExpedia.stars,
+        description: returnedFromExpedia.description
+      });
+    }.bind(this);
+
+    $.ajax({
+      type: 'POST',
+      url: '/expedia-bookmarks',
+      dataType: 'json',
+      data: expediaBookmarkQueryParams,
+      success: function(expediaResults) {
+        handleExpediaBookmarkQueryResults(expediaResults);
+      }.bind(this)
     });
   }
 
   render(){
     return (
-      <div className="row">
-        <div className="col s12 l4">
-          <div>
-            <h5>{this.state.hotelName}</h5>
+      <li className="collection-item trip-bookmark">
+        <div className="row bookmark-main">
+          <div className="col s12 l6">
+            <div className="row">
+              <h5>{this.state.hotelName}</h5>
+            </div>
+            <div className="row">
+              <div className="col s3">
+                <img src={'http://media.expedia.com' + this.state.image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
+              </div>
+              <div className="s9">
+                <p>{this.props.bookmark.bookmarkerNote}</p>
+              </div>
+            </div>
           </div>
-          <div className="row">
-            <div className="col s8 offset-s2">
-              <img src={this.state.image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
-            </div>
-            <div className="s10 offset-s1">
-              <p className="center-align">{this.props.bookmark.boormarkerNote}</p>
-            </div>
+          <div className="col s12 l6">
+            <BuddyVotesWindow
+              bookmarkID={this.props.bookmark.bookmarkID}
+              buddyVotes={this.props.bookmark.buddyVotes}
+              updateBookmarkVote={this.props.updateBookmarkVote}
+            />
           </div>
         </div>
-        <div className="col s12 l8">
-          <BuddyVotesWindow
-            bookmarkID={this.props.bookmark.bookmarkID}
-            buddyVotes={this.props.bookmark.buddyVotes}
-            updateBookmarkVote={this.props.updateBookmarkVote}
-          />
-        </div>
-        <div className="row">
+        <div className="row bookmark-comments">
           <div className="col s12">
             <BookmarkComments
               profile={this.props.profile}
@@ -104,7 +106,7 @@ class Bookmark extends Component {
             />
           </div>
         </div>
-      </div>
+      </li>
     );
   }
 }
