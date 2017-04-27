@@ -92,6 +92,19 @@ class TripPreferencesForm extends Component {
     });
   }
 
+  handleData(data) {
+    var name = this.props.profile.name;
+    this.setState({
+      locations: data[name].locations,
+      hotelBudget: data[name].hotelBudget,
+      activitiesBudget: data[name].activitiesBudget,
+      flightBudget: data[name].flightBudget,
+      duration: data[name].duration,
+      beginDate: data[name].beginDate,
+      endDate: data[name].endDate
+    })
+  }
+
   updateUserTripPreferences(email, tripId, state){
     state.email = email;
     state.tripID = tripID;
