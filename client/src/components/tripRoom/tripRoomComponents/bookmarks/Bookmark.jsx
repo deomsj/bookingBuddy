@@ -74,28 +74,30 @@ class Bookmark extends Component {
 
   render(){
     return (
-      <div className="trip-bookmark card">
-        <div className="col s12 l4">
-          <div>
-            <h5>{this.state.hotelName}</h5>
+      <li className="collection-item trip-bookmark">
+        <div className="row bookmark-main">
+          <div className="col s12 l6">
+            <div className="row">
+              <h5>{this.state.hotelName}</h5>
+            </div>
+            <div className="row">
+              <div className="col s3">
+                <img src={'http://media.expedia.com' + this.state.image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
+              </div>
+              <div className="s9">
+                <p>{this.props.bookmark.bookmarkerNote}</p>
+              </div>
+            </div>
           </div>
-          <div className="row">
-            <div className="col s8 offset-s2">
-              <img src={'http://media.expedia.com' + this.state.image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
-            </div>
-            <div className="s10 offset-s1">
-              <p className="center-align">{this.props.bookmark.boormarkerNote}</p>
-            </div>
+          <div className="col s12 l6">
+            <BuddyVotesWindow
+              bookmarkID={this.props.bookmark.bookmarkID}
+              buddyVotes={this.props.bookmark.buddyVotes}
+              updateBookmarkVote={this.props.updateBookmarkVote}
+            />
           </div>
         </div>
-        <div className="col s12 l8">
-          <BuddyVotesWindow
-            bookmarkID={this.props.bookmark.bookmarkID}
-            buddyVotes={this.props.bookmark.buddyVotes}
-            updateBookmarkVote={this.props.updateBookmarkVote}
-          />
-        </div>
-        <div className="row">
+        <div className="row bookmark-comments">
           <div className="col s12">
             <BookmarkComments
               profile={this.props.profile}
@@ -104,7 +106,7 @@ class Bookmark extends Component {
             />
           </div>
         </div>
-      </div>
+      </li>
     );
   }
 }
