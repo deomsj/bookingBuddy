@@ -3,11 +3,7 @@ import LocationCard from './TripPreferencesComponents/LocationCard.jsx';
 import DurationsCard from './TripPreferencesComponents/DurationsCard.jsx';
 import WhenCard from './TripPreferencesComponents/WhenCard.jsx';
 import BudgetCard from './TripPreferencesComponents/BudgetCard.jsx';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import {worldCities} from '../../../../../worldcities.js'
 
@@ -16,101 +12,10 @@ const calculateTotalBudget = function(duration, hotel, activities, flight){
   return duration * (hotel + activities) + flight;
 }
 
-const FriendsLocationsList = ({friendsData}) => {
-  var uniqueLocations = [];
-  var friendsLocations;
-  if (Object.keys(friendsData).length !== 0) {
-    for (var key in friendsData) {
-      friendsLocations = friendsData[key].locations.map(
-        (location, index) => {
-        if (!uniqueLocations.includes(location)) {
-          uniqueLocations.push(location);
-        }
-      });
-    }
-    var locations = uniqueLocations.map(
-      (location, index) =>{
-        return (
-          <span className="checkbox" key={index}>
-            <input type="checkbox" className="filled-in" id="filled-in-box" ></input>
-            <label htmlFor="filled-in-box">{location}</label>
-          </span>
-        );
-      });
-    return (
-      <div>
-        <p className="orange-text darken-2">These are the locations your friends have already selected:</p>
-        <span>{locations}</span>
-      </div>
-    );
-  }
-};
-
-const FriendNights = ({friendsData}) => {
-  //var friendsNights = function() {
-  var keys = Object.keys(friendsData);
-  if (keys.length !== 0) {
-    var lowest = friendsData[keys[0]].duration;
-    for (var i = 0; i < keys.length; i++) {
-      if(lowest > friendsData[keys[i]].duration) {
-          lowest = friendsData[keys[i]].duration;
-      }
-    }
-    var highest = friendsData[keys[0]].duration;
-    for (var i = 0; i < keys.length; i++) {
-      if(highest < friendsData[keys[i]].duration) {
-          highest = friendsData[keys[i]].duration;
-      }
-    }
-    return (
-      <div className="friendsBox col s5">
-        <p className="icon-block orange-text darken-2">Your friends chose between {lowest} and {highest} nights for their trip</p>
-      </div>
-    )
-  }
-};
-
-
-const FriendBudget = ({friendsData}) => {
-  var keys = Object.keys(friendsData);
-  if (keys.length !== 0) {
-    var lowest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
-    for (var i = 0; i < keys.length; i++) {
-      var currentL = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
-      if(lowest > currentL) {
-        lowest = currentL;
-      }
-    }
-    var highest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
-    for (var i = 0; i < keys.length; i++) {
-      var currentH = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
-      if(highest < currentH) {
-        highest = currentH;
-      }
-    }
-    return (
-      <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div>
-    )
-  }
-};
-
-
-const LocationsList = ({locations}) => {
-  var locations = locations.map(
-    (location, index) => {
-
-    return (
-      <span className="checkbox" key={index}>
-        <input type="checkbox" className="filled-in" id="filled-in-box" checked="checked"></input>
-        <label htmlFor="filled-in-box">{location}</label>
-      </span>
-    );
-  });
-  return (
-    <div className="locationsList">
-       {locations}
-    </div>
-  );
+var convertDateFormat = function(mmddyyyy){
+  var arr = mmddyyyy.split('/');
+  var yyyymmdd = arr[2] + '-' + arr[0] + '-' + arr[1];
+  return yyyymmdd;
 };
 
 
@@ -180,8 +85,8 @@ class TripPreferencesForm extends Component {
       activitiesBudget: data[name].activitiesBudget,
       flightBudget: data[name].flightBudget,
       duration: data[name].duration,
-      beginDate: data[name].beginDate,
-      endDate: data[name].endDate,
+      beginDate: convertDateFormat(data[name].beginDate),
+      endDate: convertDateFormat(data[name].endDate),
       totalBudget: totalBudget
     });
 
@@ -305,13 +210,31 @@ class TripPreferencesForm extends Component {
         <div className="row">
           <ul className="collapsible popout" data-collapsible="accordion">
 
-            <LocationCard friendsData={this.state.friendsData}  location={this.state.location} locations={this.state.locations} changeLocation={this.changeLocation} addLocation={this.addLocation} />
+            <LocationCard friendsData={this.state.friendsData}
+                          location={this.state.location}
+                          locations={this.state.locations}
+                          changeLocation={this.changeLocation}
+                          addLocation={this.addLocation} />
 
-            <DurationsCard friendsData={this.state.friendsData}  duration={this.state.duration} changeDuration={this.changeDuration} />
+            <DurationsCard friendsData={this.state.friendsData}
+                           duration={this.state.duration}
+                           changeDuration={this.changeDuration} />
 
-            <WhenCard friendsData={this.state.friendsData} changeBeginDate={this.changeBeginDate}changeEndDate={this.changeEndDate} beginDate={this.state.beginDate} endDate={this.state.endDate} />
+            <WhenCard friendsData={this.state.friendsData}
+                      changeBeginDate={this.changeBeginDate}
+                      changeEndDate={this.changeEndDate}
+                      beginDate={this.state.beginDate}
+                      endDate={this.state.endDate} />
 
-            <BudgetCard friendsData={this.state.friendsData} activitiesBudget={this.state.activitiesBudget} hotelBudget={this.state.hotelBudget} flightBudget={this.state.flightBudget} changeActivitiesBudget={this.changeActivitiesBudget} changeHotelBudget={this.changeHotelBudget} changeFlightBudget={this.changeFlightBudget} totalBudget={this.state.totalBudget}/>
+
+            <BudgetCard friendsData={this.state.friendsData}
+                        activitiesBudget={this.state.activitiesBudget}
+                        hotelBudget={this.state.hotelBudget}
+                        flightBudget={this.state.flightBudget}
+                        changeActivitiesBudget={this.changeActivitiesBudget}
+                        changeHotelBudget={this.changeHotelBudget}
+                        changeFlightBudget={this.changeFlightBudget}
+                        totalBudget={this.state.totalBudget} />
 
           </ul>
           <div>
@@ -323,7 +246,106 @@ class TripPreferencesForm extends Component {
   }
 }
 
-// const TripPreferencesForm = () => (
-//   <h2>Trip Preferences Form</h2>
-// );
+
 export default TripPreferencesForm;
+
+
+
+
+
+// const FriendsLocationsList = ({friendsData}) => {
+//   var uniqueLocations = [];
+//   var friendsLocations;
+//   if (Object.keys(friendsData).length !== 0) {
+//     for (var key in friendsData) {
+//       friendsLocations = friendsData[key].locations.map(
+//         (location, index) => {
+//         if (!uniqueLocations.includes(location)) {
+//           uniqueLocations.push(location);
+//         }
+//       });
+//     }
+//     var locations = uniqueLocations.map(
+//       (location, index) =>{
+//         return (
+//           <span className="checkbox" key={index}>
+//             <input type="checkbox" className="filled-in" id="filled-in-box" ></input>
+//             <label htmlFor="filled-in-box">{location}</label>
+//           </span>
+//         );
+//       });
+//     return (
+//       <div>
+//         <p className="orange-text darken-2">These are the locations your friends have already selected:</p>
+//         <span>{locations}</span>
+//       </div>
+//     );
+//   }
+// };
+
+// const FriendNights = ({friendsData}) => {
+//   //var friendsNights = function() {
+//   var keys = Object.keys(friendsData);
+//   if (keys.length !== 0) {
+//     var lowest = friendsData[keys[0]].duration;
+//     for (var i = 0; i < keys.length; i++) {
+//       if(lowest > friendsData[keys[i]].duration) {
+//           lowest = friendsData[keys[i]].duration;
+//       }
+//     }
+//     var highest = friendsData[keys[0]].duration;
+//     for (var i = 0; i < keys.length; i++) {
+//       if(highest < friendsData[keys[i]].duration) {
+//           highest = friendsData[keys[i]].duration;
+//       }
+//     }
+//     return (
+//       <div className="friendsBox col s5">
+//         <p className="icon-block orange-text darken-2">Your friends chose between {lowest} and {highest} nights for their trip</p>
+//       </div>
+//     )
+//   }
+// };
+
+
+// const FriendBudget = ({friendsData}) => {
+//   var keys = Object.keys(friendsData);
+//   if (keys.length !== 0) {
+//     var lowest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
+//     for (var i = 0; i < keys.length; i++) {
+//       var currentL = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
+//       if(lowest > currentL) {
+//         lowest = currentL;
+//       }
+//     }
+//     var highest = friendsData[keys[0]].duration * (friendsData[keys[0]].hotelBudget + friendsData[keys[0]].activitiesBudget) + friendsData[keys[0]].flightBudget;
+//     for (var i = 0; i < keys.length; i++) {
+//       var currentH = friendsData[keys[i]].duration * (friendsData[keys[i]].hotelBudget + friendsData[keys[i]].activitiesBudget) + friendsData[keys[i]].flightBudget;
+//       if(highest < currentH) {
+//         highest = currentH;
+//       }
+//     }
+//     return (
+//       <div className="friendsBox orange-text darken-2">Your friends' total budgets are currently between ${lowest} and ${highest} for this trip</div>
+//     )
+//   }
+// };
+
+
+// const LocationsList = ({locations}) => {
+//   var locations = locations.map(
+//     (location, index) => {
+
+//     return (
+//       <span className="checkbox" key={index}>
+//         <input type="checkbox" className="filled-in" id="filled-in-box" checked="checked"></input>
+//         <label htmlFor="filled-in-box">{location}</label>
+//       </span>
+//     );
+//   });
+//   return (
+//     <div className="locationsList">
+//        {locations}
+//     </div>
+//   );
+// };

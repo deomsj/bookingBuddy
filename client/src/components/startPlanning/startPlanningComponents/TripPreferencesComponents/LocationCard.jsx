@@ -109,7 +109,7 @@ var LocationCard = function({changeLocation, location, addLocation, locations, f
           <div className="col s1">
           </div>
           <div className="friendsBox col s4">
-            <FriendsLocationsList friendsData={friendsData} />
+            {/*<FriendsLocationsList friendsData={friendsData} />*/}
           </div>
         </div>
       </div>
