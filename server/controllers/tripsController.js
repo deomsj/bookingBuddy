@@ -8,12 +8,10 @@ db.connect(function (err) {
 });
 
 module.exports.createTrip = function(req, res, next) {
-  console.log("Creating new trip data with this data from client:", req.body);
   var make = req.body;
   make.beginDate = make.beginDate.replace(/[-]/g, '/');
   make.endDate = make.endDate.replace(/[-]/g, '/');
   db.query('SELECT id FROM users WHERE email = ($1)', [make.email], function(err, data) {
-    // console.log(data, "data");
     if(data.rows.length === 0) {
       create({ email : make.email,
         activitiesBudget : parseInt(make.activitiesBudget),
@@ -44,45 +42,44 @@ module.exports.createTrip = function(req, res, next) {
         name : make.name,
         id : make.id
       });
-    }
+    };
     res.send({tripId : make.id});
-});
-}
+  });
+};
 
 var additionalTrips = function(obj) {
-  console.log('Creating Additional Trips', obj);
+  console.log('Creating Additional Trips');
   db.query('INSERT INTO \
                   trips(name, description) \
                   VALUES($1, $2) RETURNING id',
                   [obj.tripName, obj.description], function(err, tripResults) {
                     if (err) {
-                      console.log(err, "ERROR!");
-                    }
+                      console.log("Insert Error At trips", err);
+                    };
 
   db.query('INSERT INTO \
                   userTrips(user_id, trip_id) \
                   VALUES($1, $2) RETURNING id',
                   [obj.id, tripResults.rows[0].id], function(err, userTripsResults) {
                     if (err) {
-                      // res.send(err)
-                    }
+                      console.log("Insert Error At userTrips", err);
+                    };
 
-                    // console.log(userTripsResults.rows[0], "HELLO!");
   db.query('INSERT INTO \
                   dates(beging, ending, duration, trip_id, trip_number) \
                   VALUES($1, $2, $3, $4, $5) RETURNING id',
                   [obj.beginDate.slice(5)+'/'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'/'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
                     if (err) {
-                      // res.send(err)
-                    }
+                      console.log("Insert Error At dates", err);
+                    };
 
   db.query('INSERT INTO \
                   budget(total, trip_id) \
                   VALUES($1, $2) RETURNING id',
                   [obj.hotelBudget, userTripsResults.rows[0].id], function(err, budgetResults) {
                     if (err) {
-                      // res.send(err)
-                    }
+                      console.log("Insert Error At budget", err);
+                    };
 
   obj.locations.forEach(function(location, ind, coll) {
   db.query('INSERT INTO \
@@ -90,8 +87,8 @@ var additionalTrips = function(obj) {
                   VALUES($1, $2, $3) RETURNING id',
                   [location, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, userResults) {
                     if (err) {
-                      // res.send(err)
-                    }
+                      console.log("Insert Error At locations", err);
+                    };
                   });
                 });
               });
@@ -101,15 +98,13 @@ var additionalTrips = function(obj) {
 };
 
 var create = function(obj) {
-  console.log('Creating Trip Master!', obj);
-  // db.query('SELECT * FROM users WHERE email = ($1)', [obj.email], function(err, data) { 
+  console.log('Creating Trip Master!');
       db.query('INSERT INTO \
                       trips(name, description) \
                       VALUES($1, $2) RETURNING id',
                       [obj.tripName, obj.description], function(err, tripResults) {
                         if (err) {
-                           console.log("Error in ", err);
-                          // res.send(err)
+                          console.log("Insert Error At trips", err);
                         }
 
       db.query('INSERT INTO \
@@ -118,7 +113,7 @@ var create = function(obj) {
                       [obj.name, obj.name, obj.email], function(err, userResults) {
                         console.log(userResults, "userResults")
                         if (err) {
-                          // res.send(err)
+                          console.log("Insert Error At users", err);
                         }
 
       db.query('INSERT INTO \
@@ -126,15 +121,15 @@ var create = function(obj) {
                       VALUES($1, $2) RETURNING id',
                       [userResults.rows[0].id, tripResults.rows[0].id], function(err, userTripsResults) {
                         if (err) {
-                          // res.send(err)
+                          console.log("Insert Error At userTrips", err);
                         }
-                        // console.log(userTripsResults.rows[0], "HELLO!");
+                
       db.query('INSERT INTO \
                       dates(beging, ending, duration, trip_id, trip_number) \
                       VALUES($1, $2, $3, $4, $5) RETURNING id',
                       [obj.beginDate.slice(5)+'/'+obj.beginDate.slice(0,4), obj.endDate.slice(5)+'/'+obj.endDate.slice(0,4), obj.duration, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, dateResults) {
                         if (err) {
-                          // res.send(err)
+                          console.log("Insert Error At dates", err);
                         }
 
 
@@ -143,7 +138,7 @@ var create = function(obj) {
                       VALUES($1, $2, $3, $4) RETURNING id',
                       [obj.hotelBudget, userTripsResults.rows[0].id, obj.flightBudget, obj.activitiesBudget], function(err, budgetResults) {
                         if (err) {
-                          // res.send(err)
+                          console.log("Insert Error At budget", err);
                         }
 
       obj.locations.forEach(function(location, ind, coll) {
@@ -152,8 +147,8 @@ var create = function(obj) {
                       VALUES($1, $2, $3) RETURNING id',
                       [location, userTripsResults.rows[0].id, tripResults.rows[0].id], function(err, userResults) {
                         if (err) {
-                          // res.send(err)
-                        }
+                          console.log("Insert Error At Locations", err);
+                        };
                       });
                     });
                   });
@@ -164,15 +159,20 @@ var create = function(obj) {
 };
 
 module.exports.getTripPreferences = function(req, res, next) {
-  console.log(req.body, "PREFERENCES!");
   //get all budgets, end and begin dates and user locations
   var obj = {};
   db.query('select namef FROM users INNER JOIN userTrips ON (users.id = userTrips.user_id AND userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
+    if (err) {
+      console.log("Preferences Error", err);
+    };
     data.rows.forEach(function(item, index, coll) {
       var name = item.namef;
       obj[name] = {locations:[]};
       console.log(item, "NAMEF!")
-        db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)) and trip_id = ($2)) and trip_id = ($3)', [name, req.body.tripId, req.body.tripId], function(err, location) { 
+        db.query('select name from locations where user_trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)) and trip_id = ($2)) and trip_id = ($3)', [name, req.body.tripId, req.body.tripId], function(err, location) {
+          if (err) {
+            console.log("Preferences Error", err);
+          }; 
           if(location !== undefined) {
             console.log(location, "LOCATION!")
             location.rows.forEach(function(item, ind, coll) {
@@ -181,7 +181,10 @@ module.exports.getTripPreferences = function(req, res, next) {
           };
         });
 
-        db.query('select * from dates where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, dates) {
+        db.query('select * from dates where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)) and trip_id = ($2)) and trip_number = ($3)', [name, req.body.tripId, req.body.tripId], function(err, dates) {
+          if (err) {
+            console.log("Dates Error", err);
+          };
           if(dates !== undefined) {
             if(dates.rows.length > 0) {
               obj[name].beginDate = dates.rows[0].beging;
@@ -190,7 +193,10 @@ module.exports.getTripPreferences = function(req, res, next) {
             };
           };
         });
-        db.query('select * from budget where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)))', [name], function(err, budget) {
+        db.query('select * from budget where trip_id = (select id from userTrips where user_id = (select id from users where namef = ($1)) and trip_id = ($2))', [name, req.body.tripId], function(err, budget) {
+          if (err) {
+            console.log("Budget Error", err);
+          };
           if (budget !== undefined) {
             if (budget.rows.length > 0) {
               obj[name].hotelBudget = parseInt(budget.rows[0].total);
@@ -212,11 +218,10 @@ module.exports.getTripData = function(req, res, next) {
   var sum = 0;
   var commonTrips = [];
   var len;
-
   db.query('select * from userTrips where trip_id = ($1)',[req.body.tripId], function(err, data) {
     len = data.rows.length;
     dat.tripId = req.body.tripId;
-    if( err ) {
+    if (err) {
       console.log("userTrips Error", err);
     }
     data.rows.forEach(function(item, index, coll) {
@@ -235,19 +240,16 @@ module.exports.getTripData = function(req, res, next) {
 
   db.query('SELECT * FROM bookmarks WHERE trip_id = (SELECT id FROM trips WHERE name = ($1))', [req.body.tripId],
     function(err, data) {
-      if( err ) {
+      if (err) {
         console.log("Bookmarks Error", err);
-      }
+      };
       data.bookmarks = data.rows;
   });
-
   var commonDateObj = {beginning: '', ending: '', duration: ''};
-
   db.query('SELECT beging FROM dates WHERE trip_number = ($1)', [req.body.tripId], function(err, data) {
     var begHighMon = [];
     var begHighDay = [];
     var begHighYear = [];
-
     for (var i = 0; i < data.rows.length; i++) {
       begHighMon.push(parseInt(data.rows[i].beging.slice(0, 2)));
       begHighDay.push(parseInt(data.rows[i].beging.slice(3, 5)));
@@ -281,18 +283,23 @@ module.exports.getTripData = function(req, res, next) {
   });
 
   db.query('SELECT total FROM budget INNER JOIN userTrips ON(budget.trip_id = userTrips.user_id and userTrips.trip_id = ($1))', [req.body.tripId], function(err, data) {
+    if (err) {
+      console.log("Error Line 285", err);
+    };
     data.rows.forEach(function(item, ind, coll) {
       sum += parseInt(item.total);
       if(ind === coll.length-1) {
         setTimeout(function() {
           dat.averageNightlyHotelBudget = Math.round(parseInt(sum)/parseInt(commonDateObj.duration));
         }, 500);
-      }
+      };
     });
   });
 
   db.query('SELECT name FROM locations WHERE trip_id = ($1)', [req.body.tripId], function(err, dataa) {
-    // console.log(req.body.tripId, "TRIP ID!!!!!", dataa, "LOCATIONS!")
+    if (err) {
+      console.log("Error Line 299", err);
+    };
     var counter = {};
     dataa.rows.forEach(function(item, ind, coll) {
       if(counter[item.name] === undefined) {
@@ -310,6 +317,9 @@ module.exports.getTripData = function(req, res, next) {
   });
 
   db.query('SELECT * FROM bookmarks WHERE trip_id = ($1)', [req.body.tripId], function(err, data) {
+    if (err) {
+      console.log("Error Line 318", err);
+    };
     if(data.rows.length > 0) {
       data.rows.forEach(function(item, ind, coll) {
         var obj = { bookmarkComments : [], buddyVotes : [] };
@@ -319,7 +329,6 @@ module.exports.getTripData = function(req, res, next) {
         obj.bookmarkerNote = item.bookmark;
         obj.bookmarkedHotelId = "";
         db.query('SELECT * FROM comments where bookmark_id = ($1)', [item.bookmark_id], function(err, comment) {
-
           comment.rows.forEach(function(item, ind, coll) {
             var obj2 = {};
             obj2.buddyName = item.name;
@@ -329,7 +338,6 @@ module.exports.getTripData = function(req, res, next) {
             obj.bookmarkComments.push(obj2);
           });
           db.query('SELECT * FROM votes WHERE bookmark_id = ($1)', [item.bookmark_id], function(err, vote) {
-
             vote.rows.forEach(function(item, ind, coll) {
               var obj2 = {};
               obj2.buddyName = item.name;
@@ -360,7 +368,7 @@ module.exports.addTripBookmark = function(req, res, next) {
                     [req.body.bookmarkedHotelId, req.body.bookmarkerNote, req.body.bookmarkID, req.body.tripId, req.body.bookmarkerName], function(err, userResults) {
                       if (err) {
                         console.log("Bookmarks error", err);
-                      }
+                      };
         req.body.buddyVotes.forEach(function(item, ind, coll) {
           db.query('INSERT INTO \
                         votes(vote, name, email, bookmark_id, trip_id) \
@@ -368,23 +376,26 @@ module.exports.addTripBookmark = function(req, res, next) {
                         [item.buddyVote, item.buddyName, item.buddyEmail, req.body.bookmarkID, req.body.tripId], function(err, userResults) {
                           if (err) {
                             console.log("Votes Error", err);
-                          }
+                          };
 
           });
         });
-      });
+      }) 
+      setTimeout(function() { res.status(201) },500);
+    } else {
+      res.status(404);
     };
   });
-}
+};
 
 module.exports.updateBookmarkVote = function(req, res, next) {
-  console.log( "updateBookmarkVote!");
   var voteInfo = req.body;
   db.query('UPDATE votes SET vote = ($1) WHERE email = ($2) AND bookmark_id = ($3)', [voteInfo.updatedBuddyVote.buddyVote, voteInfo.updatedBuddyVote.buddyEmail, voteInfo.bookmarkID], function(err, data) {
     if (err) {
       console.log("Update Vote Error", err);
-    }
-  });
+    };
+  }); 
+  setTimeout(function() { res.status(201) },300);
 };
 
 module.exports.addCommentToBookmark = function(req, res, next) {
@@ -398,8 +409,11 @@ module.exports.addCommentToBookmark = function(req, res, next) {
                     [comment.commentObj.buddyEmail, comment.commentObj.comment, comment.bookmarkID, comment.commentObj.buddyName, comment.commentObj.date], function(err, userResults) {
                       if (err) {
                         console.log("Bookmarks error", err);
-                      }
-                    });
+                      };
+                    }) 
+      setTimeout(function() { res.status(201) },500);
+    } else {
+      res.status(404);
     };
   });
 };

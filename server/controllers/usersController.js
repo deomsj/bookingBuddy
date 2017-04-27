@@ -16,18 +16,6 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-module.exports.registerUser = function(req, res, next) {
-  db.query('INSERT INTO \
-                    users(namef, namel, email) \
-                    VALUES($1, $2, $3) RETURNING id',
-                    [req.body.nameB, req.body.nameL, req.body.email], function(err, userResults) {
-                      if (err) {
-                        console.log(err, "ERROR!");
-                      };
-                      res.send(userResults.rows[0]);
-  });
-};
-
 //iterate over buddies array and ensure taht each buddy is inivited by email
 //also ensure that list of buddies is trip specific
 // ... i don't want ot have to deal with bobTheSwimmer when there isn't any water near by
@@ -98,7 +86,7 @@ module.exports.updateUserTripPreference = function(req, res) {
                       VALUES($1, $2, $3) RETURNING id',
                       [item, userData.rows[0].id, req.body.tripId], function(err, userResults) {
                         if (err) {
-                          // res.send(err)
+                          console.log("Error inserting into locations", err);
                         }
           });
         });
@@ -107,18 +95,19 @@ module.exports.updateUserTripPreference = function(req, res) {
                   VALUES($1, $2, $3, $4) RETURNING id',
                   [req.body.hotelBudget, req.body.tripId, req.body.flightBudget, req.body.activitiesBudget], function(err, budgetResults) {
                     if (err) {
-                      // res.send(err)
-                    }
+                      console.log("Error inserting into budget", err);
+                    };
         });
         db.query('INSERT INTO \
                   dates(beging, ending, duration, trip_id, trip_number) \
                   VALUES($1, $2, $3, $4, $5) RETURNING id',
                   [req.body.beginDate.replace(/[-]/g, '/').slice(5)+'/'+req.body.beginDate.slice(0,4), req.body.endDate.replace(/[-]/g, '/').slice(5)+'/'+req.body.endDate.slice(0,4), req.body.duration, userData.rows[0].id, req.body.tripId], function(err, dateResults) {
                     if (err) {
-                      // res.send(err)
-                    }
+                      console.log("Error inserting into dates", err);
+                    };
         });
       });
+      setTimeout(function() { res.status(201) }, 500);
     } else {
       db.query('select id from userTrips where user_id = (select id from users where email = ($1))', [req.body.email], function(err, userData) {
         obj.id = userData.rows[0].id;
@@ -133,7 +122,7 @@ module.exports.updateUserTripPreference = function(req, res) {
                           VALUES($1, $2, $3) RETURNING id',
                           [location, userData.rows[0].id, req.body.tripId], function(err, userResults) {
                             if (err) {
-                              // res.send(err)
+                              console.log("Error inserting into locations", err);
                             }
               });
             };
@@ -149,8 +138,9 @@ module.exports.updateUserTripPreference = function(req, res) {
             console.log("ERROR!", err);
           };
         });
-      }, setTimeout(function() { res.status(201) },500));
+      });
     };
+    setTimeout(function() { res.status(201) },500);
   });
 };
 
