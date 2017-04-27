@@ -32,7 +32,6 @@ class TripRecomendationsCards extends React.Component {
 
   bookmarkThisRec(bookmarkerNote) {
     var bookmarkedHotelObject = this.props.hotelRecomendations[this.state.currentRecIndex];
-    console.log('TIS IS THE CURRENT HOTEL INDEX BEING PASSED', bookmarkedHotelObject);
     var newBookmark = {
       bookmarkedHotelId: bookmarkedHotelObject.hotelId,
       bookmarkerNote: bookmarkerNote
@@ -50,7 +49,9 @@ class TripRecomendationsCards extends React.Component {
             className="card-action"
           />
           <div className="card-action">
-            <a onClick={this.advanceToNextRec}>Next</a>
+            <div className="right-align">
+              <a onClick={this.advanceToNextRec}>Next</a>
+            </div>
           </div>
         </div>
         <Bookmarker bookmarkThisRec={this.bookmarkThisRec}/>
