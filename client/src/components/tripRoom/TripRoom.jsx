@@ -225,12 +225,9 @@ class TripRoom extends Component {
 
     var expediaQueryParams = {
       beginningDate : this.state.beginning, //this.state.beginning,
-      endingDate : '5/12/2017', //this.state.ending,
+      endingDate : this.state.ending, //this.state.ending,
       location : this.state.selectedLocation, //this.state.selectedLocation
     };
-    console.log('this.state.beginning');
-    console.log(this.state.beginning);
-    console.log(typeof this.state.beginning);
 
     console.log('expediaQueryParams', expediaQueryParams);
 
