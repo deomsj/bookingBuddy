@@ -5,26 +5,6 @@ import BookmarkComments from './BookmarkComments.jsx';
 // TripRoom > TripBookmarksList > You Are Here (Bookmark)
 //bookmark object passed in as props
 
-// bookmark = {
-//   bookmarkID: 1492888181571,
-//   tripId: 23,
-//   bookmarkerName: 'Lou',
-//   boormarkerNote: 'stringComment',
-//   bookmarkedHotelId: 'expediaHotelString'
-//   bookmarkComments: [{
-//     buddyName: 'Lou',
-//     buddyEmail: 'formMasterLou@gmail.com',
-//     date: 1492888181571
-//     comment: 'messageMadeUnderBookmark'}
-//   ],
-//   buddyVotes: [{
-//     buddyName: 'Lou',
-//     buddyEmail: 'formMasterLou@gmail.com',
-//     buddyVote: -1
-//   }]
-// }
-
-
 var convertToFullImageUrl = function(thumbNailUrl){
   var fullImageUrl = 'http://media.expedia.com';
   fullImageUrl += thumbNailUrl;
@@ -82,7 +62,7 @@ class Bookmark extends Component {
 
   render(){
     return (
-      <li className="collection-item trip-bookmark">
+      <li key={this.props.bookmark.bookmarkID} className="collection-item trip-bookmark">
         <div className="row bookmark-main">
           <div className="row">
             <h5>{this.state.hotelName}</h5>

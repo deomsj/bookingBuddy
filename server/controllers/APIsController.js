@@ -35,12 +35,23 @@ module.exports.expediaAPI = function(req, res, next) {
       "numberOfResults": "12"
     }
   }
-
+  var returned = false;
   expedia.hotels.list(options, function(err, data){
       if(err){console.log("ERROR",err) };
       console.log("Getting Expedia Hotel Data...");
       res.send(data.HotelListResponse.HotelList);
+      returned = true;
   });
+
+  var handleExpediaFail = function(){
+    console.log('setTimeout for expedia error handling');
+    if(!returned){
+      console.log('Expdedia is having a moment... ');
+      res.send({err:'Expdedia is having a moment... '});
+    }
+  }
+
+  setTimeout(handleExpediaFail.bind(this), 5000);
 };
 
 
