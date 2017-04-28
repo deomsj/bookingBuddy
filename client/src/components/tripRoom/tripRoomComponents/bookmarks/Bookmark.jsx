@@ -14,6 +14,24 @@ var convertToFullImageUrl = function(thumbNailUrl){
 
 
 
+const BookmarkedHotelDisplay = ({hotelName, bookmarkerNote, image}) => (
+  <div>
+    <div className="row">
+      <h5>{hotelName}</h5>
+    </div>
+    <div className="col s12 l5">
+      <div className="row">
+        <img src={image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
+      </div>
+      <div className="row">
+          <p>{bookmarkerNote}</p>
+      </div>
+    </div>
+  </div>
+);
+
+
+
 // props => bookmark, profile, expediaParams, updateBookmarkVote, addBookmarkComment
 class Bookmark extends Component {
 
@@ -42,7 +60,7 @@ class Bookmark extends Component {
       var returnedFromExpedia = expediaResults.HotelSummary;
       this.setState({
         hotelName: returnedFromExpedia.name,
-        image: returnedFromExpedia.thumbNailUrl,
+        image: convertToFullImageUrl(returnedFromExpedia.thumbNailUrl),
         price: returnedFromExpedia.price,
         stars: returnedFromExpedia.stars,
         description: returnedFromExpedia.description
@@ -62,19 +80,15 @@ class Bookmark extends Component {
 
   render(){
     return (
-      <li key={this.props.bookmark.bookmarkID} className="collection-item trip-bookmark">
+      <li className="collection-item trip-bookmark">
         <div className="row bookmark-main">
-          <div className="row">
-            <h5>{this.state.hotelName}</h5>
-          </div>
-          <div className="col s12 l5">
-            <div className="row">
-              <img src={convertToFullImageUrl(this.state.image)} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
-            </div>
-            <div className="row">
-                <p>{this.props.bookmark.bookmarkerNote}</p>
-            </div>
-          </div>
+
+          <BookmarkedHotelDisplay
+            hotelName={this.state.hotelName}
+            bookmarkerNote={this.props.bookmark.bookmarkerNote}
+            image={this.state.image}
+            />
+
           <div className="col s12 l7">
             <BuddyVotesWindow
               bookmarkID={this.props.bookmark.bookmarkID}
@@ -83,6 +97,8 @@ class Bookmark extends Component {
             />
           </div>
         </div>
+
+
         <div className="row bookmark-comments">
           <div className="col s12">
             <BookmarkComments

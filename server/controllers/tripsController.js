@@ -378,13 +378,12 @@ module.exports.addTripBookmark = function(req, res, next) {
                           if (err) {
                             console.log("Votes Error", err);
                           };
-
+                          setTimeout(function() { res.status(201).end() }, 500);
           });
         });
       })
-      setTimeout(function() { res.status(201) },500);
     } else {
-      res.status(404);
+      res.send(404);
     };
   });
 };
