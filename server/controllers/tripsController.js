@@ -383,7 +383,7 @@ module.exports.addTripBookmark = function(req, res, next) {
         });
       })
     } else {
-      res.send(404);
+      res.send(404).end();
     };
   });
 };
@@ -395,7 +395,7 @@ module.exports.updateBookmarkVote = function(req, res, next) {
       console.log("Update Vote Error", err);
     };
   });
-  setTimeout(function() { res.status(201) },300);
+  setTimeout(function() { res.status(201).end() },300);
 };
 
 module.exports.addCommentToBookmark = function(req, res, next) {
@@ -411,9 +411,9 @@ module.exports.addCommentToBookmark = function(req, res, next) {
                         console.log("Bookmarks error", err);
                       };
                     })
-      setTimeout(function() { res.status(201) },500);
+      setTimeout(function() { res.status(201).end() },500);
     } else {
-      res.status(404);
+      res.status(404).end();
     };
   });
 };
