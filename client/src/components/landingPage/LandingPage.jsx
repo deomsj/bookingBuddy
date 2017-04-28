@@ -4,6 +4,9 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import GetStartedSection from './LandingPageComponents/GetStarted.jsx';
+import HowItWorksSection from './LandingPageComponents/HowItWorks.jsx';
+import IntroMessageSection from './LandingPageComponents/IntroMessage.jsx';
 
 var colors = [
   'red', 'pink', 'purple', 'deep-purple', 'indigo',
@@ -99,28 +102,7 @@ class LandingPage extends Component {
       <div>
         <div className="no-pad-bot" id="index-banner">
           {/* INTRO */}
-          <div className="parallax-container homepage-intro">
-            <h1 className="header center orange-text">Planning a trip with friends? Let us Help!</h1>
-            <h5 className="header col s12 light">Booking Buddy makes planning a trip with your friends a fun and sociable experience</h5>
-            <div className="parallax"><img src="https://images.trvl-media.com/media/content/expus/graphics/launch/activity1320x742.jpg" alt="photo" /></div>
-          </div>
-
-          {/* Why */}
-          <div className="container">
-            <div className="section">
-              <h5 className="header col s12 light">Insert cool thought bubble section</h5>
-              <h5 className="header col s12 light">More awesomeness...</h5>
-
-              <div className="bubble">
-                Hello, I am a thought bubble
-              </div>
-              <div className="little bubble"></div>
-              <div className="tiny bubble"></div>
-
-              <br />
-              <h5 className="header col s12 light">Take the headache out of planning a trip with your buddies!</h5>
-            </div>
-          </div>
+          <IntroMessageSection />
 
           {/* QUOTE */}
           <div className="parallax-container homepage-quote">
@@ -130,42 +112,7 @@ class LandingPage extends Component {
           </div>
 
           {/* How */}
-          <div className="container">
-            <div className="section">
-              <h5 className="header col s12 light">We make it easy to find trips that your whole group can and wants to go on!</h5>
-
-              <div className="row">
-                <div className="col s12 m4">
-                  <div className="icon-block">
-                    <h2 className="center green-text darken-2"><i className="material-icons">location_on</i></h2>
-                    <h5 className="center">Location</h5>
-
-                    <p className="light">Choose one, or several locations where you'd like to travel. If you're friends have already chosen some locations, you can also choose from theirs. You can add to this list at any time. After that, everyone can vote on their favorites.</p>
-                  </div>
-                </div>
-
-                <div className="col s12 m4">
-                  <div className="icon-block">
-                    <h2 className="center green-text darken-2"><i className="material-icons">today</i></h2>
-                    <h5 className="center">Date</h5>
-
-                    <p className="light">Which dates are you available? When you and your buddies pick dates, the whole group can see them in order to figure out what works best for everyone. Are your dates not working out? Just go back and modify them at any time.</p>
-                  </div>
-                </div>
-
-                <div className="col s12 m4">
-                  <div className="icon-block">
-                    <h2 className="center bling-header green-text darken-2">$</h2>
-                    <h5 className="center">Budget</h5>
-
-                    <p className="light">Almost everyone has a budget. We promise not to make it awkward for you. Let us know how much you can spend and we'll find trip options that work for everyone, without breaking the bank.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
+          <HowItWorksSection />
 
           {/* CHAT */}
           <div className="section container white homepage-data">
@@ -219,13 +166,8 @@ class LandingPage extends Component {
           </div>
 
           {/* GET STARTED */}
-          <div className="parallax-container homepage-cta">
-            <div className="parallax"><img src="http://www.parisaddress.com/var/source/district/new/tour_eiffel-paris.jpg" alt="photo" /></div>
-              <h4 className="header col s12 light white-text">What are you waiting for?</h4>
-              <div className="row center">
-                <Link id="download-button" className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
-              </div>
-          </div>
+          <GetStartedSection />
+
           {/* FOOTER */}
           <footer className="page-footer orange">
             <div className="container">
@@ -238,7 +180,7 @@ class LandingPage extends Component {
             </div>
             <div className="footer-copyright">
               <div className="container">
-              Made by <a className="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+              <span className="orange-text text-lighten-3">&copy; BookingBuddy</span>
               </div>
             </div>
           </footer>
