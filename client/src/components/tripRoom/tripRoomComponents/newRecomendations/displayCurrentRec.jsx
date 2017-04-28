@@ -34,7 +34,7 @@ var DisplayCurrentRec = function({currentRec}) {
     backgroundImage: 'url(' + convertToFullImageUrl(currentRec.thumbNailUrl) + ')'
   };
 
-  console.log('currendRec', currentRec);
+  // console.log('currendRec', currentRec);
 
   return (
     <div className="recommendation-card card horizontal">
