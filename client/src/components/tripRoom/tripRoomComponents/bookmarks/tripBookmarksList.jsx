@@ -10,12 +10,13 @@ var TripBookmarksList = function(
   if(bookmarks.length){
     bookmarksList = bookmarks.map( (bookmark, index) => (
       <Bookmark
+        key={bookmark.bookmarkID.toString()}
         bookmark={bookmark}
         profile={profile}
         expediaParams={expediaParams}
         updateBookmarkVote={updateBookmarkVote}
         addBookmarkComment={addBookmarkComment}
-        key={index} />
+        />
     ));
   }
 

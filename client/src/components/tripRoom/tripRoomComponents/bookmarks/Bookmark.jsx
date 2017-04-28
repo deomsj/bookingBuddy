@@ -2,27 +2,33 @@ import React, { Component } from 'react';
 import BuddyVotesWindow from './BuddyVotesWindow.jsx';
 import BookmarkComments from './BookmarkComments.jsx';
 
-// TripRoom > TripRoomComponents > TripBookmarksList > You Are Here (Bookmark)
+// TripRoom > TripBookmarksList > You Are Here (Bookmark)
 //bookmark object passed in as props
 
-// bookmark = {
-//   bookmarkID: 1492888181571,
-//   tripId: 23,
-//   bookmarkerName: 'Lou',
-//   boormarkerNote: 'stringComment',
-//   bookmarkedHotelId: 'expediaHotelString'
-//   bookmarkComments: [{
-//     buddyName: 'Lou',
-//     buddyEmail: 'formMasterLou@gmail.com',
-//     date: 1492888181571
-//     comment: 'messageMadeUnderBookmark'}
-//   ],
-//   buddyVotes: [{
-//     buddyName: 'Lou',
-//     buddyEmail: 'formMasterLou@gmail.com',
-//     buddyVote: -1
-//   }]
-// }
+var convertToFullImageUrl = function(thumbNailUrl){
+  var fullImageUrl = 'http://media.expedia.com';
+  fullImageUrl += thumbNailUrl;
+  fullImageUrl = fullImageUrl.slice(0, fullImageUrl.length - 5) + 'b' + fullImageUrl.slice( fullImageUrl.length - 4);
+  return fullImageUrl;
+};
+
+
+
+const BookmarkedHotelDisplay = ({hotelName, bookmarkerNote, image}) => (
+  <div>
+    <div className="row">
+      <h5>{hotelName}</h5>
+    </div>
+    <div className="col s12 l5">
+      <div className="row">
+        <img src={image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
+      </div>
+      <div className="row">
+          <p>{bookmarkerNote}</p>
+      </div>
+    </div>
+  </div>
+);
 
 
 
@@ -54,7 +60,7 @@ class Bookmark extends Component {
       var returnedFromExpedia = expediaResults.HotelSummary;
       this.setState({
         hotelName: returnedFromExpedia.name,
-        image: returnedFromExpedia.thumbNailUrl,
+        image: convertToFullImageUrl(returnedFromExpedia.thumbNailUrl),
         price: returnedFromExpedia.price,
         stars: returnedFromExpedia.stars,
         description: returnedFromExpedia.description
@@ -76,20 +82,14 @@ class Bookmark extends Component {
     return (
       <li className="collection-item trip-bookmark">
         <div className="row bookmark-main">
-          <div className="col s12 l6">
-            <div className="row">
-              <h5>{this.state.hotelName}</h5>
-            </div>
-            <div className="row">
-              <div className="col s3">
-                <img src={'http://media.expedia.com' + this.state.image} style={{'maxHeight':'300px', 'maxWidth':'100%'}} alt="picture"/>
-              </div>
-              <div className="s9">
-                <p>{this.props.bookmark.bookmarkerNote}</p>
-              </div>
-            </div>
-          </div>
-          <div className="col s12 l6">
+
+          <BookmarkedHotelDisplay
+            hotelName={this.state.hotelName}
+            bookmarkerNote={this.props.bookmark.bookmarkerNote}
+            image={this.state.image}
+            />
+
+          <div className="col s12 l7">
             <BuddyVotesWindow
               bookmarkID={this.props.bookmark.bookmarkID}
               buddyVotes={this.props.bookmark.buddyVotes}
@@ -97,6 +97,8 @@ class Bookmark extends Component {
             />
           </div>
         </div>
+
+
         <div className="row bookmark-comments">
           <div className="col s12">
             <BookmarkComments
