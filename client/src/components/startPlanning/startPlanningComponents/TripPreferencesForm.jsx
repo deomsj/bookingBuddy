@@ -75,8 +75,6 @@ class TripPreferencesForm extends Component {
   }
 
   handleData(data) {
-    //var profile = this.props.profile;
-    console.log('data sent back to client on visit to tripPreferences', data);
     var name = this.props.profile.name;
 
     if(data[name]){
@@ -89,8 +87,8 @@ class TripPreferencesForm extends Component {
         activitiesBudget: data[name].activitiesBudget || 0,
         flightBudget: data[name].flightBudget || 0,
         duration: data[name].duration || 1,
-        beginDate: convertDateFormat(data[name].beginDate)  || '',
-        endDate: convertDateFormat(data[name].endDate)  || '',
+        beginDate: data[name].beginDate ? convertDateFormat(data[name].beginDate): '',
+        endDate: data[name].endDate ? convertDateFormat(data[name].endDate): '',
         totalBudget: totalBudget || 0
       });
     }
@@ -118,26 +116,20 @@ class TripPreferencesForm extends Component {
 
   updateUserTripPreferences(e){
     var incompleteFields = this.stillNotFilledIn();
-    console.log('incompleteFields', incompleteFields);
     if(incompleteFields.length){
-      console.log('incompleteFields.... STOP ME FROM SUBMITTING');
       e.preventDefault();
       alert('Please finish completing the following sections first: ' + incompleteFields.join(', '));
     } else {
-      console.log('Submit at your lesure');
       var obj = this.state;
       obj.email = this.props.userEmail
       obj.tripId = this.props.tripId
-      //console.log("updateUserTripPreferences!!");
       $.ajax({
         type: 'POST',
         url: '/updateUserTripPreferences',
         dataType: 'json',
         data: obj,
         success: function(data) {
-          //console.log(data, "Updated User Preferences");
           this.setState(data);
-          //console.log(this.state);
         }.bind(this)
       });
     }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BuddyVotesWindow from './BuddyVotesWindow.jsx';
 import BookmarkComments from './BookmarkComments.jsx';
 
-// TripRoom > TripRoomComponents > TripBookmarksList > You Are Here (Bookmark)
+// TripRoom > TripBookmarksList > You Are Here (Bookmark)
 //bookmark object passed in as props
 
 // bookmark = {
