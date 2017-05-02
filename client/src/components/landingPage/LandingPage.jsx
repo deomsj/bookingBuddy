@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 import GetStartedSection from './LandingPageComponents/GetStarted.jsx';
 import HowItWorksSection from './LandingPageComponents/HowItWorks.jsx';
 import IntroMessageSection from './LandingPageComponents/IntroMessage.jsx';
