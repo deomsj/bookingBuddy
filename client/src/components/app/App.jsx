@@ -75,7 +75,9 @@ class App extends Component {
           <div>
             <Route exact path="/"
               render={() =>
-                !this.state.isLoggedIn ? <LandingPage /> : <Redirect to='/profile' />
+                !this.state.isLoggedIn ?
+                  <LandingPage logIn={this.logInOrOut} /> :
+                  <Redirect to='/profile' />
               } />
             <Route path="/profile"
               render={() =>

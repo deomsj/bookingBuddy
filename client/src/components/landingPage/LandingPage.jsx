@@ -26,7 +26,7 @@ class LandingPage extends Component {
       <div>
         <div className="no-pad-bot" id="index-banner">
           {/* INTRO */}
-          <IntroMessageSection />
+          <IntroMessageSection logIn={this.props.logIn} />
 
           {/* How */}
           <HowItWorksSection />
@@ -38,7 +38,7 @@ class LandingPage extends Component {
           <ProcessStepsSection />
 
           {/* GET STARTED */}
-          <GetStartedSection />
+          <GetStartedSection logIn={this.props.logIn} />
 
           {/* FOOTER */}
           <footer className="page-footer orange">

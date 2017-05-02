@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import StartPlanningButton from './StartPlanningButton.jsx';
 
-var IntroMessageSection = function() {
+var IntroMessageSection = function({logIn}) {
 
   var headingStyle = {
     fontWeight: "bold",
@@ -19,7 +20,7 @@ var IntroMessageSection = function() {
           <h5 className="header col s12 white-text">Make planning a trip with your friends fun and social</h5>
         </div>
         <div className="row center">
-          <Link className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
+          <StartPlanningButton logIn={logIn} />
         </div>
       </div>
     </div>
