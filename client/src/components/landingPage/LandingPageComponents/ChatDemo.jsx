@@ -41,7 +41,8 @@ class ChatDemo extends Component {
     this.state = {
       messages: [],
       counter: 0,
-      activeRoom: 'Weekend Getaway'
+      activeRoom: 'Weekend Getaway',
+      chatInterval: null
     };
   }
 
@@ -119,13 +120,19 @@ class ChatDemo extends Component {
       $('select').material_select();
     });
 
-    setInterval(this.loadNextMessage, 2000);
+    var chatInterval = setInterval(this.loadNextMessage, 2000);
 
+    this.setState({
+      chatInterval: chatInterval
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.chatInterval);
   }
 
 
   render() {
-    console.log(this.state.activeRoom);
     return (
       <div className="section white homepage-data">
         <div className="input-field">
