@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import StartPlanningButton from './StartPlanningButton.jsx';
 
-var GetStartedSection = function() {
+var GetStartedSection = function({logIn}) {
 
   return(
     <div className="parallax-container homepage-cta homepage-section">
@@ -12,7 +12,7 @@ var GetStartedSection = function() {
         <h4 className="header col s12 white-text">What are you waiting for?</h4>
       </div>
       <div className="row center">
-        <Link id="download-button" className="btn-large waves-effect waves-light orange" to="/start-planning">Start Planning!</Link>
+        <StartPlanningButton logIn={logIn} />
       </div>
     </div>
   );

@@ -13,6 +13,8 @@ var colors = [
   'deep-orange'
 ];
 
+var randomColor = colors[Math.floor(Math.random() * (colors.length - 1))] + '-text';
+
 var weekendBuddies = ['Preston', 'Lou', 'Max', 'Jesse', 'Nate'];
 var weekendMessages = [
   'Its been forever!!! I want to hang out with you guys!',
@@ -30,8 +32,7 @@ var weekendMessages = [
   'Looks great! I like the hotel you chose. Great ratings and not a bad price at all'
 ];
 var getWeekendMessage = function(counter) {
-  counter = counter > weekendMessages.length - 1 ? 0 : counter;
-  return weekendMessages[counter++];
+  return weekendMessages[counter++] || '';
 };
 
 var familyBuddies = [
@@ -57,11 +58,10 @@ var familyMessages = [
   'Yeah that one. This looks great!',
   'Whoa, so we can all throw in ideas and see each others ideas too',
   'Nice, I love seeing everyones ideas and this makes it so easy to coordinate',
-  'Thanks for sharing this booking buddies thing, im really excited for reunion!'
+  'Thanks again for sharing this booking buddies thing, Im really excited to see everyone!'
 ];
 var getFamilyMessage = function(counter) {
-  counter = counter > familyMessages.length - 1 ? 0 : counter;
-  return familyMessages[counter++];
+  return familyMessages[counter++] || '';
 };
 
 var bachBuddies = ['Danya', 'Emilie', 'Emma', 'Joanna', 'Meg', 'Misaki', 'Rocky', 'Emma'];
@@ -80,8 +80,7 @@ var bachMessages = [
   'Thank goodness this great site exists to help us all plan together!! Its like the fun has already started!!!!'
 ];
 var getBachMessage = function(counter) {
-  counter = counter > bachMessages.length - 1 ? 0 : counter;
-  return bachMessages[counter++];
+  return bachMessages[counter++] || '';
 };
 
 var summerBuddies = [
@@ -110,8 +109,7 @@ var summerMessages = [
   'Yeah me too, that one looks perfect and it matches everyones schedules!'
 ];
 var getSummerMessage = function(counter) {
-  counter = counter > summerMessages.length - 1 ? 0 : counter;
-  return summerMessages[counter];
+  return summerMessages[counter] || '';
 };
 
 var getBuddyFromGroup = function(buddies) {
@@ -119,6 +117,8 @@ var getBuddyFromGroup = function(buddies) {
 };
 
 module.exports = {
+  colors: colors,
+  randomColor: randomColor,
   getBuddyFromGroup: getBuddyFromGroup,
   weekendBuddies: weekendBuddies,
   familyBuddies: familyBuddies,

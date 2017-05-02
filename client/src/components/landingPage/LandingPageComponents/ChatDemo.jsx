@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {
+  colors,
+  randomColor,
   getBuddyFromGroup,
   weekendBuddies,
   familyBuddies,
@@ -12,12 +13,6 @@ import {
   getSummerMessage,
 } from './chatDemoData';
 
-var colors = [
-  'red', 'pink', 'purple', 'deep-purple', 'indigo',
-  'blue', 'cyan', 'teal', 'green',
-  'amber', 'orange', 'deep-orange'
-];
-var randomColor = colors[Math.floor(Math.random() * (colors.length - 1))] + '-text';
 
 var ChatMessages = function({name, text, color}) {
   return (
@@ -41,7 +36,8 @@ class ChatDemo extends Component {
     this.state = {
       messages: [],
       counter: 0,
-      activeRoom: 'Weekend Getaway'
+      activeRoom: 'Weekend Getaway',
+      chatInterval: null
     };
   }
 
@@ -102,16 +98,18 @@ class ChatDemo extends Component {
       nextName = getBuddyFromGroup(summerBuddies);
     }
 
-    var nextMessage = {
-        name: nextName,
-        text: nextText,
-        color: colors[Math.floor(Math.random() * (colors.length - 1))] + '-text'
-      }
+    if (nextText){
+      var nextMessage = {
+          name: nextName,
+          text: nextText,
+          color: colors[Math.floor(Math.random() * (colors.length - 1))] + '-text'
+        }
 
-    this.setState({
-      messages: this.state.messages.concat(nextMessage),
-      counter: ++counter
-    });
+      this.setState({
+        messages: this.state.messages.concat(nextMessage),
+        counter: ++counter
+      });
+    }
   }
 
   componentDidMount() {
@@ -119,13 +117,19 @@ class ChatDemo extends Component {
       $('select').material_select();
     });
 
-    setInterval(this.loadNextMessage, 2000);
+    var chatInterval = setInterval(this.loadNextMessage, 2000);
 
+    this.setState({
+      chatInterval: chatInterval
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.chatInterval);
   }
 
 
   render() {
-    console.log(this.state.activeRoom);
     return (
       <div className="section white homepage-data">
         <div className="input-field">

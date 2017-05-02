@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 import GetStartedSection from './LandingPageComponents/GetStarted.jsx';
 import HowItWorksSection from './LandingPageComponents/HowItWorks.jsx';
 import IntroMessageSection from './LandingPageComponents/IntroMessage.jsx';
@@ -26,7 +21,7 @@ class LandingPage extends Component {
       <div>
         <div className="no-pad-bot" id="index-banner">
           {/* INTRO */}
-          <IntroMessageSection />
+          <IntroMessageSection logIn={this.props.logIn} />
 
           {/* How */}
           <HowItWorksSection />
@@ -38,7 +33,7 @@ class LandingPage extends Component {
           <ProcessStepsSection />
 
           {/* GET STARTED */}
-          <GetStartedSection />
+          <GetStartedSection logIn={this.props.logIn} />
 
           {/* FOOTER */}
           <footer className="page-footer orange">
