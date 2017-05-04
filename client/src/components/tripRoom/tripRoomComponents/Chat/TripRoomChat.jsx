@@ -29,7 +29,7 @@ class TripRoomChat extends Component {
     super(props);
     this.state = {
       messages: [],
-      socket: io(),
+      socket: io()
     };
 
     this.state.socket.on('connect', function() {
@@ -50,21 +50,20 @@ class TripRoomChat extends Component {
 
   sendMessage() {
     var text = $('#chatTextField').val();
+    var newMessage = {
+      name: this.props.name,
+      text: text,
+      color: randomColor
+    };
     this.setState({
-      messages: this.state.messages.concat(
-        {
-          name: 'You',
-          text: text,
-          color: randomColor
-        })
+      messages: this.state.messages.concat(newMessage)
     });
     $('#chatTextField').val('');
 
-    this.state.socket.emit('new message', {
-      name: 'Someone',
-      text: text,
-      color: randomColor
-    });
+    this.state.socket.emit('new message', newMessage);
+
+    var chatWindow = $('.trip-room-chat');
+    chatWindow.animate({ scrollTop: chatWindow.prop("scrollHeight")}, 2000);
   }
 
   updateMessage(event) {
@@ -79,25 +78,32 @@ class TripRoomChat extends Component {
 
         <div className="col s12">
           <div className="chat card grey lighten-4">
-            <div className="card-content">
+            <div className="trip-room-chat card-content">
               <div>
-                <p className="blue-text">Preston</p>
+                <p className="blue-text">Booking Buddies</p>
                 <div className="chatMessageContainer blue-text">
-                  Hey guys looks like we all are free to travel in a few weeks...
+                  Welcome to your group's private trip room!
                 </div>
               </div>
 
               <div>
-                <p className="green-text">Nate</p>
+                <p className="green-text">Booking Buddies</p>
                 <div className="chatMessageContainer green-text">
-                  Yeah that looks like the best time! Where do you guys want to go? Looks like we had a lot of overlap
+                  We have partnered with expedia to ensure that we are always showing you the best deals on hotels that match your group's travel preferences
                 </div>
               </div>
 
               <div>
-                <p className="red-text">Max</p>
+                <p className="red-text">Booking Buddies</p>
                 <div className="chatMessageContainer red-text">
-                  Personally, the carribean would be my top choice!
+                  Bookmark, comment on, and upvote your favorites to let your buddies know which ones you're most excited about!
+                </div>
+              </div>
+
+              <div>
+                <p className="purple-text">Booking Buddies</p>
+                <div className="chatMessageContainer purple-text">
+                  Use this chat with your buddies as a central location to brainstorm and share ideas, links, and any details related to your trip!
                 </div>
               </div>
 

@@ -33,12 +33,13 @@ class TripRoom extends Component {
     this.setState({
       selectedLocation: event.target.value
     });
-    console.log('getting new hotels form expedia!');
+    // console.log('getting new hotels form expedia!');
     setTimeout(this.getTripRecomendationFromExpedia, 100);
   }
 
   getVoteTotal(bookmark){
-    return bookmark.buddyVotes.reduce((sum,buddy)=>sum + buddy.buddyVote, 0);
+    var total = bookmark.buddyVotes.reduce((sum,buddy)=>sum + +buddy.buddyVote, 0);
+    return total;
   }
 
   sortBookmarks(bookmarksArray) {
@@ -123,6 +124,11 @@ class TripRoom extends Component {
 
   updateBookmarkVote(bookmarkID, updatedBuddyVote) {
 
+    if(updatedBuddyVote.buddyName !== this.props.profile.given_name)  {
+      // console.log('why dont you just focus on your own votes, buddy...')
+      return;
+    }
+
     var updatedBookmarks = this.state.bookmarks.map((bookmark) => {
       if (bookmark.bookmarkID === bookmarkID) {
         bookmark.buddyVotes.forEach( (buddyVoteObj) => {
@@ -141,7 +147,7 @@ class TripRoom extends Component {
       bookmarks: updatedBookmarks
     });
 
-    this.updateBookmarkVoteInDb(bookmarkID, updatedBuddyVote)
+    this.updateBookmarkVoteInDb(bookmarkID, updatedBuddyVote);
   }
 
 
@@ -244,11 +250,11 @@ class TripRoom extends Component {
       location : this.state.selectedLocation, //this.state.selectedLocation
     };
 
-    console.log('expediaQueryParams', expediaQueryParams);
+    // console.log('expediaQueryParams', expediaQueryParams);
 
     var handleResults = function(expediaResults){
       expediaResults = expediaResults.HotelSummary;
-      console.log('hotelRecomendations', expediaResults);
+      // console.log('hotelRecomendations', expediaResults);
       this.setState({
         hotelRecomendations: expediaResults
       });
@@ -303,14 +309,13 @@ class TripRoom extends Component {
                   addBookmarkComment={this.addBookmarkComment}
                 />
             </div>
-            <div className="tripRoomChatContainer col s12 m5 offset-m7 l4 offset-l8 pinned card-panel green lighten-3 hide-on-small-only" style={{'height':'100%'}}>
-              <h4>Booking Buddies</h4>
+            <div className="tripRoomChatContainer col s12 m5 offset-m7 l4 offset-l8 pinned card-panel green lighten-3 hide-on-small-only" >
               <ul>
                 {this.state.buddyList.map((buddy)=> (
-                  <li className="chip">{buddy.name.split(' ')[0]}</li>
+                  <li key={buddy.email} className="chip">{buddy.name.split(' ')[0]}</li>
                 ))}
               </ul>
-              <TripRoomChat tripId={this.state.tripId}/>
+              <TripRoomChat tripId={this.state.tripId} name={this.props.profile.given_name}/>
             </div>
           </div>
         </div>

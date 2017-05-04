@@ -445,3 +445,17 @@ span[class^="preferences-"] .material-icons {
   max-height: calc(100vh * 0.55);
   overflow: auto;
 }
+
+.trip-room-chat {
+  max-height: calc(100vh * 0.70);
+  overflow: auto;
+}
+
+.tripRoomChatContainer {
+  height: 91%;
+  border-radius: 15px 0 0 15px;
+}
+
+.chat {
+  border-radius: 15px 15px 0 0;
+}
