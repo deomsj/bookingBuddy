@@ -50,21 +50,17 @@ class TripRoomChat extends Component {
 
   sendMessage() {
     var text = $('#chatTextField').val();
+    var newMessage = {
+      name: this.props.name,
+      text: text,
+      color: randomColor
+    };
     this.setState({
-      messages: this.state.messages.concat(
-        {
-          name: 'You',
-          text: text,
-          color: randomColor
-        })
+      messages: this.state.messages.concat(newMessage)
     });
     $('#chatTextField').val('');
 
-    this.state.socket.emit('new message', {
-      name: 'Someone',
-      text: text,
-      color: randomColor
-    });
+    this.state.socket.emit('new message', newMessage);
   }
 
   updateMessage(event) {
@@ -104,7 +100,7 @@ class TripRoomChat extends Component {
               <div>
                 <p className="purple-text">Booking Buddies</p>
                 <div className="chatMessageContainer purple-text">
-                  Use this chat as a central location to share ideas, links, and any details realted to your trip planning with your group!
+                  Use this chat with your buddies as a central location to brainstorm and share ideas, links, and any details related to your trip!
                 </div>
               </div>
 

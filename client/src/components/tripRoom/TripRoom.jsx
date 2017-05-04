@@ -316,7 +316,7 @@ class TripRoom extends Component {
                   <li key={buddy.email} className="chip">{buddy.name.split(' ')[0]}</li>
                 ))}
               </ul>
-              <TripRoomChat tripId={this.state.tripId}/>
+              <TripRoomChat tripId={this.state.tripId} name={this.props.profile.given_name}/>
             </div>
           </div>
         </div>
