@@ -33,7 +33,7 @@ class TripRoom extends Component {
     this.setState({
       selectedLocation: event.target.value
     });
-    console.log('getting new hotels form expedia!');
+    // console.log('getting new hotels form expedia!');
     setTimeout(this.getTripRecomendationFromExpedia, 100);
   }
 
@@ -244,11 +244,11 @@ class TripRoom extends Component {
       location : this.state.selectedLocation, //this.state.selectedLocation
     };
 
-    console.log('expediaQueryParams', expediaQueryParams);
+    // console.log('expediaQueryParams', expediaQueryParams);
 
     var handleResults = function(expediaResults){
       expediaResults = expediaResults.HotelSummary;
-      console.log('hotelRecomendations', expediaResults);
+      // console.log('hotelRecomendations', expediaResults);
       this.setState({
         hotelRecomendations: expediaResults
       });
@@ -307,7 +307,7 @@ class TripRoom extends Component {
               <h4>Booking Buddies</h4>
               <ul>
                 {this.state.buddyList.map((buddy)=> (
-                  <li className="chip">{buddy.name.split(' ')[0]}</li>
+                  <li key={buddy.email} className="chip">{buddy.name.split(' ')[0]}</li>
                 ))}
               </ul>
               <TripRoomChat tripId={this.state.tripId}/>

@@ -81,23 +81,30 @@ class TripRoomChat extends Component {
           <div className="chat card grey lighten-4">
             <div className="card-content">
               <div>
-                <p className="blue-text">Preston</p>
+                <p className="blue-text">Booking Buddies</p>
                 <div className="chatMessageContainer blue-text">
-                  Hey guys looks like we all are free to travel in a few weeks...
+                  Welcome to your group's private trip room!
                 </div>
               </div>
 
               <div>
-                <p className="green-text">Nate</p>
+                <p className="green-text">Booking Buddies</p>
                 <div className="chatMessageContainer green-text">
-                  Yeah that looks like the best time! Where do you guys want to go? Looks like we had a lot of overlap
+                  We have partnered with expedia to ensure that we are always showing you the best deals on hotels that match your group's travel preferences
                 </div>
               </div>
 
               <div>
-                <p className="red-text">Max</p>
+                <p className="red-text">Booking Buddies</p>
                 <div className="chatMessageContainer red-text">
-                  Personally, the carribean would be my top choice!
+                  Bookmark, comment on, and upvote your favorites to let your buddies know which ones you're most excited about!
+                </div>
+              </div>
+
+              <div>
+                <p className="purple-text">Booking Buddies</p>
+                <div className="chatMessageContainer purple-text">
+                  Use this chat as a central location to share ideas, links, and any details realted to your trip planning with your group!
                 </div>
               </div>
 
