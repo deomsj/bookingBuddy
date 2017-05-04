@@ -12,6 +12,7 @@ class TripRecomendationsCards extends React.Component {
     super(props);
     this.bookmarkThisRec = this.bookmarkThisRec.bind(this);
     this.advanceToNextRec = this.advanceToNextRec.bind(this);
+    this.advanceToPrevRec = this.advanceToPrevRec.bind(this);
     this.state = {
       currentRecIndex: 0
     };
@@ -27,6 +28,19 @@ class TripRecomendationsCards extends React.Component {
     }
     this.setState({
       currentRecIndex: nextIndex
+    });
+  }
+
+  advanceToPrevRec() {
+    var numberOfRecs = this.props.hotelRecomendations.length;
+    var prevIndex;
+    if (this.state.currentRecIndex > 0) {
+      prevIndex = this.state.currentRecIndex - 1;
+    } else {
+      prevIndex = numberOfRecs - 1;
+    }
+    this.setState({
+      currentRecIndex: prevIndex
     });
   }
 
@@ -48,9 +62,12 @@ class TripRecomendationsCards extends React.Component {
             currentRec={this.props.hotelRecomendations[this.state.currentRecIndex]}
             className="card-action"
           />
-          <div className="card-action">
+          <div className="card-action recommendation-slider-nav">
+            <div className="left-align">
+              <a className="btn-flat orange-text" onClick={this.advanceToPrevRec}>Prev</a>
+            </div>
             <div className="right-align">
-              <a onClick={this.advanceToNextRec}>Next</a>
+              <a className="btn-flat orange-text" onClick={this.advanceToNextRec}>Next</a>
             </div>
           </div>
         </div>
