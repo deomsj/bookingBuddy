@@ -29,7 +29,7 @@ class TripRoomChat extends Component {
     super(props);
     this.state = {
       messages: [],
-      socket: io(),
+      socket: io()
     };
 
     this.state.socket.on('connect', function() {
@@ -61,6 +61,9 @@ class TripRoomChat extends Component {
     $('#chatTextField').val('');
 
     this.state.socket.emit('new message', newMessage);
+
+    var chatWindow = $('.trip-room-chat');
+    chatWindow.animate({ scrollTop: chatWindow.prop("scrollHeight")}, 2000);
   }
 
   updateMessage(event) {
@@ -75,7 +78,7 @@ class TripRoomChat extends Component {
 
         <div className="col s12">
           <div className="chat card grey lighten-4">
-            <div className="card-content">
+            <div className="trip-room-chat card-content">
               <div>
                 <p className="blue-text">Booking Buddies</p>
                 <div className="chatMessageContainer blue-text">

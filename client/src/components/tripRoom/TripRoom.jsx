@@ -309,8 +309,7 @@ class TripRoom extends Component {
                   addBookmarkComment={this.addBookmarkComment}
                 />
             </div>
-            <div className="tripRoomChatContainer col s12 m5 offset-m7 l4 offset-l8 pinned card-panel green lighten-3 hide-on-small-only" style={{'height':'100%'}}>
-              <h4>Booking Buddies</h4>
+            <div className="tripRoomChatContainer col s12 m5 offset-m7 l4 offset-l8 pinned card-panel green lighten-3 hide-on-small-only" >
               <ul>
                 {this.state.buddyList.map((buddy)=> (
                   <li key={buddy.email} className="chip">{buddy.name.split(' ')[0]}</li>
