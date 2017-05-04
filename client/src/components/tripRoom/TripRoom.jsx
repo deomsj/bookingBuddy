@@ -209,11 +209,6 @@ class TripRoom extends Component {
     });
   };
 
-  componentDidMount() {
-    // console.log('getting current trip data for trip # ' + this.props.tripId);
-    this.fetchTripInformationFromDb(this.props.tripId);
-  }
-
   fetchTripInformationFromDb(Id){
     // console.log("GETTING TRIP DATA FROM DB!")
     $.ajax({
@@ -270,7 +265,10 @@ class TripRoom extends Component {
     });
   }
 
-
+  componentDidMount() {
+    // console.log('getting current trip data for trip # ' + this.props.tripId);
+    this.fetchTripInformationFromDb(this.props.tripId);
+  }
 
   render() {
 
@@ -286,13 +284,13 @@ class TripRoom extends Component {
             <div className="col s12 m7 l8 tripRoomMainContentContainer">
                 <h1 className="orange-text darken-2">{this.state.tripName}</h1>
                 <GroupPreferencesBar
-                        averageNightlyHotelBudget={this.state.averageNightlyHotelBudget}
-                        beginning={this.state.beginning}
-                        ending={this.state.ending}
-                        locations={this.state.locations}
-                        selectedLocation={this.state.selectedLocation}
-                        setLocation={this.setLocation}
-                  />
+                  averageNightlyHotelBudget={this.state.averageNightlyHotelBudget}
+                  beginning={this.state.beginning}
+                  ending={this.state.ending}
+                  locations={this.state.locations}
+                  selectedLocation={this.state.selectedLocation}
+                  setLocation={this.setLocation}
+                />
                 <TripRecomendationsCards
                   hotelRecomendations={this.state.hotelRecomendations}
                   addBookmark={this.addBookmark}
