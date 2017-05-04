@@ -121,94 +121,6 @@ ________________________________________*/
 }
 
 
-
-
-/* # Trip Page
----------------------------------------- */
-
-span[class^="preferences-"] {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-span[class^="preferences-"] .material-icons {
-  margin-top: -1px;
-  margin-right: 2px;
-}
-
-
-/* ## Bookmarks
----------------------------------------- */
-
-.collection .collection-item.trip-bookmark {
-  padding: 0;
-}
-
-.bookmark-main {
-  padding: 20px 10px;
-}
-
-.bookmark-comments {
-  margin-bottom: 0;
-}
-
-.bookmark-comments > .col {
-  padding: 0;
-}
-
-.bookmark-comments > .col > .collapsible {
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
-  box-shadow: none;
-  margin: 0;
-}
-
-.bookmark-comments form {
-  border-bottom: 1px solid #e0e0e0;
-  padding: 20px;
-}
-
-.bookmark-comments .input-field.comment-input {
-  margin-top: 0;
-}
-
-.bookmark-comments .comments-open,
-.bookmark-comments .comments-close {
-  float: right;
-}
-
-.bookmark-comments .comments-close {
-  display: none;
-}
-
-.bookmark-comments .active .comments-close {
-  display: block;
-}
-
-.bookmark-comments .active .comments-open {
-  display: none;
-}
-
-.bookmark-comments .collection-item {
-  padding: 20px;
-}
-
-.comment-header {
-  margin-bottom: 10px;
-}
-
-.comment-header .author {
-  font-size: 20px;
-}
-
-.comment-header .datetime {
-  font-weight: 300;
-  margin-left: 10px;
-}
-
-
 /* # Homepage
 ---------------------------------------- */
 
@@ -317,7 +229,7 @@ span[class^="preferences-"] .material-icons {
   padding: 3px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 601px) {
 
   .homepage-intro .container {
     max-width: 60%;
@@ -334,7 +246,19 @@ div.nav-wrapper.container {
   padding-right: 4%;
 }
 
-/* # Trip Room
+/* # Loading Page
+________________________________________*/
+
+.loading-card {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  min-height: calc(100vh * 0.7);
+  text-align: center;
+}
+
+/* # Trip Page
 ---------------------------------------- */
 
 div.tripRoomMainContentContainer.col {
@@ -343,7 +267,39 @@ div.tripRoomMainContentContainer.col {
   padding-right: 2%;
 }
 
-.recommendation-card  .card-image {
+span[class^="preferences-"] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+span[class^="preferences-"] .material-icons {
+  margin-top: -1px;
+  margin-right: 2px;
+}
+
+.recommendation-slider-nav {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.recommendation-card.horizontal {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.recommendation-card.card  .card-image {
   max-width: 100%;
   width: 100%;
 }
@@ -362,15 +318,6 @@ div.tripRoomMainContentContainer.col {
 
 .recommendation-card  .card-image .card-title {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.35);
-}
-
-@media (min-width: 600px) {
-
-  .recommendation-card.horizontal  .card-image {
-    max-width: 45%;
-    width: 100%;
-  }
-
 }
 
 .chatMessageContainer {
@@ -399,6 +346,96 @@ div.tripRoomMainContentContainer.col {
   height: 100%;
   background-color: #fff;
   z-index: 99;
+}
+
+@media (min-width: 481px) {
+
+  .recommendation-card.horizontal {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+
+}
+
+@media (min-width: 601px) {
+
+  .recommendation-card.horizontal  .card-image {
+    max-width: 45%;
+    width: 100%;
+  }
+
+}
+
+/* ## Bookmarks
+---------------------------------------- */
+
+.collection .collection-item.trip-bookmark {
+  padding: 0;
+}
+
+.bookmark-main {
+  padding: 20px 10px;
+}
+
+.bookmark-comments {
+  margin-bottom: 0;
+}
+
+.bookmark-comments > .col {
+  padding: 0;
+}
+
+.bookmark-comments > .col > .collapsible {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+.bookmark-comments form {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px;
+}
+
+.bookmark-comments .input-field.comment-input {
+  margin-top: 0;
+}
+
+.bookmark-comments .comments-open,
+.bookmark-comments .comments-close {
+  float: right;
+}
+
+.bookmark-comments .comments-close {
+  display: none;
+}
+
+.bookmark-comments .active .comments-close {
+  display: block;
+}
+
+.bookmark-comments .active .comments-open {
+  display: none;
+}
+
+.bookmark-comments .collection-item {
+  padding: 20px;
+}
+
+.comment-header {
+  margin-bottom: 10px;
+}
+
+.comment-header .author {
+  font-size: 20px;
+}
+
+.comment-header .datetime {
+  font-weight: 300;
+  margin-left: 10px;
 }
 
 /* # Live Chat
