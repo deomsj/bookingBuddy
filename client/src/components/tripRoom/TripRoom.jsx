@@ -38,7 +38,8 @@ class TripRoom extends Component {
   }
 
   getVoteTotal(bookmark){
-    return bookmark.buddyVotes.reduce((sum,buddy)=>sum + buddy.buddyVote, 0);
+    var total = bookmark.buddyVotes.reduce((sum,buddy)=>sum + +buddy.buddyVote, 0);
+    return total;
   }
 
   sortBookmarks(bookmarksArray) {
@@ -123,6 +124,11 @@ class TripRoom extends Component {
 
   updateBookmarkVote(bookmarkID, updatedBuddyVote) {
 
+    if(updatedBuddyVote.buddyName !== this.props.profile.given_name)  {
+      // console.log('why dont you just focus on your own votes, buddy...')
+      return;
+    }
+
     var updatedBookmarks = this.state.bookmarks.map((bookmark) => {
       if (bookmark.bookmarkID === bookmarkID) {
         bookmark.buddyVotes.forEach( (buddyVoteObj) => {
@@ -141,7 +147,7 @@ class TripRoom extends Component {
       bookmarks: updatedBookmarks
     });
 
-    this.updateBookmarkVoteInDb(bookmarkID, updatedBuddyVote)
+    this.updateBookmarkVoteInDb(bookmarkID, updatedBuddyVote);
   }
 
 
