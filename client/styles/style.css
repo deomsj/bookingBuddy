@@ -229,7 +229,7 @@ ________________________________________*/
   padding: 3px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 601px) {
 
   .homepage-intro .container {
     max-width: 60%;
@@ -244,6 +244,18 @@ div.nav-wrapper.container {
   width: 100%;
   padding-left: 4%;
   padding-right: 4%;
+}
+
+/* # Loading Page
+________________________________________*/
+
+.loading-card {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  min-height: calc(100vh * 0.7);
+  text-align: center;
 }
 
 /* # Trip Page
