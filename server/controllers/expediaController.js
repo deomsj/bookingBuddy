@@ -1,6 +1,5 @@
 var expedia = require('expedia');
 var config = process.env || require('../../env.config');
-var hotWireApiKey = config.HOTWIRE_API_KEY;
 var md5 = require('md5');
 var cid = config.EXPEDIA_CID;
 var apiKey = config.EXPEDIA_API_KEY;
@@ -9,17 +8,9 @@ var secret = config.EXPEDIA_SECRET;
 module.exports.expediaAPI = function(req, res, next) {
   console.log('Inside expediaA Api...', req.body);
 
-  var queryDate = Math.floor(new Date() / 1000);
-  var newExpediaQuery = expedia({
-    cid: '379639',
-    apiKey: '65cc419lbqf590p1njeuv4p0q0',
-    secret: 'bvp038hq772sm',
-    sig: md5('65cc419lbqf590p1njeuv4p0q0' + 'bvp038hq772sm' + queryDate),
-    locale: 'en_US', // optional defaults to en_US
-    currencyCode: 'USD' // optional defaults to USD
-  });
+  var expediaQueryDate = Math.floor(new Date() / 1000);
 
-  var options = {
+  var expediaQueryOptions = {
     customerSessionId: 'thisisauniqueID',
     customerIpAddress: '127.0.0.1',
     customerUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko)',
@@ -34,8 +25,18 @@ module.exports.expediaAPI = function(req, res, next) {
       numberOfResults: '12'
     }
   };
+
+  var newExpediaQuery = expedia({
+    cid: '379639',
+    apiKey: '65cc419lbqf590p1njeuv4p0q0',
+    secret: 'bvp038hq772sm',
+    sig: md5('65cc419lbqf590p1njeuv4p0q0' + 'bvp038hq772sm' + expediaQueryDate),
+    locale: 'en_US', // optional defaults to en_US
+    currencyCode: 'USD' // optional defaults to USD
+  });
+
   var returned = false;
-  newExpediaQuery.hotels.list(options, function(err, data) {
+  newExpediaQuery.hotels.list(expediaQueryOptions, function(err, data) {
     if (err) {
       console.log('ERROR', err);
     }
@@ -43,33 +44,15 @@ module.exports.expediaAPI = function(req, res, next) {
     res.send(data.HotelListResponse.HotelList);
     returned = true;
   });
-
-  // var handleExpediaFail = function(){
-  //   console.log('setTimeout for expedia error handling');
-  //   if(!returned){
-  //     console.log('Expdedia is having a moment... ');
-  //     res.send({err:'Expdedia is having a moment... '});
-  //   }
-  // }
-
-  // setTimeout(handleExpediaFail.bind(this), 5000);
 };
 
 // Bookmarks
 module.exports.expediaBookmarksAPI = function(req, res, next) {
   console.log('Inside expedia Bookmarks Api...', req.body);
 
-  var queryDate = Math.floor(new Date() / 1000);
-  var newExpediaBookmarksQuery = expedia({
-    cid: '379639',
-    apiKey: '65cc419lbqf590p1njeuv4p0q0',
-    secret: 'bvp038hq772sm',
-    sig: md5('65cc419lbqf590p1njeuv4p0q0' + 'bvp038hq772sm' + queryDate),
-    locale: 'en_US', // optional defaults to en_US
-    currencyCode: 'USD' // optional defaults to USD
-  });
+  var expediaBookmarksQueryDate = Math.floor(new Date() / 1000);
 
-  var bookmarkOptions = {
+  var expediaBookmarksQueryOptions = {
     customerSessionId: 'thisisauniqueID',
     customerIpAddress: '127.0.0.1',
     customerUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko)',
@@ -84,7 +67,16 @@ module.exports.expediaBookmarksAPI = function(req, res, next) {
     }
   };
 
-  newExpediaBookmarksQuery.hotels.list(bookmarkOptions, function(err, data) {
+  var newExpediaBookmarksQuery = expedia({
+    cid: '379639',
+    apiKey: '65cc419lbqf590p1njeuv4p0q0',
+    secret: 'bvp038hq772sm',
+    sig: md5('65cc419lbqf590p1njeuv4p0q0' + 'bvp038hq772sm' + expediaBookmarksQueryDate),
+    locale: 'en_US', // optional defaults to en_US
+    currencyCode: 'USD' // optional defaults to USD
+  });
+
+  newExpediaBookmarksQuery.hotels.list(expediaBookmarksQueryOptions, function(err, data) {
     if (err) {
       console.log('ERROR', err);
     }
@@ -92,34 +84,4 @@ module.exports.expediaBookmarksAPI = function(req, res, next) {
     console.log('BOOKMARK data returned from expedia: ', data);
     res.send(data.HotelListResponse.HotelList);
   });
-};
-
-var Hotwire = require('hotwire');
-var hotwire = new Hotwire(process.env.HOTWIRE_API_KEY || hotWireApiKey);
-var options = {
-  cid: '379639',
-  apiKey: '65cc419lbqf590p1njeuv4p0q0'
-  // secret : 'bvp038hq772sm'
-};
-
-var Hotwire = require('hotwire');
-var hotwire = new Hotwire(process.env.HOTWIRE_API_KEY || hotWireApiKey);
-
-module.exports.hotwirePostRequest = function(req, res, next) {
-  console.log('Inside Hotwire Api...');
-  hotwire.hotelDeals(
-    {
-      format: 'json',
-      price: '*~' + req.body.sum,
-      limit: 10,
-      startdate: req.body.dates[0] + '~' + req.body.dates[1],
-      duration: parseInt(req.body.dates[2])
-    },
-    function(err, response, body) {
-      if (err) {
-        console.log(err, 'ERR');
-      }
-      res.send(JSON.parse(body));
-    }
-  );
 };
