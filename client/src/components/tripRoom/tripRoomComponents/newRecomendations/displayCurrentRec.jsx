@@ -44,7 +44,7 @@ var DisplayCurrentRec = function({currentRec}) {
       <div className="card-stacked">
         <div className="card-content">
           <div className="row">
-            <div className="col s6">
+            <div className="col s12 m6">
               <span className='left-align'>
                 <i className="material-icons orange-text main-stars">{countStars(currentRec.tripAdvisorRating)}</i>
                 {hasRemainder(currentRec.tripAdvisorRating) ?
@@ -53,7 +53,7 @@ var DisplayCurrentRec = function({currentRec}) {
 
               </span>
             </div>
-            <div className="col s6">
+            <div className="col s12 m6">
               <span className='right'>${currentRec.lowRate} - ${currentRec.highRate} / night</span>
             </div>
           </div>
